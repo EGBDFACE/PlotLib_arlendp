@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>chord</title>
+  <style type="text/css">
+    .container {
+      width: 500px;
+      margin: 100px auto 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <svg class="chord" width="500" height="500"></svg>
+  </div>
+  <script type="text/javascript" src="./lib/d3.min.js"></script>
+  <script type="text/javascript">
+    var svg = d3.select('.chord'),
+      width = svg.attr('width'),
+      height = svg.attr('height'),
+    innerRadius = width / 2 * 0.8,
+    outerRadius = width / 2;
+
+    var data = [
+      [11975, 5871, 8916, 2868],
+      [1951, 10048, 2060, 6171],
+      [8010, 16145, 8090, 8045],
+      [1013, 990, 940, 6907]
+    ];
+
+    //data[i][j]表示从节点i到节点j的网络流量。
+    var chord = d3.chord()(data);
+    //chord方法根据上面的数据按比例进行计算，得到每个区域的角度信息。
+    console.log(chord);
+    var ribbon = d3.ribbon().radius(innerRadius);
+    var i;
+    // for (i = 0; i < chord.length; i++) {
+    //     ribbon(chord[i]);
+    // }
+
+    //arc根据startAngle、endAngle、innerRadius和outerRadius来绘制圆弧。
+    var arc = d3.arc()
+      .innerRadius(innerRadius)
+      .outerRadius(outerRadius);
+
+    //创建arc的容器
+    var arc_container = svg.append('g')
+      .attr('class', 'arc-container')
+      .attr('transform', 'translate(' + width / 2 + ', ' + height / 2 + ')');
+
+    //绘制arc路径
+    arc_container.selectAll('path')
+      .data(chord.groups)
+      .enter()
+      .append('path')
+      .attr('d', function(d) {
+        return arc(d);
+      })
+      .style('fill', function(d, i) {
+        return d3.schemeCategory10[i];
+      });
+
+    //添加arc上的文字
+    arc_container.selectAll('text')
+      .data(chord.groups)
+      .enter()
+      .append('text')
+      .style('text-anchor', 'middle')
+      .attr('transform', function(d) {
+        return 'translate(' + arc.centroid(d) + ') rotate(' + (d.startAngle + d.endAngle) / 2 * 180 / Math.PI + ')';
+      })
+      .text(function(d) {
+        return d.value;
+      });
+
+    //绘制ribbon部分
+    svg.append('g')
+      .attr('class', 'ribbon-container')
+      .attr('transform', 'translate(' + width / 2 + ', ' + height / 2 + ')')
+      .selectAll('path')
+      .data(chord)
+      .enter()
+      .append('path')
+      .attr('d', function(d) {
+        return ribbon(d);
+      })
+      .style('fill', function(d, i) {
+        return d3.schemeCategory20[i];
+      })
+      //添加交互效果
+      .on('mouseover', function() {
+        console.log(this);
+        d3.select(this)
+          .style('opacity', 0.8);
+      })
+      .on('mouseout', function() {
+        d3.select(this)
+          .style('opacity', 1);
+      });
+  </script>
+</body>
+
+</html>

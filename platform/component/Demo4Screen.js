@@ -1,0 +1,28 @@
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  View,
+  NativeModules
+} from 'react-native';
+import CocosBaseView from './CocosBaseView.js';
+const CocosView = require('./CocosView.js');
+
+export default class Demo2Screen extends CocosBaseView {
+  render() {
+    return (
+      <View style={styles.container}>
+        <CocosView style={styles.view}/>
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
+  view: {
+    flex: 1
+  }
+});

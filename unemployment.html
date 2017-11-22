@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>unemployment</title>
+  <style>
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #container {
+      position: relative;
+    }
+
+    .tip {
+      position: absolute;
+      background-color: #ffffff;
+      border: 1px solid #e2e2e2;
+      font-size: 12px;
+      padding: 10px 8px;
+      font-weight: lighter;
+    }
+
+    .tip .title {
+      color: #34afee;
+      font-weight: normal;
+    }
+
+    svg {
+      cursor: default;
+    }
+
+    #addData {
+      vertical-align: top;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+      <button id="addData" type="button" title="add data">add data</button>
+  </div>
+  <script type="text/javascript" src="./lib/d3.min.js"></script>
+  <script type="text/javascript">
+    const yAxisLabel = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const xAxisLabel = [];
+    const range = [3, 11];
+    const color = ['#75968f', '#a5bab7', '#c9d9d3', '#e2e2e2', '#dfccce', '#ddb7b1', '#cc7878', '#933b41', '#550b1d'];
+    let count = 50;
+    document.getElementById('addData').addEventListener('click', function (d) {
+      plot(count += 50);
+    }, false)
+    plot(count);
+    function plot(n) {
+      xAxisLabel.length = 0;
+      for (var i = 0; i <= n; i++) {
+        xAxisLabel.push(i);
+      }
+
+      const unitSize = {
+        width: 12,
+        height: 25
+      }
+      const contentSize = {
+        width: xAxisLabel.length * unitSize.width,
+        height: yAxisLabel.length * unitSize.height
+      }
+      const margin = {
+        horizontal: 100,
+        vertical: 100
+      }
+      d3.select('#container svg').remove();
+      const svg = d3.select('#container')
+        .append('svg')
+        .attr('class', 'wrapper')
+        .attr('width', contentSize.width + 2 * margin.vertical)
+        .attr('height', contentSize.height + 2 * margin.horizontal)
+        .call(d3.zoom().on('zoom', zoomed));
+
+      // contet svg
+      const contentWrapper = svg.append('svg')
+        .attr('class', 'content')
+        .attr('width', contentSize.width)
+        .attr('height', contentSize.height)
+        .attr('x', margin.horizontal)
+        .attr('y', margin.vertical);
+
+      // axis svg
+      const xAxisSvg = svg.append('svg')
+        .attr('class', 'xAxisSvg')
+        .attr('x', margin.horizontal)
+        .attr('y', 0)
+        .attr('width', contentSize.width)
+        .attr('height', margin.vertical);
+
+      const yAxisSvg = svg.append('svg')
+        .attr('class', 'yAxisSvg')
+        .attr('x', 0)
+        .attr('y', margin.vertical)
+        .attr('width', margin.horizontal)
+        .attr('height', contentSize.height);
+
+      const content = contentWrapper.append('g');
+
+      const blocks = [];
+      for (var x = 0; x < yAxisLabel.length; x++) {
+        for (var y = 0; y < xAxisLabel.length; y++) {
+          blocks.push({
+            x: x,
+            y: y,
+            date: yAxisLabel[x] + ' ' + xAxisLabel[y],
+            rate: Math.random() * (range[1] + 1 - range[0]) + range[0]
+          })
+        }
+      }
+      content.selectAll('.block')
+        .data(blocks)
+        .enter()
+        .append('rect')
+        .attr('class', 'block')
+        .attr('x', function (d) {
+          return d.y * unitSize.width;
+        })
+        .attr('y', function (d) {
+          return d.x * unitSize.height;
+        })
+        .attr('width', unitSize.width)
+        .attr('height', unitSize.height)
+        .style('fill', function (d) {
+          return color[Math.floor(d.rate) - range[0]];
+        })
+        .on('mouseenter', function (d) {
+          d3.select('#container')
+            .append('div')
+            .attr('class', 'tip')
+            .style('top', d3.event.clientY - 20 + 'px')
+            .style('left', d3.event.clientX + 20 + 'px')
+            .html(generateTip(d.date, d.rate.toFixed(3) + '%'))
+        })
+        .on('mouseleave', function (d) {
+          d3.select('.tip').remove();
+        });
+
+      // add axis text
+      var xAxis = xAxisSvg.append('g')
+        .attr('class', 'x-axis-wrapper axis-wrapper')
+        .attr('transform', 'translate(0, ' + margin.vertical + ') rotate(-90)');
+      xAxis.selectAll('text')
+        .data(xAxisLabel)
+        .enter()
+        .append('text')
+        .attr('class', 'x-axis')
+        .attr('x', 3)
+        .style('font-size', unitSize.width + 'px')
+        .style('text-anchor', 'start')
+        .text(function (d) {
+          return d;
+        })
+        .attr('y', function (d, i) {
+          return i * unitSize.width + (unitSize.width + this.getBBox().height / 2) / 2;
+        });
+
+      var yAxis = yAxisSvg.append('g')
+        .attr('class', 'y-axis-wrapper axis-wrapper');
+
+      yAxis.selectAll('text')
+        .data(yAxisLabel)
+        .enter()
+        .append('text')
+        .attr('class', 'y-axis')
+        .attr('x', margin.horizontal - 5)
+        .style('text-anchor', 'end')
+        .style('font-size', '15px')
+        .text(function (d) {
+          return d;
+        })
+        .attr('y', function (d, i) {
+          return i * unitSize.height + (unitSize.height + this.getBBox().height / 2) / 2;
+        });
+
+      function generateTip(date, rate) {
+        return '<ul>' +
+          '<li><span class="title">date: </span>' + date + '</li>' +
+          '<li><span class="title">rate: </span>' + rate + '</li>' +
+          '</ul>';
+      }
+
+      function zoomed() {
+        console.log(d3.event);
+        content.attr('transform', 'translate(' + d3.event.transform.x + ', ' + d3.event.transform.y + ') ' + 'scale(' +
+          d3.event.transform.k + ')');
+        // xAxis.attr('transform', 'translate(' + (d3.event.transform.x + 12 * d3.event.transform.k) + ', ' + (space + height + 8 - xAxisWidth * 0.65 * d3.event.transform.k) + ') rotate(-90) ' + 'scale(' + d3.event.transform.k + ')');
+        // yAxis.attr('transform', 'translate(' + (space + width + 8 - yAxisWidth * 0.65 * d3.event.transform.k) + ', ' + (d3.event.transform.y + 12 * d3.event.transform.k) + ') scale(' + d3.event.transform.k + ')');
+        d3.selectAll('.x-axis')
+          .attr('y', function (d, i) {
+            return d3.event.transform.x + (i * unitSize.width + (unitSize.width + this.getBBox().height / 2) / 2) *
+              d3.event
+              .transform.k - (d3.event.transform.k - 1) * 4;
+          })
+
+        d3.selectAll('.y-axis')
+          .attr('y', function (d, i) {
+            return d3.event.transform.y + (i * unitSize.height + (unitSize.height + this.getBBox().height / 2) / 2) *
+              d3.event.transform.k - (d3.event.transform.k - 1) * 6;
+          })
+      }
+    }
+  </script>
+</body>
+
+</html>

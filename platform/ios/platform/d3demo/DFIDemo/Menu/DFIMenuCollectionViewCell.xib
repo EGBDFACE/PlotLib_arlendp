@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="ipad12_9" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DFIMenuCell" id="gTV-IL-0wX" customClass="DFIMenuCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="470" height="210"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="470" height="210"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uCU-lt-qYR">
+                        <rect key="frame" x="20" y="10" width="430" height="146"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="430" id="RFK-IL-KUT"/>
+                            <constraint firstAttribute="height" constant="150" id="lCg-ce-5me">
+                                <variation key="heightClass=regular-widthClass=regular" constant="146"/>
+                            </constraint>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="RFK-IL-KUT"/>
+                                <exclude reference="lCg-ce-5me"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="RFK-IL-KUT"/>
+                                <include reference="lCg-ce-5me"/>
+                            </mask>
+                        </variation>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hierarchy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c2W-Dw-jTB">
+                        <rect key="frame" x="192.5" y="173.5" width="85.5" height="23.5"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                        <color key="textColor" red="0.6588235294117647" green="0.63137254901960782" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="c2W-Dw-jTB" secondAttribute="bottom" id="1Tm-OW-Giy"/>
+                <constraint firstItem="c2W-Dw-jTB" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="8KU-NK-caL"/>
+                <constraint firstItem="uCU-lt-qYR" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Cim-NP-UzH"/>
+                <constraint firstItem="uCU-lt-qYR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="hRb-Wk-W5a"/>
+                <constraint firstItem="c2W-Dw-jTB" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" constant="80" id="ovH-uX-SDy"/>
+            </constraints>
+            <size key="customSize" width="426" height="255"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="c2W-Dw-jTB"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="Cim-NP-UzH"/>
+                    <exclude reference="hRb-Wk-W5a"/>
+                    <exclude reference="1Tm-OW-Giy"/>
+                    <exclude reference="8KU-NK-caL"/>
+                    <exclude reference="ovH-uX-SDy"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=regular">
+                <mask key="subviews">
+                    <include reference="c2W-Dw-jTB"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="Cim-NP-UzH"/>
+                    <include reference="hRb-Wk-W5a"/>
+                    <exclude reference="1Tm-OW-Giy"/>
+                    <include reference="8KU-NK-caL"/>
+                    <include reference="ovH-uX-SDy"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="menuLabel" destination="c2W-Dw-jTB" id="sU1-hA-PJM"/>
+                <outlet property="thumbnailView" destination="uCU-lt-qYR" id="xT5-m4-YU4"/>
+            </connections>
+            <point key="canvasLocation" x="80" y="79"/>
+        </collectionViewCell>
+    </objects>
+</document>
