@@ -336,7 +336,7 @@
     };
     const range = options.range;
 
-    draw('svg', d3.resolution());
+    draw('canvas', d3.resolution());
 
     function draw(type, r) {
       d3.selectAll('.container ' + type).remove();
@@ -357,17 +357,17 @@
         .domain(range.y)
         .range([contentSize.height, 0]);
 
-      const clip = container.append('defs')
-        .append('clipPath')
-        .attr('id', 'clip')
-        .append('rect')
-        .attr('width', contentSize.width)
-        .attr('height', contentSize.height);
+      // const clip = container.append('defs')
+      //   .append('clipPath')
+      //   .attr('id', 'clip')
+      //   .append('rect')
+      //   .attr('width', contentSize.width)
+      //   .attr('height', contentSize.height);
 
       const content = container.append('g')
         .classed('content', true)
         .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
-        .attr('clip-path', 'url(#clip)')
+        // .attr('clip-path', 'url(#clip)')
         .attr('width', contentSize.width)
         .attr('height', contentSize.height)
         .selectAll('circle')
@@ -394,18 +394,20 @@
 
       const xAxis = d3.axisBottom(x).ticks(6);
       const yAxis = d3.axisLeft(y).ticks(6);
-
-      const cX = container.append('g')
-        .attr('transform', 'translate(' + margin.h + ', ' + (contentSize.height + margin.v) + ')')
-        .call(xAxis);
-      const cY = container.append('g')
-        .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
-        .call(yAxis);
+      
+      // render
+      container.render();
+      // const cX = container.append('g')
+      //   .attr('transform', 'translate(' + margin.h + ', ' + (contentSize.height + margin.v) + ')')
+      //   .call(xAxis);
+      // const cY = container.append('g')
+      //   .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
+      //   .call(yAxis);
 
       function zoom() {
         content.attr('transform', d3.event.transform);
-        cX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
-        cY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+        // cX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+        // cY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
       }
     }
   }
