@@ -112,7 +112,7 @@ tools/jenkins_scripts/mac/android/userconf.ini
 tags
 
 # ignore files, created with make-all-linux-project script
-/lib
+# /lib
 /build/linux-build
 
 # Cmake files
