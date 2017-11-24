@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div class="container">
+
+  </div>
+  <script src="./lib/d3.v4.js"></script>
+  <script src="./lib/pixi.js"></script>
+  <script src="./lib/d3-svg2webgl.js"></script>
+  <script>
+    var svg = d3.select('.container')
+      .append('canvas')
+      .attr('width', 400)
+      .attr('height', 400)
+      .canvasResolution(window.devicePixelRatio)
+      .canvas(true);
+    svg.append('g')
+      .append('rect')
+      .attr('x', 10)
+      .attr('y', 10)
+      .attr('width', 200)
+      .attr('height', 200)
+      .style('fill', 0xff0000);
+    // svg.render();
+    // var renderer = new PIXI.autoDetectRenderer({
+    //   width: 400,
+    //   height: 400,
+    //   view: svg.node(),
+    //   resolution: window.devicePixelRatio
+    // });
+    // renderer.view.style.width = 400 + 'px';
+    // renderer.view.style.height = 400 + 'px';
+    // var stage = new PIXI.Container();
+    // var graphic = new PIXI.Graphics();
+    // graphic.beginFill(0xff0000);
+    // graphic.drawRect(10, 10, 100, 100);
+    // graphic.endFill();
+    // stage.addChild(graphic);
+    // renderer.render(stage);
+  </script>
+</body>
+
+</html>
