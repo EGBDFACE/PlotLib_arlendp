@@ -21,7 +21,8 @@
       w: 800,
       h: 800
     };
-    const initCount = 1000000;
+    const row = 1000;
+    const column = 1000;
     const color = [0xff0000, 0x0000ff, 0x00ff00];
     const range = {
       x: [0, 7],
@@ -50,15 +51,16 @@
       width: canvasSize.w,
       height: canvasSize.h,
       resolution,
-      antialias: true
+      antialias: true,
+      backgroundColor: 0xffffff
     });
 
     // generate base texture
-    const circle = new PIXI.Graphics();    
+    const circle = new PIXI.Graphics();
     color.forEach(function (v, i) {
       circle.lineStyle(1, v);
       circle.beginFill(v, 0.3);
-      circle.drawCircle(15 * i, 0, 5);
+      circle.drawRect(15 * i, 0, 10, 10);
       circle.endFill();
     })
     const texture = circle.generateCanvasTexture(resolution, resolution);
@@ -72,7 +74,6 @@
     renderer.view.style.height = canvasSize.h + 'px';
     // add containers
     var stage = new PIXI.Container();
-    renderer.backgroundColor = 0xffffff;
     // add 3 containers for content, x axis and y axis
     const contentContainer = new PIXI.particles.ParticleContainer(500000, {
       scale: true,
@@ -192,8 +193,10 @@
     // init 
     function init() {
       const data = [];
-      for (let i = 0; i < initCount; i++) {
-        data.push(generateData(range, color));
+      for (let i = 0; i < row; i++) {
+        for (let j = 0; j < column; j++) {
+          data.push(generateData(i, j, color));
+        }
       }
 
       function drawing() {
@@ -206,16 +209,15 @@
       const addCount = 50000;
       document.getElementById('addData').addEventListener('click', function (d) {
         for (let i = 0; i < addCount; i++) {
-          data.push(generateData(range, color));
+          data.push(generateData(i, color));
         }
         drawing();
       }, false)
 
-      function generateData(range, color) {
+      function generateData(i, j, color) {
         return {
-          x: round(x(getRandom.apply(null, range.x))),
-          y: round(y(getRandom.apply(null, range.y))),
-          r: 5,
+          x: canvasSize.w / column * (j + 0.5),
+          y: canvasSize.h / row * (i + 0.5),
           color: color[Math.floor(getRandom.apply(null, [0, color.length]))]
         }
       }

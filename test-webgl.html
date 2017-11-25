@@ -21,13 +21,19 @@
       .attr('height', 400)
       .canvasResolution(window.devicePixelRatio)
       .canvas(true);
-    svg.append('g')
-      .append('rect')
+    var container = svg.append('g');
+    container.append('rect')
       .attr('x', 10)
       .attr('y', 10)
       .attr('width', 200)
       .attr('height', 200)
       .style('fill', 0xff0000);
+      
+    container.append('circle')
+      .attr('cx', 100)
+      .attr('cy', 100)
+      .attr('r', 20)
+      .style('fill', 0x00ffff);
     // svg.render();
     // var renderer = new PIXI.autoDetectRenderer({
     //   width: 400,

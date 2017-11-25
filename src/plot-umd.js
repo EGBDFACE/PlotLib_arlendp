@@ -395,8 +395,6 @@
       const xAxis = d3.axisBottom(x).ticks(6);
       const yAxis = d3.axisLeft(y).ticks(6);
       
-      // render
-      container.render();
       // const cX = container.append('g')
       //   .attr('transform', 'translate(' + margin.h + ', ' + (contentSize.height + margin.v) + ')')
       //   .call(xAxis);
