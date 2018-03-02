@@ -30,6 +30,15 @@
       gap: 0 // gap between blocks
     }
   }
+  function Plot(elem, bgColor) {
+    return new PIXI.autoDetectRenderer({
+      width: elem.width,
+      height: elem.height,
+      view: elem,
+      backgroundColor: bgColor || 0x000000,
+      antialias: true
+    })
+  }
   // fetch data
   function getData(url, type, callback) {
     switch (type) {
@@ -336,7 +345,7 @@
     };
     const range = options.range;
 
-    draw('canvas', d3.resolution());
+    draw('svg', window.devicePixelRatio);
 
     function draw(type, r) {
       d3.selectAll('.container ' + type).remove();
@@ -345,8 +354,8 @@
         .classed('container', true)
         .attr('width', canvasSize.w)
         .attr('height', canvasSize.h)
-        .canvasResolution(r)
-        .canvas(true)
+        // .canvasResolution(r)
+        // .canvas(true)
         .call(d3.zoom().on('zoom', zoom));
 
       const x = d3.scaleLinear()
@@ -357,17 +366,17 @@
         .domain(range.y)
         .range([contentSize.height, 0]);
 
-      // const clip = container.append('defs')
-      //   .append('clipPath')
-      //   .attr('id', 'clip')
-      //   .append('rect')
-      //   .attr('width', contentSize.width)
-      //   .attr('height', contentSize.height);
+      const clip = container.append('defs')
+        .append('clipPath')
+        .attr('id', 'clip')
+        .append('rect')
+        .attr('width', contentSize.width)
+        .attr('height', contentSize.height);
 
       const content = container.append('g')
         .classed('content', true)
         .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
-        // .attr('clip-path', 'url(#clip)')
+        .attr('clip-path', 'url(#clip)')
         .attr('width', contentSize.width)
         .attr('height', contentSize.height)
         .selectAll('circle')
@@ -403,9 +412,9 @@
         .call(yAxis);
 
       function zoom() {
-        // content.attr('transform', d3.event.transform);
-        // cX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
-        // cY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+        content.attr('transform', d3.event.transform);
+        cX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
+        cY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
       }
     }
   }
@@ -424,7 +433,7 @@
       return (Math.floor(n / sn)) * sn;
     }
   }
-
+  exports.init = Plot;
   exports.candleStick = candleStick;
   exports.occurrence = occurrence;
   exports.iris = iris;

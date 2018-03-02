@@ -5,7 +5,7 @@
   export function toRadian(a) {
     return a * degree;
   }
-  
+
   // matrix
   export function create() {
     let out = new ARRAY_TYPE(16);
@@ -52,4 +52,16 @@
       0, sy, 0,
       0, 0, 1
     ];
+  }
+
+  // fetch data
+  export default function getData(url, type, callback) {
+    switch (type) {
+      case 'json':
+        return d3.json(url, callback);
+      case 'tsv':
+        return d3.tsv(url, callback);
+      default:
+        return d3.csv(url, callback);
+    }
   }

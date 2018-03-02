@@ -73,7 +73,12 @@
         value: [100, 102, 106, 107]
       }
     ];
-    Plot.candleStick(data, '#container');
+    Plot.candleStick(data, '#container', {
+      canvasSize: {
+        w: 600,
+        h: 400
+      }
+    });
   </script>
 </body>
 
