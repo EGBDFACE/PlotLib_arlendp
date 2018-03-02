@@ -1,5 +1,8 @@
-// import * as utils from './util';
-import * as d3 from 'd3';
+const d3 = Object.assign({}, require('d3-selection'), require('d3-zoom'), require('d3-scale'), require('d3-axis'));
+// deal with d3.event is null error
+import {
+  event as currentEvent
+} from 'd3-selection';
 import * as PIXI from 'pixi.js';
 
 const defaultConfigs = {
@@ -115,9 +118,9 @@ export default class Plot {
         .call(yAxis);
 
       function zoom() {
-        content.attr('transform', d3.event.transform);
-        cX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
-        cY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
+        content.attr('transform', currentEvent.transform);
+        cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+        cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
       }
     }
   }

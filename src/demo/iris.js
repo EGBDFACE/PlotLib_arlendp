@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+const d3 = Object.assign({}, require('d3-selection'));
 import Plot from '../plot.js';
 const color = ['red', 'blue', 'green'];
 const range = {
@@ -13,7 +13,7 @@ for (let i = 0; i < count; i++) {
 
 function drawing() {
   d3.select('.count').text(data.length);
-  new Plot(d3.select('.container').append('canvas').node(), {}).iris(data, '.container', {
+  new Plot(d3.select('canvas').node(), {}).iris(data, '.container', {
     range: range
   })
 }
