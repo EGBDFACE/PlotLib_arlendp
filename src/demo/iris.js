@@ -14,7 +14,8 @@ for (let i = 0; i < count; i++) {
 function drawing() {
   d3.select('.count').text(data.length);
   new Plot(d3.select('canvas').node(), {}).iris(data, '.container', {
-    range: range
+    range: range,
+    zoom: true
   })
 }
 // start drawing
@@ -40,5 +41,3 @@ function generateData(range, color) {
 function getRandom(min, max) {
   return Math.random() * (max - min) + min;
 }
-
-console.log('hhh')
