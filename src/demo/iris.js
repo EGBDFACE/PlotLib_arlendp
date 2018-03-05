@@ -5,7 +5,7 @@ const range = {
   x: [0, 7],
   y: [0, 3]
 }
-const count = 50;
+const count = 5000;
 const data = [];
 for (let i = 0; i < count; i++) {
   data.push(generateData(range, color));
