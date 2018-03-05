@@ -5,7 +5,7 @@ module.exports = {
     path: __dirname + '/dist',
     filename: 'plot.bundle.js'
   },
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
