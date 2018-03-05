@@ -78,6 +78,11 @@
       scale: true,
       position: true
     });
+    const mask = new PIXI.Graphics();
+    mask.beginFill(0xff0000);
+    mask.drawRect(0, 0, contentSize.width, contentSize.height);
+    mask.endFill();
+    contentContainer.mask = mask;
     // const contentContainer = new PIXI.Container();
     contentContainer.x = margin.h;
     contentContainer.y = margin.v;
@@ -245,7 +250,7 @@
         circleSprite.position.y = data[i].y;
         contentContainer.addChild(circleSprite);
       }
-      addClear();
+      // addClear();
       // addAxis();
       renderer.render(stage);
     }

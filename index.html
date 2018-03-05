@@ -22,5 +22,36 @@
         <a href="./unemployment.html">unemployment</a>
       </li>
     </ul>
+    <canvas width="700" height="800" id="demo"></canvas>
+    <script src="./lib/pixi.js"></script>
+    <script>
+      var renderer = PIXI.autoDetectRenderer({
+          width: 700,
+          height: 800,
+          resolution: 2,
+          view: document.getElementById('demo'),
+          backgroundColor: 0xffffff,
+          antialias: true
+        });
+        renderer.view.style.width = 700 + 'px';
+        renderer.view.style.height = 800 + 'px';
+        var stage = new PIXI.Container();
+        var content = new PIXI.Container();
+        var rectangle = new PIXI.Graphics();
+        var mask = new PIXI.Graphics();
+        rectangle.lineStyle(4, 0xFF3300, 1);
+        rectangle.beginFill(0x66CCFF);
+        rectangle.drawRect(0, 0, 500, 500);
+        rectangle.endFill();
+        mask.beginFill(0xffffff);
+        mask.drawRect(0, 0, 200, 200);
+        mask.endFill();
+        content.mask = mask;
+        content.x = 20;
+        content.y = 50;
+        content.addChild(rectangle);
+        stage.addChild(content);
+        renderer.render(stage);
+    </script>
   </body>
 </html>
