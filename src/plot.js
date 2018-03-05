@@ -9,13 +9,23 @@ import * as PIXI from 'pixi.js';
 const defaultConfigs = {
   base: {
     canvasSize: {
-      w: 1200,
+      w: 800,
       h: 800
+    },
+    contentSize: {
+      w: 600,
+      h: 600
     },
     canvasMargin: {
       h: 100,
       v: 100
     },
+    style: {
+      strokeWidth: 1,
+      stroke: '#000000',
+      fill: '#000000',
+      fillOpacity: 1
+    }
   },
   candleStick: {
     blockWidth: 10
@@ -33,52 +43,51 @@ const defaultConfigs = {
 export default class Plot {
   constructor(elem, options) {
     this.renderer = new PIXI.autoDetectRenderer({
-      width: elem.width,
-      height: elem.height,
+      width: elem.width || defaultConfigs.base.canvasSize.w,
+      height: elem.height || defaultConfigs.base.canvasSize.h,
+      resolution: d3.resolution(),
       view: elem,
       backgroundColor: options.bgColor || 0xffffff,
       antialias: true
-    })
+    });
+    console.log(elem);
+    this.renderer.view.style.width = elem.width / 2 + 'px';
+    this.renderer.view.style.height = elem.height / 2 + 'px';
   }
 
   // draw iris chart
-  iris(data, elem, configs) {
+  iris(data, configs) {
     const options = Object.assign({}, defaultConfigs.base, configs);
-    const canvasSize = options.canvasSize;
     const margin = options.canvasMargin;
-    const contentSize = {
-      width: 600,
-      height: 600
-    };
+    const contentSize = options.contentSize;
     const range = options.range;
 
     const container = d3.select(this.renderer.view)
-      .canvasResolution(d3.resolution())
-      .canvas(true);
-      
+      .toCanvas(this.renderer);
+
     options.zoom && container.call(d3.zoom().on('zoom', zoom));
 
     const x = d3.scaleLinear()
       .domain(range.x)
-      .range([0, contentSize.width]);
+      .range([0, contentSize.w]);
 
     const y = d3.scaleLinear()
       .domain(range.y)
-      .range([contentSize.height, 0]);
+      .range([contentSize.h, 0]);
 
     const clip = container.append('defs')
       .append('clipPath')
       .attr('id', 'clip')
       .append('rect')
-      .attr('width', contentSize.width)
-      .attr('height', contentSize.height);
+      .attr('width', contentSize.w)
+      .attr('height', contentSize.h);
 
     const content = container.append('g')
       .classed('content', true)
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
       .attr('clip-path', 'url(#clip)')
-      .attr('width', contentSize.width)
-      .attr('height', contentSize.height)
+      .attr('width', contentSize.w)
+      .attr('height', contentSize.h)
       .selectAll('circle')
       .data(data)
       .enter()
@@ -92,20 +101,24 @@ export default class Plot {
       .attr('r', function (d) {
         return d.r;
       })
-      .style('stroke-width', 1)
+      .style('stroke-width', function (d) {
+        return d.strokeWidth || options.style.strokeWidth
+      })
       .style('stroke', function (d) {
-        return d.color;
+        return d.stroke || options.style.stroke;
       })
       .style('fill', function (d) {
-        return d.color;
+        return d.fill || options.style.fill;
       })
-      .style('fill-opacity', 0.3);
+      .style('fill-opacity', function (d) {
+        return d.fillOpacity || options.style.fill;
+      });
 
     const xAxis = d3.axisBottom(x).ticks(6);
     const yAxis = d3.axisLeft(y).ticks(6);
 
     const cX = container.append('g')
-      .attr('transform', 'translate(' + margin.h + ', ' + (contentSize.height + margin.v) + ')')
+      .attr('transform', 'translate(' + margin.h + ', ' + (contentSize.h + margin.v) + ')')
       .call(xAxis);
     const cY = container.append('g')
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')

@@ -13,9 +13,9 @@ for (let i = 0; i < count; i++) {
 
 function drawing() {
   d3.select('.count').text(data.length);
-  new Plot(d3.select('canvas').node(), {}).iris(data, '.container', {
+  new Plot(d3.select('canvas').node(), {}).iris(data, {
     range: range,
-    zoom: true
+    zoom: true,
   })
 }
 // start drawing
@@ -30,11 +30,15 @@ document.getElementById('addData').addEventListener('click', function (d) {
 }, false)
 
 function generateData(range, color) {
+  var randomColor = color[Math.floor(getRandom.apply(null, [0, color.length]))];
   return {
     x: getRandom.apply(null, range.x),
     y: getRandom.apply(null, range.y),
     r: 5,
-    color: color[Math.floor(getRandom.apply(null, [0, color.length]))]
+    fill: randomColor,
+    stroke: randomColor,
+    strokeWidth: 1,
+    fillOpacity: 0.3
   }
 }
 
