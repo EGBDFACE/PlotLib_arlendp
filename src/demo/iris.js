@@ -13,7 +13,7 @@ for (let i = 0; i < count; i++) {
 
 function drawing() {
   d3.select('.count').text(data.length);
-  new Plot(d3.select('canvas').node(), {}).iris(data, {
+  new Plot(d3.select('canvas').node()).iris(data, {
     range: range,
     zoom: true,
   })

@@ -55,7 +55,7 @@
   }
 
   // fetch data
-  export default function getData(url, type, callback) {
+  export function getData(url, type, callback) {
     switch (type) {
       case 'json':
         return d3.json(url, callback);
@@ -63,5 +63,20 @@
         return d3.tsv(url, callback);
       default:
         return d3.csv(url, callback);
+    }
+  }
+
+  /**
+   * 对数字按照指定取整
+   * @param  {Number}  n      源数据
+   * @param  {Number}  sn     指定整数
+   * @param  {Boolean} isCeil 是否向上取整
+   * @return {Number}         处理后的数据
+   */
+  export function roundNumber(n, sn, isCeil) {
+    if (isCeil) {
+      return (Math.floor(n / sn) + 1) * sn;
+    } else {
+      return (Math.floor(n / sn)) * sn;
     }
   }

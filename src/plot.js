@@ -5,6 +5,9 @@ import {
 } from 'd3-selection';
 
 import * as PIXI from 'pixi.js';
+import {
+  roundNumber
+} from './util.js';
 
 const defaultConfigs = {
   base: {
@@ -47,7 +50,7 @@ export default class Plot {
       height: elem.height || defaultConfigs.base.canvasSize.h,
       resolution: d3.resolution(),
       view: elem,
-      backgroundColor: options.bgColor || 0xffffff,
+      backgroundColor: options && options.bgColor || 0xffffff,
       antialias: true
     });
     console.log(elem);
@@ -128,6 +131,105 @@ export default class Plot {
       content.attr('transform', currentEvent.transform);
       cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
       cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+    }
+  }
+
+  // draw candleStick chart
+  candleStick(data, configs) {
+    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.candleStick, configs);
+    const canvasSize = options.canvasSize;
+    const contentSize = options.contentSize;
+    const margin = options.canvasMargin;
+    const blockWidth = options.blockWidth;
+    let x = d3.scaleTime().range([0, contentSize.w]);
+    let y = d3.scaleLinear().range([contentSize.h, 0]);
+    const xAxis = d3.axisBottom(x);
+    const yAxis = d3.axisLeft(y);
+    const timeRange = options.range.x;
+    const valueRange = options.range.y;
+    const style = options.style;
+
+    x.domain(timeRange.map(function (v, i) {
+      const tmpDate = new Date(v);
+      if (i === 0) {
+        tmpDate.setDate(tmpDate.getDate() - 2);
+      } else {
+        tmpDate.setDate(tmpDate.getDate() + 2);
+      }
+      return tmpDate;
+    }));
+    y.domain(valueRange.map(function (v, i) {
+      return i === 0 ? roundNumber(v, 10, false) : roundNumber(v, 10, true);
+    }));
+
+    const svg = d3.select(this.renderer.view)
+      .toCanvas(this.renderer);
+    options.zoom && svg.call(d3.zoom().on('zoom', zoomed));
+
+    // clipPath
+    // !important
+    // pay attention that the clippath area is related to the ref element
+    const clip = svg.append('defs')
+      .append('clipPath')
+      .attr('id', 'clip')
+      .append('rect')
+      .attr('width', contentSize.w)
+      .attr('height', contentSize.h);
+
+    const container = svg.append('g')
+      .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')');
+
+    const cX = container.append('g')
+      .attr('class', 'xAxis')
+      .attr('transform', 'translate(0, ' + contentSize.h + ')')
+      .call(xAxis);
+
+    const cY = container.append('g')
+      .attr('class', 'yAxis')
+      .call(yAxis);
+
+    const content = container.append('g')
+      .attr('class', 'clipArea')
+      .attr('clip-path', 'url(#clip)')
+      .append('g')
+      .attr('class', 'content');
+
+    const blocks = content.selectAll('.block')
+      .data(data)
+      .enter()
+      .append('path')
+      .attr('d', function (d) {
+        return getPath(d);
+      })
+      .style('stroke-width', function (d) {
+        return d.strokeWidth || style.strokeWidth
+      })
+      .style('fill', function (d) {
+        return d.fill || style.fill
+      })
+      .style('stroke', function (d) {
+        return d.stroke || style.stroke
+      });
+
+    function zoomed() {
+      content.attr('transform', currentEvent.transform);
+      cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+      cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+    }
+
+    function getPath(d) {
+      const xCoor = x(new Date(d.date));
+      return (
+        'M ' + xCoor + ' ' + y(d.value[0]) + ' ' +
+        'V ' + y(d.value[1]) + ' ' +
+        'H ' + (xCoor - blockWidth / 2) + ' ' +
+        'V ' + y(d.value[2]) + ' ' +
+        'H ' + (xCoor + blockWidth / 2) + ' ' +
+        'V ' + y(d.value[1]) + ' ' +
+        'H ' + xCoor + ' ' +
+        'M ' + xCoor + ' ' + y(d.value[2]) + ' ' +
+        'V ' + y(d.value[3])
+      )
     }
   }
 }

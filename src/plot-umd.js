@@ -124,7 +124,6 @@
       d3.select('.yAxis').call(yAxis);
       blocks.attr('d', function (d) {
         return getPath(d);
-
       })
     }
 

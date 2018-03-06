@@ -1,18 +1,19 @@
 const path = require('path');
 module.exports = {
-  entry: './src/demo/iris.js',
+  entry: {
+    iris: './src/demo/iris.js',
+    candlestick: './src/demo/candlestick.js'
+  },
   output: {
     path: __dirname + '/dist',
-    filename: 'plot.bundle.js'
+    filename: '[name].bundle.js'
   },
   devtool: 'eval-source-map',
   module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      }
-    ]
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: 'babel-loader'
+    }]
   }
 };
