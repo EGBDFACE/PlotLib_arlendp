@@ -2,23 +2,28 @@ const d3 = Object.assign({}, require('d3-selection'), require('d3-array'));
 import Plot from '../plot.js';
 const data = [{
     date: "2017-03-01",
-    value: [89, 90, 92, 96]
+    value: [89, 90, 92, 96],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-03-02",
-    value: [91, 92, 94, 99]
+    value: [91, 92, 94, 99],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-03-03",
-    value: [94, 95, 97, 99]
+    value: [94, 95, 97, 99],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-03-06",
-    value: [82, 84, 87, 90]
+    value: [82, 84, 87, 90],
+    fill: '#F2583E'
   },
   {
     date: "2017-03-10",
-    value: [100, 102, 106, 107]
+    value: [100, 102, 106, 107],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-03-15",
@@ -30,35 +35,43 @@ const data = [{
   },
   {
     date: "2017-03-23",
-    value: [94, 95, 97, 99]
+    value: [94, 95, 97, 99],
+    fill: '#F2583E'
   },
   {
     date: "2017-04-02",
-    value: [82, 84, 87, 90]
+    value: [82, 84, 87, 90],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-04-10",
-    value: [100, 102, 106, 107]
+    value: [100, 102, 106, 107],
+    fill: '#F2583E'
   },
   {
     date: "2017-04-15",
-    value: [89, 90, 92, 96]
+    value: [89, 90, 92, 96],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-04-22",
-    value: [91, 92, 94, 99]
+    value: [91, 92, 94, 99],
+    fill: '#F2583E'
   },
   {
     date: "2017-04-25",
-    value: [94, 95, 97, 99]
+    value: [94, 95, 97, 99],
+    fill: '#F2583E'
   },
   {
     date: "2017-04-28",
-    value: [83, 84, 87, 90]
+    value: [83, 84, 87, 90],
+    fill: '#D5E1DD'
   },
   {
     date: "2017-05-05",
-    value: [100, 102, 106, 107]
+    value: [100, 102, 106, 107],
+    fill: '#F2583E'
   }
 ];
 

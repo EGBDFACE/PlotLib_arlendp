@@ -186,27 +186,42 @@
       .attr('width', contentSize.width + 2 * margin.v)
       .attr('height', contentSize.height + 2 * margin.h)
       .call(d3.zoom().on('zoom', zoomed));
-    // content svg
-    const contentWrapper = svg.append('svg')
-      .attr('class', 'content')
+    // clips
+    const defs = svg.append('defs');
+    const clipContent = defs
+      .append('clipPath')
+      .attr('id', 'clip-content')
+      .append('rect')
       .attr('width', contentSize.width)
-      .attr('height', contentSize.height)
-      .attr('x', margin.h)
-      .attr('y', margin.v);
-    // axis svg
-    const xAxisSvg = svg.append('svg')
-      .attr('class', 'xAxisSvg')
-      .attr('x', margin.h)
-      .attr('y', 0)
+      .attr('height', contentSize.height);
+    const clipXAxis = defs
+      .append('clipPath')
+      .attr('id', 'clip-x-axis')
+      .append('rect')
       .attr('width', contentSize.width)
       .attr('height', margin.v);
-
-    const yAxisSvg = svg.append('svg')
-      .attr('class', 'yAxisSvg')
-      .attr('x', 0)
-      .attr('y', margin.v)
+    const clipYAxis = defs
+      .append('clipPath')
+      .attr('id', 'clip-y-axis')
+      .append('rect')
       .attr('width', margin.h)
       .attr('height', contentSize.height);
+    // content svg
+    const contentWrapper = svg.append('g')
+    .attr('class', 'content')
+      .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
+      .attr('clip-path', 'url(#clip-content)');
+    // axis svg
+    const xAxisSvg = svg.append('g')
+      .attr('class', 'xAxisSvg')
+      .attr('transform', 'translate(' + margin.h + ', 0)')
+      .attr('clip-path', 'url(#clip-x-axis)');
+
+    const yAxisSvg = svg.append('g')
+      .attr('class', 'yAxisSvg')
+      .attr('transform', 'translate(0, ' + margin.v + ')')
+      .attr('clip-path', 'url(#clip-y-axis)');;
+      
     const content = contentWrapper.append('g');
 
     const blocks = [];
@@ -224,7 +239,6 @@
     }
     content.selectAll('.block')
       .data(blocks)
-
       .enter()
       .append('rect')
       .attr('class', 'block')
@@ -296,7 +310,8 @@
     }
 
     function zoomed() {
-      content.attr('transform', 'translate(' + d3.event.transform.x + ', ' + d3.event.transform.y + ') ' + 'scale(' + d3.event.transform.k + ')');
+      // content.attr('transform', 'translate(' + d3.event.transform.x + ', ' + d3.event.transform.y + ') ' + 'scale(' + d3.event.transform.k + ')');
+      content.attr('transform', d3.event.transform);
       // xAxis.attr('transform', 'translate(' + (d3.event.transform.x + 12 * d3.event.transform.k) + ', ' + (space + height + 8 - xAxisWidth * 0.65 * d3.event.transform.k) + ') rotate(-90) ' + 'scale(' + d3.event.transform.k + ')');
       // yAxis.attr('transform', 'translate(' + (space + width + 8 - yAxisWidth * 0.65 * d3.event.transform.k) + ', ' + (d3.event.transform.y + 12 * d3.event.transform.k) + ') scale(' + d3.event.transform.k + ')');
       d3.selectAll('.x-axis')

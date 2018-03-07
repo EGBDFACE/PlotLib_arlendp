@@ -2,7 +2,8 @@ const path = require('path');
 module.exports = {
   entry: {
     iris: './src/demo/iris.js',
-    candlestick: './src/demo/candlestick.js'
+    candlestick: './src/demo/candlestick.js',
+    occurrence: './src/demo/occurrence.js'
   },
   output: {
     path: __dirname + '/dist',

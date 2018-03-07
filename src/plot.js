@@ -35,8 +35,8 @@ const defaultConfigs = {
   },
   occurrence: {
     unitSize: { // unit block size
-      width: 8,
-      height: 8
+      w: 12,
+      h: 12
     },
     gap: 0 // gap between blocks
   },
@@ -89,9 +89,9 @@ export default class Plot {
       .classed('content', true)
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
       .attr('clip-path', 'url(#clip)')
-      .attr('width', contentSize.w)
-      .attr('height', contentSize.h)
-      .selectAll('circle')
+      .append('g');
+      
+    content.selectAll('circle')
       .data(data)
       .enter()
       .append('circle')
@@ -137,7 +137,6 @@ export default class Plot {
   // draw candleStick chart
   candleStick(data, configs) {
     const options = Object.assign({}, defaultConfigs.base, defaultConfigs.candleStick, configs);
-    const canvasSize = options.canvasSize;
     const contentSize = options.contentSize;
     const margin = options.canvasMargin;
     const blockWidth = options.blockWidth;
@@ -230,6 +229,137 @@ export default class Plot {
         'M ' + xCoor + ' ' + y(d.value[2]) + ' ' +
         'V ' + y(d.value[3])
       )
+    }
+  }
+
+  // draw occurrence chart
+  occurrence(data, configs) {
+    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.occurrence, configs);
+    const xAxisLabel = options.range.x;
+    const yAxisLabel = options.range.y;
+    const unitSize = options.unitSize;
+    const gap = options.gap;
+    const contentSize = options.contentSize;
+    const margin = options.canvasMargin;
+    const svg = d3.select(this.renderer.view)
+      .toCanvas(this.renderer)
+
+    options.zoom && svg.call(d3.zoom().on('zoom', zoomed));
+    // clips
+    const defs = svg.append('defs');
+    const clipContent = defs
+      .append('clipPath')
+      .attr('id', 'clip-content')
+      .append('rect')
+      .attr('width', contentSize.w)
+      .attr('height', contentSize.h);
+    const clipXAxis = defs
+      .append('clipPath')
+      .attr('id', 'clip-x-axis')
+      .append('rect')
+      .attr('width', contentSize.w)
+      .attr('height', margin.v);
+    const clipYAxis = defs
+      .append('clipPath')
+      .attr('id', 'clip-y-axis')
+      .append('rect')
+      .attr('width', margin.h)
+      .attr('height', contentSize.h);
+    // content
+    const content = svg.append('g')
+      .attr('class', 'content-wrapper')
+      .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
+      .attr('clip-path', 'url(#clip-content)')
+      .append('g')
+      .attr('class', 'content');
+    // axis
+    const xAxis = svg.append('g')
+      .attr('class', 'xAxisSvg')
+      .attr('transform', 'translate(' + margin.h + ', 0)')
+      .attr('clip-path', 'url(#clip-x-axis)')
+      .append('g')
+      .attr('class', 'x-axis-wrapper axis-wrapper')
+      .attr('transform', 'translate(0, ' + margin.v + ') rotate(-90)')
+      .selectAll('text')
+      .data(xAxisLabel)
+      .enter()
+      .append('text')
+      .attr('class', 'x-axis')
+      .attr('x', unitSize.w)
+      .style('font-size', unitSize.w + 'px')
+      .style('text-anchor', 'start')
+      .text(function (d) {
+        return d;
+      })
+      .attr('y', function (d, i) {
+        return i * (unitSize.w + gap) + unitSize.w * 2 / 3;
+      });;
+
+    const yAxis = svg.append('g')
+      .attr('class', 'yAxisSvg')
+      .attr('transform', 'translate(0, ' + margin.v + ')')
+      .attr('clip-path', 'url(#clip-y-axis)')
+      .append('g')
+      .attr('class', 'y-axis-wrapper axis-wrapper')
+      .selectAll('text')
+      .data(yAxisLabel)
+      .enter()
+      .append('text')
+      .attr('class', 'y-axis')
+      .attr('x', margin.h - unitSize.w)
+      .style('text-anchor', 'end')
+      .style('font-size', unitSize.h + 'px')
+      .text(function (d) {
+        return d;
+      })
+      .attr('y', function (d, i) {
+        return i * (unitSize.h + gap) + unitSize.h * 2 / 3;
+      });;
+
+    content.selectAll('.block')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('class', 'block')
+      .attr('x', function (d) {
+        return d.y * (unitSize.w + gap);
+      })
+      .attr('y', function (d) {
+        return d.x * (unitSize.h + gap);
+      })
+      .attr('width', unitSize.w)
+      .attr('height', unitSize.h)
+      .style('fill', function (d) {
+        return d.color;
+      })
+    // .on('mouseenter', function (d) {
+    //   d3.select('#container')
+    //     .append('div')
+    //     .attr('class', 'tip')
+    //     .style('top', d3.event.clientY - 20 + 'px')
+    //     .style('left', d3.event.clientX + 20 + 'px')
+    //     .html(generateTip(d.names, d.count))
+    // })
+    // .on('mouseleave', function (d) {
+    //   d3.select('.tip').remove();
+    // });
+
+    function generateTip(date, rate) {
+      return '<ul>' +
+        '<li><span class="title">names: </span>' + date + '</li>' +
+        '<li><span class="title">count: </span>' + rate + '</li>' +
+        '</ul>';
+    }
+
+    function zoomed() {
+      content.attr('transform', currentEvent.transform);
+      console.log(d3.selectAll('.x-axis'));
+      xAxis.attr('y', function (d, i) {
+        return currentEvent.transform.x + (i * (unitSize.w + gap) + unitSize.w * 3 / 4) * currentEvent.transform.k - (currentEvent.transform.k - 1) * 3;
+      })
+      yAxis.attr('y', function (d, i) {
+        return currentEvent.transform.y + (i * (unitSize.h + gap) + unitSize.h * 3 / 4) * currentEvent.transform.k - (currentEvent.transform.k - 1) * 3;
+      })
     }
   }
 }
