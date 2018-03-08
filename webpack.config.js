@@ -3,7 +3,8 @@ module.exports = {
   entry: {
     iris: './src/demo/iris.js',
     candlestick: './src/demo/candlestick.js',
-    occurrence: './src/demo/occurrence.js'
+    occurrence: './src/demo/occurrence.js',
+    boxplot: './src/demo/boxplot.js'
   },
   output: {
     path: __dirname + '/dist',
