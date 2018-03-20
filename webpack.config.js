@@ -4,7 +4,8 @@ module.exports = {
     iris: './src/demo/iris.js',
     candlestick: './src/demo/candlestick.js',
     occurrence: './src/demo/occurrence.js',
-    boxplot: './src/demo/boxplot.js'
+    boxplot: './src/demo/boxplot.js',
+    chords: './src/demo/chords.js'
   },
   output: {
     path: __dirname + '/dist',
@@ -15,7 +16,19 @@ module.exports = {
     rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      use: 'babel-loader'
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015'],
+          plugins: [
+            ['transform-runtime', {
+              helpers: false,
+              polyfill: false,
+              regenerator: true,
+            }]
+          ],
+        }
+      }
     }]
   }
 };

@@ -1,5 +1,5 @@
 const d3 = Object.assign({}, require('d3-selection'), require('d3-array'));
-import Plot from '../plot.js';
+import Plot from '../index.js';
 const data = [{
     date: "2017-03-01",
     value: [89, 90, 92, 96],
@@ -75,7 +75,7 @@ const data = [{
   }
 ];
 
-new Plot(d3.select('canvas').node()).candleStick(data, {
+new Plot.bokeh(d3.select('canvas').node()).candleStick(data, {
   contentSize: {
     w: 600,
     h: 400

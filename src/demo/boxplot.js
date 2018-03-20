@@ -1,5 +1,5 @@
 const d3 = Object.assign({}, require('d3-random'), require('d3-scale'), require('d3-array'));
-import Plot from '../plot.js';
+import Plot from '../index.js';
 var width = 600;
 var height = 400;
 var barWidth = 15;
@@ -79,7 +79,7 @@ var yScale = d3.scaleLinear()
   .domain([min - 1, max + 1])
   .range([height, 0]);
 
-new Plot(document.getElementsByTagName('canvas')[0]).boxplot(boxPlotData, {
+new Plot.bokeh(document.getElementsByTagName('canvas')[0]).boxplot(boxPlotData, {
   barWidth: barWidth,
   range: {
     x: [-1, +groupKeys[groupKeys.length - 1] + 1],

@@ -5,14 +5,19 @@
   <title></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
 </head>
 
 <body>
   <div id="container">
-    <button id="addData" type="button" title="add data">add data</button>
+    <!-- <button id="addData" type="button" title="add data">add data</button>
     <p>count:
       <span class="count"></span>
-    </p>
+    </p> -->
   </div>
   <script src="../lib/d3.v4.js"></script>
   <script>
@@ -20,7 +25,7 @@
       w: 800,
       h: 800
     };
-    const initCount = 10000;
+    const initCount = 1000;
     const color = ['#ff0000', '#0000ff', '#00ff00'];
     const range = {
       x: [0, 600],
@@ -66,15 +71,15 @@
       drawing();
 
       const addCount = 1000;
-      document.getElementById('addData').addEventListener('click', function (d) {
-        shapeArr.length = 0;
-        for (let i = 0; i < addCount; i++) {
-          const data = generateData(range, color);
-          shapeArr.push(data);
-          totalArr.push(data);
-        }
-        drawing();
-      }, false)
+      // document.getElementById('addData').addEventListener('click', function (d) {
+      //   shapeArr.length = 0;
+      //   for (let i = 0; i < addCount; i++) {
+      //     const data = generateData(range, color);
+      //     shapeArr.push(data);
+      //     totalArr.push(data);
+      //   }
+      //   drawing();
+      // }, false)
 
       function generateData(range, color) {
         return {

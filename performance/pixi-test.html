@@ -5,31 +5,36 @@
   <title></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
 </head>
 
 <body>
   <div id="container">
-    <button id="addData" type="button" title="add data">add data</button>
+    <!-- <button id="addData" type="button" title="add data">add data</button>
     <p>count:
       <span class="count"></span>
-    </p>
+    </p> -->
   </div>
   <script src="../lib/pixi.js"></script>
   <script src="../lib/d3.v4.js"></script>
   <script>
     const canvasSize = {
-      w: 800,
-      h: 800
+      w: 600,
+      h: 600
     };
-    const initCount = 400000;
+    const initCount = 4000;
     const color = [0xff0000, 0x0000ff, 0x00ff00];
     const range = {
       x: [0, 600],
       y: [0, 600]
     };
     const margin = {
-      h: 100,
-      v: 100
+      h: 0,
+      v: 0
     };
     const contentSize = {
       width: 600,
@@ -125,12 +130,12 @@
       drawing();
 
       const addCount = 50000;
-      document.getElementById('addData').addEventListener('click', function (d) {
-        for (let i = 0; i < addCount; i++) {
-          spritesArr.push(generateData(range, color));
-        }
-        drawing();
-      }, false)
+      // document.getElementById('addData').addEventListener('click', function (d) {
+      //   for (let i = 0; i < addCount; i++) {
+      //     spritesArr.push(generateData(range, color));
+      //   }
+      //   drawing();
+      // }, false)
 
       function generateData(range, color) {
         const params = {

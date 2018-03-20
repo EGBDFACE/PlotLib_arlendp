@@ -1,4 +1,4 @@
-import Plot from '../plot.js';
+import Plot from '../index.js';
 const xAxisLabel = [];
 const yAxisLabel = [];
 const range = [0, 15];
@@ -33,7 +33,7 @@ function plot(n) {
     h: 12
   };
   const gap = 1;
-  new Plot(document.getElementsByTagName('canvas')[0]).occurrence(blocks, {
+  new Plot.bokeh(document.getElementsByTagName('canvas')[0]).occurrence(blocks, {
     contentSize: {
       w: xAxisLabel.length * unitSize.w + (xAxisLabel.length - 1) * gap,
       h: yAxisLabel.length * unitSize.h + (yAxisLabel.length - 1) * gap

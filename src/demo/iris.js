@@ -1,4 +1,4 @@
-import Plot from '../plot.js';
+import Plot from '../index.js';
 const color = ['red', 'blue', 'green'];
 const range = {
   x: [0, 7],
@@ -11,7 +11,7 @@ for (let i = 0; i < count; i++) {
 }
 
 function drawing() {
-  new Plot(document.getElementsByTagName('canvas')[0]).iris(data, {
+  new Plot.bokeh(document.getElementsByTagName('canvas')[0]).iris(data, {
     range: range,
     zoom: true,
   })

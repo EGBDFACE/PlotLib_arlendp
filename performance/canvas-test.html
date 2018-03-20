@@ -5,14 +5,19 @@
   <title></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
 </head>
 
 <body>
   <div id="container">
-    <button id="addData" type="button" title="add data">add data</button>
+    <!-- <button id="addData" type="button" title="add data">add data</button>
     <p>count:
       <span class="count"></span>
-    </p>
+    </p> -->
   </div>
   <script src="../lib/d3.v4.js"></script>
   <script>
@@ -67,12 +72,12 @@
       drawing();
 
       const addCount = 1000;
-      document.getElementById('addData').addEventListener('click', function (d) {
-        for (let i = 0; i < addCount; i++) {
-          totalArr.push(generateData(range, color));
-        }
-        drawing();
-      }, false)
+      // document.getElementById('addData').addEventListener('click', function (d) {
+      //   for (let i = 0; i < addCount; i++) {
+      //     totalArr.push(generateData(range, color));
+      //   }
+      //   drawing();
+      // }, false)
 
       function generateData(range, color) {
         return {

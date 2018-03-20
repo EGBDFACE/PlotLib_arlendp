@@ -61,7 +61,7 @@
         return d3.json(url, callback);
       case 'tsv':
         return d3.tsv(url, callback);
-      default:
+      case 'csv':
         return d3.csv(url, callback);
     }
   }
