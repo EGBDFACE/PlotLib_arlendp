@@ -94,8 +94,22 @@ export default class Track {
         })
         .enter().append('path')
         .attr('class', 'background')
+        .attr('stroke-width', 0)
         .attr('fill', (background) => background.color)
         .attr('opacity', (background) => background.opacity || 1)
+        .attr('pathType', 'arc')
+        .attr('pathData', d => {
+          const dCopy = JSON.parse(JSON.stringify(d))
+          dCopy.innerRadius = conf.direction === 'in'
+            ? conf.outerRadius - this.scale(d.start)
+            : conf.innerRadius + this.scale(d.start)
+          dCopy.outerRadius = conf.direction === 'in'
+            ? conf.outerRadius - this.scale(d.end)
+            : conf.innerRadius + this.scale(d.end)
+          dCopy.start = 0
+          dCopy.end = d.angle
+          return dCopy;
+        })
         .attr('d', arc()
           .innerRadius((background) => {
             return conf.direction === 'in'

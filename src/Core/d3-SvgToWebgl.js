@@ -219,12 +219,12 @@ var transform = function (node) {
     if (sx || sy) {
         scaleX = sx, scaleY = sy;
     }
-    if (rotation) {
-        container.pivot.set(-transX, -transY);
-        container.rotation = rotation;
-    } else {
-        container.setTransform(transX || 0, transY || 0, scaleX || 1, scaleY || 1);
-    }
+    // if (rotation) {
+    //     container.pivot.set(-transX, -transY);
+    //     container.rotation = rotation;
+    // } else {
+        container.setTransform(transX || 0, transY || 0, scaleX || 1, scaleY || 1, rotation || 0);
+    // }
     node.ownContainer = container;
     node.rootNode.activeContainer.addChild(container);
     return container;
@@ -328,7 +328,7 @@ function draw(node, point) {
             graphic.setTransform(transResult.x || 0, transResult.y || 0, transResult.sx || 1, transResult.sy || 1, transResult.rotation || 0);
         }
         content = graphic;
-        if (attrs['$opacity'] !== undefined) graphic.alpha = +attrs['$opacity'];
+        if (!isUndefined(attrs['$opacity'])) graphic.alpha = isNaN(+attrs['$opacity']) ? 1 : +attrs['$opacity'];
         // if (attrs['$stroke-linecap']) ctx.lineCap = attrs['$stroke-linecap'];
         // if (attrs['$stroke-linejoin']) ctx.lineJoin = attrs['$stroke-linejoin'];
         //
@@ -340,12 +340,14 @@ function draw(node, point) {
         // Stroke
         stroke = {
             color: +color2hex((node.getValue('stroke') === 'none' ? undefined : node.getValue('stroke')) || '#000'),
-            alpha: +node.getValue('stroke-opacity')
+            alpha: node.getValue('stroke-opacity')
         };
         // if (stroke) graphic.lineColor = stroke;
         if (attrs['$stroke-width'] !== undefined) {
             width = getSize(node.attrs['$stroke-width']);
-            if (width) graphic.lineWidth = width;
+            graphic.lineWidth = +width;
+        } else {
+            graphic.lineWidth = undefined;
         }
         // stroke = width === 0 ? false : stroke;
         //
@@ -1126,22 +1128,33 @@ var line = function (node, graphic, stroke, fill, point) {
 var re = /[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g;
 
 var path$1 = function (node, graphic, stroke, fill, point) {
-    var path;
-    graphic.lineStyle(isUndefined(graphic.lineWidth) ? 1 : graphic.lineWidth, stroke.color || 0, isUndefined(stroke.alpha) ? 1 : stroke.alpha);
+    var path, arcFlag = 0;
+    graphic.lineStyle(isUndefined(graphic.lineWidth) ? 1 : graphic.lineWidth, stroke.color || 0, isUndefined(stroke.alpha) ? 1 : +stroke.alpha);
         // ctx = node.context;
     if (fill.color) {
         graphic.beginFill(fill.color, fill.alpha);
     }
-    if (node.attrs.get('pathType')) {
+    var pathType = node.attrs.get('pathType');
+    if (pathType) {
         const type = node.attrs.get('pathType');
         const pathData = node.attrs.get('pathData');
+        const cx = pathData.cx || 0;
+        const cy = pathData.cy || 0;
         if (type === 'arc') {
             if (pathData.innerRadius && pathData.outerRadius) {
-                graphic.moveTo(pathData.outerRadius * Math.sin(pathData.start), -pathData.outerRadius * Math.cos(pathData.start));
-                graphic.arc(0, 0, pathData.outerRadius, pathData.start - Math.PI / 2, pathData.end - Math.PI / 2);
-                graphic.lineTo(pathData.innerRadius * Math.sin(pathData.end), -pathData.innerRadius * Math.cos(pathData.end));
-                graphic.arc(0, 0, pathData.innerRadius, pathData.end - Math.PI / 2, pathData.start - Math.PI / 2, true);
+                // if (pathData.innerRadius !== pathData.outerRadius) {
+                    graphic.moveTo(pathData.outerRadius * Math.sin(pathData.start) + cx, -pathData.outerRadius * Math.cos(pathData.start) + cy);
+                    graphic.arc(cx, cy, pathData.outerRadius, pathData.start - Math.PI / 2, pathData.end - Math.PI / 2);
+                    graphic.lineTo(pathData.innerRadius * Math.sin(pathData.end) + cx, -pathData.innerRadius * Math.cos(pathData.end) + cy);
+                    graphic.arc(cx, cy, pathData.innerRadius, pathData.end - Math.PI / 2, pathData.start - Math.PI / 2, true);
+                // } 
+                // else {
+                //     graphic.moveTo(pathData.outerRadius * Math.sin(pathData.start), -pathData.outerRadius * Math.cos(pathData.start));
+                //     graphic.arc(0, 0, pathData.outerRadius, pathData.start - Math.PI / 2, pathData.end - Math.PI / 2);
+                // }
             }
+        } else if (type === 'circle') {
+            graphic.drawCircle(pathData.cx, pathData.cy, pathData.radius);
         }
     } else {
         path = node.attrs.get('d');
@@ -1172,61 +1185,70 @@ var path$1 = function (node, graphic, stroke, fill, point) {
                     position.y = +data.split(/[ ,]/)[1];
                     graphic.lineTo(position.x, position.y);
                 } else if (sign === 'A') {
+                    // when the sign is A, we try to get path from pathData in the node attrs
+                    if (pathType) {
+                        const arcPath = node.attrs.get('pathData');
+                        if (pathType === 'ribbon') {
+                            graphic.arc(arcPath.cx || 0, arcPath.cy || 0, arcPath[arcFlag].radius, arcPath[arcFlag].startAngle, arcPath[arcFlag].endAngle);
+                            arcFlag++;
+                        }
+                    }
                     // here just consider rx = ry
-                    let x1 = position.x;
-                    let y1 = position.y;
-                    const pathRecord = data.split(/[ ,]/);
-                    const r = +pathRecord[0];
-                    let largeArc = +pathRecord[3] === 1 ? true : false;
-                    const anticlockwise = +pathRecord[4] === 0 ? true : false;
-                    let x2 = +pathRecord[5];
-                    let y2 = +pathRecord[6];
-                    // swap x1, y1 with x2, y2
-                    let tmp;
-                    if (x1 > x2) {
-                        tmp = x1;
-                        x1 = x2;
-                        x2 = tmp;
-                        tmp = y1;
-                        y1 = y2;
-                        y2 = tmp;
-                        anticlockwise != anticlockwise;
-                    }
-                    const theta1 = Math.acos(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) / 2 / r);
-                    const l = r * Math.sin(theta1);
-                    const theta2 = Math.atan((y2 - y1) / (x2 - x1));
-                    const theta3 = Math.PI / 2 + theta2;
-                    const circleCenter1 = {
-                        x: l * Math.cos(theta3) + (x1 + x2) / 2,
-                        y: l * Math.sin(theta3) + (y1 + y2) / 2
-                    };
-                    const circleCenter2 = {
-                        x: -l * Math.cos(theta3) + (x1 + x2) / 2,
-                        y: -l * Math.sin(theta3) + (y1 + y2) / 2
-                    };
-                    let center;
-                    if ((anticlockwise && !largeArc) || (!anticlockwise && largeArc)) {
-                        center = circleCenter1;
-                    } else {
-                        center = circleCenter2;
-                    }
-                    let startAngle = Math.asin((y1 - center.y) / r);
-                    let endAngle = Math.asin((y2 - center.y) / r);
-                    if (x1 < center.x) {
-                        if (y1 > center.y) {
-                            startAngle = Math.PI - startAngle;
-                        } else {
-                            startAngle = -Math.PI - startAngle;
-                        }
-                    }
-                    if (x2 < center.x) {
-                        if (y2 > center.y) {
-                            endAngle = Math.PI - endAngle;
-                        } else {
-                            endAngle = -Math.PI - endAngle;
-                        }
-                    }
-                    graphic.arc(center.x, center.y, r, startAngle, endAngle, anticlockwise);
+                    // let x1 = position.x;
+                    // let y1 = position.y;
+                    // const pathRecord = data.split(/[ ,]/);
+                    // const r = +pathRecord[0];
+                    // let largeArc = +pathRecord[3] === 1 ? true : false;
+                    // const anticlockwise = +pathRecord[4] === 0 ? true : false;
+                    // let x2 = +pathRecord[5];
+                    // let y2 = +pathRecord[6];
+                    // // swap x1, y1 with x2, y2
+                    // let tmp;
+                    // if (x1 > x2) {
+                    //     tmp = x1;
+                    //     x1 = x2;
+                    //     x2 = tmp;
+                    //     tmp = y1;
+                    //     y1 = y2;
+                    //     y2 = tmp;
+                    //     anticlockwise != anticlockwise;
+                    // }
+                    // const theta1 = Math.acos(Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)) / 2 / r);
+                    // const l = r * Math.sin(theta1);
+                    // const theta2 = Math.atan((y2 - y1) / (x2 - x1));
+                    // const theta3 = Math.PI / 2 + theta2;
+                    // const circleCenter1 = {
+                    //     x: l * Math.cos(theta3) + (x1 + x2) / 2,
+                    //     y: l * Math.sin(theta3) + (y1 + y2) / 2
+                    // };
+                    // const circleCenter2 = {
+                    //     x: -l * Math.cos(theta3) + (x1 + x2) / 2,
+                    //     y: -l * Math.sin(theta3) + (y1 + y2) / 2
+                    // };
+                    // let center;
+                    // if ((anticlockwise && !largeArc) || (!anticlockwise && largeArc)) {
+                    //     center = circleCenter1;
+                    // } else {
+                    //     center = circleCenter2;
+                    // }
+                    // let startAngle = Math.asin((y1 - center.y) / r);
+                    // let endAngle = Math.asin((y2 - center.y) / r);
+                    // if (x1 < center.x) {
+                    //     if (y1 > center.y) {
+                    //         startAngle = Math.PI - startAngle;
+                    //     } else {
+                    //         startAngle = -Math.PI - startAngle;
+                    //     }
+                    // }
+                    // if (x2 < center.x) {
+                    //     if (y2 > center.y) {
+                    //         endAngle = Math.PI - endAngle;
+                    //     } else {
+                    //         endAngle = -Math.PI - endAngle;
+                    //     }
+                    // }
+                    // graphic.arc(center.x, center.y, r, startAngle, endAngle, anticlockwise);
+
                 } else if (sign === 'Q') {
                     const pathRecord = data.split(/[ ,]/);
                     graphic.quadraticCurveTo(+pathRecord[0], +pathRecord[1], +pathRecord[2], +pathRecord[3]);
@@ -1301,6 +1323,10 @@ sizeTags.rect = function (node) {
 
 function isUndefined(v) {
     return typeof v === 'undefined';
+}
+
+function isNaN(v) {
+    return v !== v
 }
 
 var fontProperties = ['style', 'variant', 'weight', 'size', 'family'];

@@ -89,7 +89,7 @@ export default class BokehRenderer extends BaseRenderer {
 
   // draw candleStick chart
   candleStick(data, configs) {
-    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.candleStick, configs);
+    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.bokeh.candleStick, configs);
     const contentSize = options.contentSize;
     const margin = options.canvasMargin;
     const blockWidth = options.blockWidth;
@@ -187,7 +187,7 @@ export default class BokehRenderer extends BaseRenderer {
 
   // draw occurrence chart
   occurrence(data, configs) {
-    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.occurrence, configs);
+    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.bokeh.occurrence, configs);
     const xAxisLabel = options.range.x;
     const yAxisLabel = options.range.y;
     const unitSize = options.unitSize;

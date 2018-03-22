@@ -139,6 +139,15 @@ export default class Stack extends Track {
       .enter().append('path')
       .attr('class', 'tile')
       .attr('d', arc())
+      .attr('pathType', 'arc')
+      .attr('pathData', d => {
+        return {
+          innerRadius: d.innerRadius,
+          outerRadius: d.outerRadius,
+          start: d.startAngle,
+          end: d.endAngle
+        }
+      })
       .attr('opacity', conf.opacity)
       .attr('stroke-width', conf.strokeWidth)
       .attr('stroke', conf.strokeColor)

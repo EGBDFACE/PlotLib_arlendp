@@ -70,9 +70,18 @@ export const renderAxes = (parentElement, conf, instance, scale) => {
       })
     .enter()
     .append('path')
-      .attr('opacity', (d) => d.opacity)
+      .attr('opacity', d => d.opacity)
       .attr('class', 'axis')
       .attr('d', axis)
+      .attr('pathType', 'arc')
+      .attr('pathData', d => {
+        const dCopy = JSON.parse(JSON.stringify(d))
+        dCopy.innerRadius = axis.innerRadius()(d)
+        dCopy.outerRadius = axis.outerRadius()(d)
+        dCopy.start = 0
+        dCopy.end = d.length
+        return dCopy;
+      })
       .attr('stroke-width', (d) => d.thickness)
       .attr('stroke', (d) => d.color)
 

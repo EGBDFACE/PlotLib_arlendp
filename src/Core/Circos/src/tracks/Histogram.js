@@ -26,10 +26,20 @@ export default class Histogram extends Track {
 
   renderDatum (parentElement, conf, layout) {
     const bin = parentElement.selectAll('.bin')
-      .data((d) => d.values)
+      .data(d => d.values)
       .enter().append('path')
       .attr('class', 'bin')
-      .attr('opacity', (d) => conf.opacity)
+      .attr('opacity', conf.opacity)
+      .attr('stroke-width', 0)
+      .attr('pathType', 'arc')
+      .attr('pathData', d => {
+        const dCopy = JSON.parse(JSON.stringify(d))
+        dCopy.innerRadius = conf.direction == 'in' ? conf.outerRadius - this.scale(d.value) : conf.innerRadius
+        dCopy.outerRadius = conf.direction == 'out' ? conf.innerRadius + this.scale(d.value) : conf.outerRadius
+        dCopy.start = this.theta(d.start, layout.blocks[d.block_id])
+        dCopy.end = this.theta(d.end, layout.blocks[d.block_id])
+        return dCopy;
+      })
       .attr('d', arc()
         .innerRadius((d) => {
           if (conf.direction == 'in') {

@@ -70,7 +70,12 @@ function renderLayoutTicks (conf, layout, instance) {
     .enter().append('g')
     .attr(
       'transform',
-      (d) => 'rotate(' + (d.angle * 180 / Math.PI - 90) + ')' + 'translate(' + conf.outerRadius + ',0)'
+      (d) => {
+        const rotation = d.angle * 180 / Math.PI - 90;
+        const radius = conf.outerRadius;
+        return 'translate(' + radius * Math.cos(-rotation / 180 * Math.PI) + ', ' + -radius * Math.sin(-rotation / 180 * Math.PI) + ') rotate(' + rotation + ')'
+        // 'rotate(' + (d.angle * 180 / Math.PI - 90) + ')' + 'translate(' + conf.outerRadius + ',0)'
+      }
     )
 
   ticks.append('line')
@@ -130,8 +135,9 @@ export default function renderLayout (parentElement, instance) {
 
   block.append('path')
     .attr('d', entry)
+    .attr('stroke-width', 0)
     .attr('pathType', 'arc')
-    .attr('pathData', function (d) {
+    .attr('pathData', d => {
       d.innerRadius = conf.innerRadius;
       d.outerRadius = conf.outerRadius;
       return d;

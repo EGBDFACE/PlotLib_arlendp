@@ -27,6 +27,16 @@ export default class Heatmap extends Track {
       .enter()
       .append('path')
         .attr('class', 'tile')
+        .attr('pathType', 'arc')
+        .attr('stroke-width', 0)
+        .attr('pathData', d => {
+          const dCopy = JSON.parse(JSON.stringify(d));
+          dCopy.start = this.theta(dCopy.start, layout.blocks[dCopy.block_id])
+          dCopy.end = this.theta(dCopy.end, layout.blocks[dCopy.block_id])
+          dCopy.innerRadius = conf.innerRadius
+          dCopy.outerRadius = conf.outerRadius
+          return dCopy
+        })
         .attr('opacity', conf.opacity)
         .attr('d', arc()
           .innerRadius(conf.innerRadius)

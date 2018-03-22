@@ -56,16 +56,27 @@ export default class Chords extends Track {
 
   renderChords (parentElement, name, conf, data, instance, getCoordinates) {
     const track = parentElement.append('g')
-
+    const self = this
     const link = track
       .selectAll('.chord')
       .data(data)
       .enter().append('path')
       .attr('class', 'chord')
+      .attr('stroke-width', 0)
       .attr('d', ribbon()
         .source((d) => getCoordinates(d.source, instance._layout, this.conf, d))
         .target((d) => getCoordinates(d.target, instance._layout, this.conf, d))
       )
+      .attr('pathType', 'ribbon')
+      .attr('pathData', function (d) {
+        const s = getCoordinates(d.source, instance._layout, self.conf, d)
+        const t = getCoordinates(d.target, instance._layout, self.conf, d)
+        s.startAngle = s.startAngle - Math.PI / 2
+        s.endAngle = s.endAngle - Math.PI / 2
+        t.startAngle = t.startAngle - Math.PI / 2
+        t.endAngle = t.endAngle - Math.PI / 2
+        return [s, t]
+      })
       .attr('opacity', conf.opacity)
       .on('mouseover', (d) => {
         this.dispatch.call('mouseover', this, d)

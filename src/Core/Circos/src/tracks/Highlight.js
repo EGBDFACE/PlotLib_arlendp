@@ -25,6 +25,7 @@ export default class Highlight extends Track {
   }
 
   renderDatum (parentElement, conf, layout) {
+    const self = this
     return parentElement.selectAll('tile')
       .data((d) => d.values)
       .enter().append('path')
@@ -35,6 +36,14 @@ export default class Highlight extends Track {
         .startAngle((d, i) => this.theta(d.start, layout.blocks[d.block_id]))
         .endAngle((d, i) => this.theta(d.end, layout.blocks[d.block_id]))
       )
+      .attr('pathType', 'arc')
+      .attr('pathData', function (d) {
+        d.innerRadius = conf.innerRadius;
+        d.outerRadius = conf.outerRadius;
+        d.start = self.theta(d.start, layout.blocks[d.block_id]);
+        d.end = self.theta(d.end, layout.blocks[d.block_id]);
+        return d;
+      })
       .attr('fill', conf.colorValue)
       .attr('opacity', conf.opacity)
       .attr('stroke-width', conf.strokeWidth)

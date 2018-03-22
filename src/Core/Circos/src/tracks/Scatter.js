@@ -104,6 +104,19 @@ export default class Scatter extends Track {
       .attr('stroke-width', conf.strokeWidth)
       .attr('fill', 'none')
 
+    if (conf.shape === 'circle') {
+      point
+        .attr('pathType', 'circle')
+        .attr('pathData', d => {
+          const radius = Math.sqrt(conf.size / Math.PI)
+          return {
+            cx: 0,
+            cy: 0,
+            radius
+          }
+        })
+    }
+
     if (conf.fill) { point.attr('fill', conf.colorValue) }
 
     return point
