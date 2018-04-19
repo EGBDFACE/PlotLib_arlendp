@@ -38,8 +38,14 @@ class Core {
     this.svg = this.svgContainer.append('g')
       .attr('class', 'content');
     var zoomed = function () {
-      console.log(this);
-      this.attr('transform', currentEvent.transform);
+      var node = this.node().glElem;
+      var rootNode = this.node().rootNode;
+      var transform = currentEvent.transform;
+      node.scale.x = transform.k;
+      node.scale.y = transform.k;
+      node.position.x = transform.x;
+      node.position.y = transform.y;
+      rootNode.renderer.render(rootNode.stage);
     };
     zoomed = zoomed.bind(this.svg);
     this.svgContainer.call(d3.zoom().on('zoom', zoomed))
