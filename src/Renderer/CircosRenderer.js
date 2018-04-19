@@ -84,7 +84,7 @@ export default class CircosRenderer extends BaseRenderer {
             logScale: false,
             opacity: 0.7,
             color: '#ff5722',
-            tooltipContent: d => `<h3>${d.source.id} ➤ ${d.target.id} : ${d.value}</h3><i>(CTRL+C to copy to clipboard)</i>`,
+            tooltipContent: d => `<h3>${d.source.id} ➤ ${d.target.id} : ${d.value}</h3>`,
             events: {
               'mouseover.demo': (d, i, nodes, event) => {
                 console.log(d, i, nodes, event.pageX)

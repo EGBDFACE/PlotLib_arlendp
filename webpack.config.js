@@ -30,7 +30,7 @@ module.exports = {
             ['transform-runtime', {
               helpers: false,
               polyfill: false,
-              regenerator: true,
+              regenerator: true
             }]
           ],
         }

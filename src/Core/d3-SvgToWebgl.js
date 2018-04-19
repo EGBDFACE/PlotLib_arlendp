@@ -2,7 +2,6 @@ const d3Selection = require('d3-selection');
 const d3Collection = require('d3-collection');
 const d3Color = require('d3-color');
 const d3Timer = require('d3-timer');
-// import * as PIXI from 'pixi.js';
 const PIXI = require('pixi.js');
 
 var getSize = function (value, dim) {
@@ -192,6 +191,7 @@ var transform = function (node) {
     var container = new PIXI.Container();
     if (!node.attrs) {
         node.ownContainer = container;
+        node.glElem = container;
         node.rootNode.activeContainer.addChild(container);
         return;
     }
@@ -226,6 +226,7 @@ var transform = function (node) {
         container.setTransform(transX || 0, transY || 0, scaleX || 1, scaleY || 1, rotation || 0);
     // }
     node.ownContainer = container;
+    node.glElem = container;
     node.rootNode.activeContainer.addChild(container);
     return container;
 };
@@ -363,6 +364,7 @@ function draw(node, point) {
             content = drawer(node, graphic, stroke, fill, point);
             if (node.tagName !== 'text') content = graphic;
         }
+        node.glElem = content;
         // if (drawer) drawer(node, graphic, stroke, fill, point);
         container.addChild(content);
         // if (children) node.each(function (child) {
@@ -376,6 +378,13 @@ function draw(node, point) {
 
         // restore
         // ctx.restore();
+    }
+    // add listeners
+    if (node.listeners.length) {
+        node.glElem.interactive = true;
+        node.listeners.forEach(function (listener, i) {
+            node.glElem.on(listener.type, listener.listener.bind(node))
+        })
     }
     if (children) {
         node.each(function (child) {
@@ -586,6 +595,8 @@ function CanvasElement(tagName, context) {
         events = {},
         renderer = {},
         stage = {},
+        glElem = null,
+        listeners = [],
         activeContainer = null,
         ownContainer = null,
         refresh = false,
@@ -614,6 +625,22 @@ function CanvasElement(tagName, context) {
             },
             set: function set(value) {
                 stage = value;
+            }
+        },
+        glElem: {
+            get: function get() {
+                return glElem;
+            },
+            set: function set(value) {
+                glElem = value;
+            }
+        },
+        listeners: {
+            get: function get() {
+                return listeners;
+            },
+            set: function set(value) {
+                listeners = value;
             }
         },
         refresh: {
@@ -815,9 +842,13 @@ CanvasElement.prototype = {
             arguments[1] = canvasListener;
             canvas.addEventListener.apply(canvas, arguments);
         } else {
-            arguments[0] = mouseEvents[type] || type;
-            arguments[1] = canvasNodeListener;
-            canvas.addEventListener.apply(canvas, arguments);
+            // arguments[0] = mouseEvents[type] || type;
+            // arguments[1] = canvasNodeListener;
+            // canvas.addEventListener.apply(canvas, arguments);
+            this.listeners.push({
+                type: type,
+                listener: listener
+            })
         }
         var listeners = this.events[type];
         if (!listeners) this.events[type] = listeners = [];

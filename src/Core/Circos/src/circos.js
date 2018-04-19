@@ -3,7 +3,10 @@ import forEach from 'lodash/forEach'
 import isArray from 'lodash/isArray'
 import map from 'lodash/map'
 // import {select} from 'd3-selection'
-const d3 = require('../../d3-SvgToWebgl');
+const d3 = Object.assign({}, require('../../d3-SvgToWebgl'), require('d3-zoom'));
+import {
+  event as currentEvent
+} from 'd3-selection';
 import Layout from './layout/index'
 import render from './render'
 import Text from './tracks/Text'
@@ -24,26 +27,34 @@ const defaultConf = {
 }
 
 class Core {
-  constructor (conf) {
+  constructor(conf) {
     this.tracks = {}
     this._layout = null
     this.conf = defaultsDeep(conf, defaultConf)
     // const container = d3.select(this.conf.container).append('div')
     //   .style('position', 'relative')
     // this.svg = container.append('svg')
-    this.svg = d3.select(this.conf.container).toCanvas(this.conf.renderer);
-    // if (d3.select('body').select('.circos-tooltip').empty()) {
-    //   this.tip = d3.select('body').append('div')
-    //   .attr('class', 'circos-tooltip')
-    //   .style('opacity', 0)
-    // } else {
-    //   this.tip = d3.select('body').select('.circos-tooltip')
-    // }
+    this.svgContainer = d3.select(this.conf.container).toCanvas(this.conf.renderer);
+    this.svg = this.svgContainer.append('g')
+      .attr('class', 'content');
+    var zoomed = function () {
+      console.log(this);
+      this.attr('transform', currentEvent.transform);
+    };
+    zoomed = zoomed.bind(this.svg);
+    this.svgContainer.call(d3.zoom().on('zoom', zoomed))
+    if (d3.select('body').select('.circos-tooltip').empty()) {
+      this.tip = d3.select('body').append('div')
+        .attr('class', 'circos-tooltip')
+        .style('opacity', 0)
+    } else {
+      this.tip = d3.select('body').select('.circos-tooltip')
+    }
 
     // this.clipboard = initClipboard(this.conf.container)
   }
 
-  removeTracks (trackIds) {
+  removeTracks(trackIds) {
     if (typeof (trackIds) === 'undefined') {
       map(this.tracks, (track, id) => {
         this.svg.select('.' + id).remove()
@@ -64,44 +75,44 @@ class Core {
     return this
   }
 
-  layout (data, conf) {
+  layout(data, conf) {
     this._layout = new Layout(conf, data)
     return this
   }
 
-  chords (id, data, conf) {
+  chords(id, data, conf) {
     this.tracks[id] = new Chords(this, conf, data)
     return this
   }
-  heatmap (id, data, conf) {
+  heatmap(id, data, conf) {
     this.tracks[id] = new Heatmap(this, conf, data)
     return this
   }
-  highlight (id, data, conf) {
+  highlight(id, data, conf) {
     this.tracks[id] = new Highlight(this, conf, data)
     return this
   }
-  histogram (id, data, conf) {
+  histogram(id, data, conf) {
     this.tracks[id] = new Histogram(this, conf, data)
     return this
   }
-  line (id, data, conf) {
+  line(id, data, conf) {
     this.tracks[id] = new Line(this, conf, data)
     return this
   }
-  scatter (id, data, conf) {
+  scatter(id, data, conf) {
     this.tracks[id] = new Scatter(this, conf, data)
     return this
   }
-  stack (id, data, conf) {
+  stack(id, data, conf) {
     this.tracks[id] = new Stack(this, conf, data)
     return this
   }
-  text (id, data, conf) {
+  text(id, data, conf) {
     this.tracks[id] = new Text(this, conf, data)
     return this
   }
-  render (ids, removeTracks) {
+  render(ids, removeTracks) {
     render(ids, removeTracks, this)
   }
 }

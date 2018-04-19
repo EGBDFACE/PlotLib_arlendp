@@ -53,9 +53,9 @@ export default class Track {
     }
     selection.on('mouseover', (d, i) => {
       this.dispatch.call('mouseover', this, d)
-      if (this.conf.tooltipContent) {
-        instance.clipboard.attr('value', this.conf.tooltipContent(d))
-      }
+      // if (this.conf.tooltipContent) {
+      //   instance.clipboard.attr('value', this.conf.tooltipContent(d))
+      // }
     })
     selection.on('mouseout', (d, i) => {
       this.dispatch.call('mouseout', this, d)
@@ -63,7 +63,9 @@ export default class Track {
 
     Object.keys(this.conf.events).forEach((eventName) => {
       const conf = this.conf
-      selection.on(eventName, function (d, i, nodes) { conf.events[eventName](d, i, nodes, event) })
+      selection.on(eventName, function (d, i, nodes) {
+        conf.events[eventName](d, i, nodes, event)
+      })
     })
 
     return this
