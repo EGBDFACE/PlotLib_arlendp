@@ -1,6 +1,6 @@
-import bokeh from './Renderer/BokehRenderer';
-import circos from './Renderer/CircosRenderer';
+import chart from './Renderer/ChartRenderer';
+import circular from './Renderer/CircularRenderer';
 const Plot = window.Plot || {};
-Plot.bokeh = bokeh;
-Plot.circos = circos;
+Plot.chart = chart;
+Plot.circular = circular;
 export default Plot;

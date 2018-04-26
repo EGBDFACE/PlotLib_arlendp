@@ -11,7 +11,7 @@ for (let i = 0; i < count; i++) {
 }
 
 function drawing() {
-  new Plot.bokeh(document.getElementsByTagName('canvas')[0]).iris(data, {
+  new Plot.chart(document.getElementsByTagName('canvas')[0]).iris(data, {
     range: range,
     zoom: true,
   })

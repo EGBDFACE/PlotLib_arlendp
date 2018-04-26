@@ -96,7 +96,7 @@ export default class Track {
         })
         .enter().append('path')
         .attr('class', 'background')
-        .attr('stroke-width', 0)
+        // .attr('stroke-width', 0)
         .attr('fill', (background) => background.color)
         .attr('opacity', (background) => background.opacity || 1)
         .attr('pathType', 'arc')

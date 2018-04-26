@@ -79,7 +79,7 @@ var yScale = d3.scaleLinear()
   .domain([min - 1, max + 1])
   .range([height, 0]);
 
-new Plot.bokeh(document.getElementsByTagName('canvas')[0]).boxplot(boxPlotData, {
+new Plot.chart(document.getElementsByTagName('canvas')[0]).boxplot(boxPlotData, {
   barWidth: barWidth,
   range: {
     x: [-1, +groupKeys[groupKeys.length - 1] + 1],

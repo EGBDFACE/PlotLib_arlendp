@@ -1,0 +1,1933 @@
+[{
+		"chrom": "chr1",
+		"start": 0,
+		"end": 9999999,
+		"value": 234
+	},
+	{
+		"chrom": "chr1",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 208
+	},
+	{
+		"chrom": "chr1",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 94
+	},
+	{
+		"chrom": "chr1",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 60
+	},
+	{
+		"chrom": "chr1",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 82
+	},
+	{
+		"chrom": "chr1",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 97
+	},
+	{
+		"chrom": "chr1",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 127
+	},
+	{
+		"chrom": "chr1",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 179
+	},
+	{
+		"chrom": "chr1",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 89
+	},
+	{
+		"chrom": "chr1",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 71
+	},
+	{
+		"chrom": "chr1",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 126
+	},
+	{
+		"chrom": "chr1",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 142
+	},
+	{
+		"chrom": "chr1",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 36
+	},
+	{
+		"chrom": "chr1",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 13
+	},
+	{
+		"chrom": "chr1",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 247
+	},
+	{
+		"chrom": "chr1",
+		"start": 150000000,
+		"end": 159999999,
+		"value": 278
+	},
+	{
+		"chrom": "chr1",
+		"start": 160000000,
+		"end": 169999999,
+		"value": 149
+	},
+	{
+		"chrom": "chr1",
+		"start": 170000000,
+		"end": 179999999,
+		"value": 81
+	},
+	{
+		"chrom": "chr1",
+		"start": 180000000,
+		"end": 189999999,
+		"value": 114
+	},
+	{
+		"chrom": "chr1",
+		"start": 190000000,
+		"end": 199999999,
+		"value": 244
+	},
+	{
+		"chrom": "chr1",
+		"start": 200000000,
+		"end": 209999999,
+		"value": 152
+	},
+	{
+		"chrom": "chr1",
+		"start": 210000000,
+		"end": 219999999,
+		"value": 102
+	},
+	{
+		"chrom": "chr1",
+		"start": 220000000,
+		"end": 229999999,
+		"value": 116
+	},
+	{
+		"chrom": "chr1",
+		"start": 230000000,
+		"end": 239999999,
+		"value": 143
+	},
+	{
+		"chrom": "chr1",
+		"start": 240000000,
+		"end": 249250621,
+		"value": 121
+	},
+	{
+		"chrom": "chr2",
+		"start": 0,
+		"end": 9999999,
+		"value": 198
+	},
+	{
+		"chrom": "chr2",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 62
+	},
+	{
+		"chrom": "chr2",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 40
+	},
+	{
+		"chrom": "chr2",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 221
+	},
+	{
+		"chrom": "chr2",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 76
+	},
+	{
+		"chrom": "chr2",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 63
+	},
+	{
+		"chrom": "chr2",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 14
+	},
+	{
+		"chrom": "chr2",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 58
+	},
+	{
+		"chrom": "chr2",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 145
+	},
+	{
+		"chrom": "chr2",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 191
+	},
+	{
+		"chrom": "chr2",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 56
+	},
+	{
+		"chrom": "chr2",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 40
+	},
+	{
+		"chrom": "chr2",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 50
+	},
+	{
+		"chrom": "chr2",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 46
+	},
+	{
+		"chrom": "chr2",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 34
+	},
+	{
+		"chrom": "chr2",
+		"start": 150000000,
+		"end": 159999999,
+		"value": 13
+	},
+	{
+		"chrom": "chr2",
+		"start": 160000000,
+		"end": 169999999,
+		"value": 34
+	},
+	{
+		"chrom": "chr2",
+		"start": 170000000,
+		"end": 179999999,
+		"value": 36
+	},
+	{
+		"chrom": "chr2",
+		"start": 180000000,
+		"end": 189999999,
+		"value": 188
+	},
+	{
+		"chrom": "chr2",
+		"start": 190000000,
+		"end": 199999999,
+		"value": 34
+	},
+	{
+		"chrom": "chr2",
+		"start": 200000000,
+		"end": 209999999,
+		"value": 27
+	},
+	{
+		"chrom": "chr2",
+		"start": 210000000,
+		"end": 219999999,
+		"value": 38
+	},
+	{
+		"chrom": "chr2",
+		"start": 220000000,
+		"end": 229999999,
+		"value": 33
+	},
+	{
+		"chrom": "chr2",
+		"start": 230000000,
+		"end": 239999999,
+		"value": 54
+	},
+	{
+		"chrom": "chr2",
+		"start": 240000000,
+		"end": 243199373,
+		"value": 208
+	},
+	{
+		"chrom": "chr3",
+		"start": 0,
+		"end": 9999999,
+		"value": 123
+	},
+	{
+		"chrom": "chr3",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 70
+	},
+	{
+		"chrom": "chr3",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 58
+	},
+	{
+		"chrom": "chr3",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 41
+	},
+	{
+		"chrom": "chr3",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 71
+	},
+	{
+		"chrom": "chr3",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 43
+	},
+	{
+		"chrom": "chr3",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 136
+	},
+	{
+		"chrom": "chr3",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 54
+	},
+	{
+		"chrom": "chr3",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 53
+	},
+	{
+		"chrom": "chr3",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 59
+	},
+	{
+		"chrom": "chr3",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 63
+	},
+	{
+		"chrom": "chr3",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 45
+	},
+	{
+		"chrom": "chr3",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 161
+	},
+	{
+		"chrom": "chr3",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 70
+	},
+	{
+		"chrom": "chr3",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 31
+	},
+	{
+		"chrom": "chr3",
+		"start": 150000000,
+		"end": 159999999,
+		"value": 31
+	},
+	{
+		"chrom": "chr3",
+		"start": 160000000,
+		"end": 169999999,
+		"value": 289
+	},
+	{
+		"chrom": "chr3",
+		"start": 170000000,
+		"end": 179999999,
+		"value": 47
+	},
+	{
+		"chrom": "chr3",
+		"start": 180000000,
+		"end": 189999999,
+		"value": 52
+	},
+	{
+		"chrom": "chr3",
+		"start": 190000000,
+		"end": 198022430,
+		"value": 276
+	},
+	{
+		"chrom": "chr4",
+		"start": 0,
+		"end": 9999999,
+		"value": 267
+	},
+	{
+		"chrom": "chr4",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 168
+	},
+	{
+		"chrom": "chr4",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 90
+	},
+	{
+		"chrom": "chr4",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 145
+	},
+	{
+		"chrom": "chr4",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 49
+	},
+	{
+		"chrom": "chr4",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 50
+	},
+	{
+		"chrom": "chr4",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 273
+	},
+	{
+		"chrom": "chr4",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 105
+	},
+	{
+		"chrom": "chr4",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 33
+	},
+	{
+		"chrom": "chr4",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 141
+	},
+	{
+		"chrom": "chr4",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 43
+	},
+	{
+		"chrom": "chr4",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 76
+	},
+	{
+		"chrom": "chr4",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 37
+	},
+	{
+		"chrom": "chr4",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 68
+	},
+	{
+		"chrom": "chr4",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 60
+	},
+	{
+		"chrom": "chr4",
+		"start": 150000000,
+		"end": 159999999,
+		"value": 52
+	},
+	{
+		"chrom": "chr4",
+		"start": 160000000,
+		"end": 169999999,
+		"value": 80
+	},
+	{
+		"chrom": "chr4",
+		"start": 170000000,
+		"end": 179999999,
+		"value": 140
+	},
+	{
+		"chrom": "chr4",
+		"start": 180000000,
+		"end": 189999999,
+		"value": 70
+	},
+	{
+		"chrom": "chr4",
+		"start": 190000000,
+		"end": 191154276,
+		"value": 48
+	},
+	{
+		"chrom": "chr5",
+		"start": 0,
+		"end": 9999999,
+		"value": 223
+	},
+	{
+		"chrom": "chr5",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 102
+	},
+	{
+		"chrom": "chr5",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 78
+	},
+	{
+		"chrom": "chr5",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 40
+	},
+	{
+		"chrom": "chr5",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 65
+	},
+	{
+		"chrom": "chr5",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 57
+	},
+	{
+		"chrom": "chr5",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 64
+	},
+	{
+		"chrom": "chr5",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 53
+	},
+	{
+		"chrom": "chr5",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 50
+	},
+	{
+		"chrom": "chr5",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 74
+	},
+	{
+		"chrom": "chr5",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 142
+	},
+	{
+		"chrom": "chr5",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 77
+	},
+	{
+		"chrom": "chr5",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 43
+	},
+	{
+		"chrom": "chr5",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 139
+	},
+	{
+		"chrom": "chr5",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 120
+	},
+	{
+		"chrom": "chr5",
+		"start": 150000000,
+		"end": 159999999,
+		"value": 119
+	},
+	{
+		"chrom": "chr5",
+		"start": 160000000,
+		"end": 169999999,
+		"value": 44
+	},
+	{
+		"chrom": "chr5",
+		"start": 170000000,
+		"end": 179999999,
+		"value": 61
+	},
+	{
+		"chrom": "chr5",
+		"start": 180000000,
+		"end": 180915260,
+		"value": 78
+	},
+	{
+		"chrom": "chr6",
+		"start": 0,
+		"end": 9999999,
+		"value": 77
+	},
+	{
+		"chrom": "chr6",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 41
+	},
+	{
+		"chrom": "chr6",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 247
+	},
+	{
+		"chrom": "chr6",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 626
+	},
+	{
+		"chrom": "chr6",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 24
+	},
+	{
+		"chrom": "chr6",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 51
+	},
+	{
+		"chrom": "chr6",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 113
+	},
+	{
+		"chrom": "chr6",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 253
+	},
+	{
+		"chrom": "chr6",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 31
+	},
+	{
+		"chrom": "chr6",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 63
+	},
+	{
+		"chrom": "chr6",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 97
+	},
+	{
+		"chrom": "chr6",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 22
+	},
+	{
+		"chrom": "chr6",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 16
+	},
+	{
+		"chrom": "chr6",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 71
+	},
+	{
+		"chrom": "chr6",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 37
+	},
+	{
+		"chrom": "chr6",
+		"start": 150000000,
+		"end": 159999999,
+		"value": 84
+	},
+	{
+		"chrom": "chr6",
+		"start": 160000000,
+		"end": 169999999,
+		"value": 87
+	},
+	{
+		"chrom": "chr6",
+		"start": 170000000,
+		"end": 171115067,
+		"value": 38
+	},
+	{
+		"chrom": "chr7",
+		"start": 0,
+		"end": 9999999,
+		"value": 241
+	},
+	{
+		"chrom": "chr7",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 113
+	},
+	{
+		"chrom": "chr7",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 48
+	},
+	{
+		"chrom": "chr7",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 36
+	},
+	{
+		"chrom": "chr7",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 91
+	},
+	{
+		"chrom": "chr7",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 124
+	},
+	{
+		"chrom": "chr7",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 268
+	},
+	{
+		"chrom": "chr7",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 125
+	},
+	{
+		"chrom": "chr7",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 64
+	},
+	{
+		"chrom": "chr7",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 92
+	},
+	{
+		"chrom": "chr7",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 175
+	},
+	{
+		"chrom": "chr7",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 67
+	},
+	{
+		"chrom": "chr7",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 62
+	},
+	{
+		"chrom": "chr7",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 181
+	},
+	{
+		"chrom": "chr7",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 334
+	},
+	{
+		"chrom": "chr7",
+		"start": 150000000,
+		"end": 159138663,
+		"value": 222
+	},
+	{
+		"chrom": "chr8",
+		"start": 0,
+		"end": 9999999,
+		"value": 397
+	},
+	{
+		"chrom": "chr8",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 160
+	},
+	{
+		"chrom": "chr8",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 67
+	},
+	{
+		"chrom": "chr8",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 186
+	},
+	{
+		"chrom": "chr8",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 112
+	},
+	{
+		"chrom": "chr8",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 71
+	},
+	{
+		"chrom": "chr8",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 69
+	},
+	{
+		"chrom": "chr8",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 59
+	},
+	{
+		"chrom": "chr8",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 44
+	},
+	{
+		"chrom": "chr8",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 60
+	},
+	{
+		"chrom": "chr8",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 24
+	},
+	{
+		"chrom": "chr8",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 69
+	},
+	{
+		"chrom": "chr8",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 50
+	},
+	{
+		"chrom": "chr8",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 137
+	},
+	{
+		"chrom": "chr8",
+		"start": 140000000,
+		"end": 146364022,
+		"value": 127
+	},
+	{
+		"chrom": "chr9",
+		"start": 0,
+		"end": 9999999,
+		"value": 66
+	},
+	{
+		"chrom": "chr9",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 78
+	},
+	{
+		"chrom": "chr9",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 254
+	},
+	{
+		"chrom": "chr9",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 84
+	},
+	{
+		"chrom": "chr9",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 215
+	},
+	{
+		"chrom": "chr9",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 29
+	},
+	{
+		"chrom": "chr9",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 100
+	},
+	{
+		"chrom": "chr9",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 81
+	},
+	{
+		"chrom": "chr9",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 79
+	},
+	{
+		"chrom": "chr9",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 58
+	},
+	{
+		"chrom": "chr9",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 89
+	},
+	{
+		"chrom": "chr9",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 54
+	},
+	{
+		"chrom": "chr9",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 74
+	},
+	{
+		"chrom": "chr9",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 182
+	},
+	{
+		"chrom": "chr9",
+		"start": 140000000,
+		"end": 141213431,
+		"value": 54
+	},
+	{
+		"chrom": "chr10",
+		"start": 0,
+		"end": 9999999,
+		"value": 56
+	},
+	{
+		"chrom": "chr10",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 125
+	},
+	{
+		"chrom": "chr10",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 43
+	},
+	{
+		"chrom": "chr10",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 80
+	},
+	{
+		"chrom": "chr10",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 177
+	},
+	{
+		"chrom": "chr10",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 105
+	},
+	{
+		"chrom": "chr10",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 89
+	},
+	{
+		"chrom": "chr10",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 50
+	},
+	{
+		"chrom": "chr10",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 82
+	},
+	{
+		"chrom": "chr10",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 105
+	},
+	{
+		"chrom": "chr10",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 35
+	},
+	{
+		"chrom": "chr10",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 52
+	},
+	{
+		"chrom": "chr10",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 83
+	},
+	{
+		"chrom": "chr10",
+		"start": 130000000,
+		"end": 135534747,
+		"value": 132
+	},
+	{
+		"chrom": "chr11",
+		"start": 0,
+		"end": 9999999,
+		"value": 220
+	},
+	{
+		"chrom": "chr11",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 67
+	},
+	{
+		"chrom": "chr11",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 76
+	},
+	{
+		"chrom": "chr11",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 28
+	},
+	{
+		"chrom": "chr11",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 104
+	},
+	{
+		"chrom": "chr11",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 211
+	},
+	{
+		"chrom": "chr11",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 29
+	},
+	{
+		"chrom": "chr11",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 47
+	},
+	{
+		"chrom": "chr11",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 88
+	},
+	{
+		"chrom": "chr11",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 52
+	},
+	{
+		"chrom": "chr11",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 26
+	},
+	{
+		"chrom": "chr11",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 49
+	},
+	{
+		"chrom": "chr11",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 36
+	},
+	{
+		"chrom": "chr11",
+		"start": 130000000,
+		"end": 135006516,
+		"value": 53
+	},
+	{
+		"chrom": "chr12",
+		"start": 0,
+		"end": 9999999,
+		"value": 368
+	},
+	{
+		"chrom": "chr12",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 207
+	},
+	{
+		"chrom": "chr12",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 168
+	},
+	{
+		"chrom": "chr12",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 313
+	},
+	{
+		"chrom": "chr12",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 185
+	},
+	{
+		"chrom": "chr12",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 156
+	},
+	{
+		"chrom": "chr12",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 148
+	},
+	{
+		"chrom": "chr12",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 140
+	},
+	{
+		"chrom": "chr12",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 142
+	},
+	{
+		"chrom": "chr12",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 142
+	},
+	{
+		"chrom": "chr12",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 138
+	},
+	{
+		"chrom": "chr12",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 147
+	},
+	{
+		"chrom": "chr12",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 195
+	},
+	{
+		"chrom": "chr12",
+		"start": 130000000,
+		"end": 133851895,
+		"value": 165
+	},
+	{
+		"chrom": "chr13",
+		"start": 0,
+		"end": 9999999,
+		"value": 10
+	},
+	{
+		"chrom": "chr13",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 28
+	},
+	{
+		"chrom": "chr13",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 112
+	},
+	{
+		"chrom": "chr13",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 75
+	},
+	{
+		"chrom": "chr13",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 52
+	},
+	{
+		"chrom": "chr13",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 176
+	},
+	{
+		"chrom": "chr13",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 113
+	},
+	{
+		"chrom": "chr13",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 42
+	},
+	{
+		"chrom": "chr13",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 56
+	},
+	{
+		"chrom": "chr13",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 67
+	},
+	{
+		"chrom": "chr13",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 48
+	},
+	{
+		"chrom": "chr13",
+		"start": 110000000,
+		"end": 115169878,
+		"value": 98
+	},
+	{
+		"chrom": "chr14",
+		"start": 0,
+		"end": 9999999,
+		"value": 11
+	},
+	{
+		"chrom": "chr14",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 94
+	},
+	{
+		"chrom": "chr14",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 100
+	},
+	{
+		"chrom": "chr14",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 54
+	},
+	{
+		"chrom": "chr14",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 121
+	},
+	{
+		"chrom": "chr14",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 46
+	},
+	{
+		"chrom": "chr14",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 70
+	},
+	{
+		"chrom": "chr14",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 51
+	},
+	{
+		"chrom": "chr14",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 37
+	},
+	{
+		"chrom": "chr14",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 39
+	},
+	{
+		"chrom": "chr14",
+		"start": 100000000,
+		"end": 107349540,
+		"value": 430
+	},
+	{
+		"chrom": "chr15",
+		"start": 0,
+		"end": 9999999,
+		"value": 11
+	},
+	{
+		"chrom": "chr15",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 90
+	},
+	{
+		"chrom": "chr15",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 284
+	},
+	{
+		"chrom": "chr15",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 88
+	},
+	{
+		"chrom": "chr15",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 53
+	},
+	{
+		"chrom": "chr15",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 61
+	},
+	{
+		"chrom": "chr15",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 28
+	},
+	{
+		"chrom": "chr15",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 119
+	},
+	{
+		"chrom": "chr15",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 68
+	},
+	{
+		"chrom": "chr15",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 50
+	},
+	{
+		"chrom": "chr15",
+		"start": 100000000,
+		"end": 102531392,
+		"value": 29
+	},
+	{
+		"chrom": "chr16",
+		"start": 0,
+		"end": 9999999,
+		"value": 183
+	},
+	{
+		"chrom": "chr16",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 81
+	},
+	{
+		"chrom": "chr16",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 81
+	},
+	{
+		"chrom": "chr16",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 222
+	},
+	{
+		"chrom": "chr16",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 103
+	},
+	{
+		"chrom": "chr16",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 64
+	},
+	{
+		"chrom": "chr16",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 75
+	},
+	{
+		"chrom": "chr16",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 161
+	},
+	{
+		"chrom": "chr16",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 94
+	},
+	{
+		"chrom": "chr16",
+		"start": 90000000,
+		"end": 90354753,
+		"value": 17
+	},
+	{
+		"chrom": "chr17",
+		"start": 0,
+		"end": 9999999,
+		"value": 186
+	},
+	{
+		"chrom": "chr17",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 129
+	},
+	{
+		"chrom": "chr17",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 120
+	},
+	{
+		"chrom": "chr17",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 295
+	},
+	{
+		"chrom": "chr17",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 253
+	},
+	{
+		"chrom": "chr17",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 154
+	},
+	{
+		"chrom": "chr17",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 119
+	},
+	{
+		"chrom": "chr17",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 163
+	},
+	{
+		"chrom": "chr17",
+		"start": 80000000,
+		"end": 81195210,
+		"value": 88
+	},
+	{
+		"chrom": "chr18",
+		"start": 0,
+		"end": 9999999,
+		"value": 58
+	},
+	{
+		"chrom": "chr18",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 55
+	},
+	{
+		"chrom": "chr18",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 31
+	},
+	{
+		"chrom": "chr18",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 60
+	},
+	{
+		"chrom": "chr18",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 71
+	},
+	{
+		"chrom": "chr18",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 59
+	},
+	{
+		"chrom": "chr18",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 101
+	},
+	{
+		"chrom": "chr18",
+		"start": 70000000,
+		"end": 78077248,
+		"value": 104
+	},
+	{
+		"chrom": "chr19",
+		"start": 0,
+		"end": 9999999,
+		"value": 138
+	},
+	{
+		"chrom": "chr19",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 84
+	},
+	{
+		"chrom": "chr19",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 180
+	},
+	{
+		"chrom": "chr19",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 145
+	},
+	{
+		"chrom": "chr19",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 118
+	},
+	{
+		"chrom": "chr19",
+		"start": 50000000,
+		"end": 59128983,
+		"value": 138
+	},
+	{
+		"chrom": "chr20",
+		"start": 0,
+		"end": 9999999,
+		"value": 130
+	},
+	{
+		"chrom": "chr20",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 76
+	},
+	{
+		"chrom": "chr20",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 270
+	},
+	{
+		"chrom": "chr20",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 222
+	},
+	{
+		"chrom": "chr20",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 69
+	},
+	{
+		"chrom": "chr20",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 93
+	},
+	{
+		"chrom": "chr20",
+		"start": 60000000,
+		"end": 63025520,
+		"value": 122
+	},
+	{
+		"chrom": "chr21",
+		"start": 0,
+		"end": 9999999,
+		"value": 8
+	},
+	{
+		"chrom": "chr21",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 81
+	},
+	{
+		"chrom": "chr21",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 78
+	},
+	{
+		"chrom": "chr21",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 71
+	},
+	{
+		"chrom": "chr21",
+		"start": 40000000,
+		"end": 48129895,
+		"value": 111
+	},
+	{
+		"chrom": "chr22",
+		"start": 0,
+		"end": 9999999,
+		"value": 6
+	},
+	{
+		"chrom": "chr22",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 99
+	},
+	{
+		"chrom": "chr22",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 454
+	},
+	{
+		"chrom": "chr22",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 61
+	},
+	{
+		"chrom": "chr22",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 72
+	},
+	{
+		"chrom": "chr22",
+		"start": 50000000,
+		"end": 51304566,
+		"value": 15
+	},
+	{
+		"chrom": "chrX",
+		"start": 0,
+		"end": 9999999,
+		"value": 79
+	},
+	{
+		"chrom": "chrX",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 55
+	},
+	{
+		"chrom": "chrX",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 53
+	},
+	{
+		"chrom": "chrX",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 44
+	},
+	{
+		"chrom": "chrX",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 79
+	},
+	{
+		"chrom": "chrX",
+		"start": 50000000,
+		"end": 59999999,
+		"value": 81
+	},
+	{
+		"chrom": "chrX",
+		"start": 60000000,
+		"end": 69999999,
+		"value": 60
+	},
+	{
+		"chrom": "chrX",
+		"start": 70000000,
+		"end": 79999999,
+		"value": 106
+	},
+	{
+		"chrom": "chrX",
+		"start": 80000000,
+		"end": 89999999,
+		"value": 217
+	},
+	{
+		"chrom": "chrX",
+		"start": 90000000,
+		"end": 99999999,
+		"value": 209
+	},
+	{
+		"chrom": "chrX",
+		"start": 100000000,
+		"end": 109999999,
+		"value": 67
+	},
+	{
+		"chrom": "chrX",
+		"start": 110000000,
+		"end": 119999999,
+		"value": 79
+	},
+	{
+		"chrom": "chrX",
+		"start": 120000000,
+		"end": 129999999,
+		"value": 55
+	},
+	{
+		"chrom": "chrX",
+		"start": 130000000,
+		"end": 139999999,
+		"value": 52
+	},
+	{
+		"chrom": "chrX",
+		"start": 140000000,
+		"end": 149999999,
+		"value": 68
+	},
+	{
+		"chrom": "chrX",
+		"start": 150000000,
+		"end": 155270560,
+		"value": 68
+	},
+	{
+		"chrom": "chrY",
+		"start": 0,
+		"end": 9999999,
+		"value": 25
+	},
+	{
+		"chrom": "chrY",
+		"start": 10000000,
+		"end": 19999999,
+		"value": 25
+	},
+	{
+		"chrom": "chrY",
+		"start": 20000000,
+		"end": 29999999,
+		"value": 23
+	},
+	{
+		"chrom": "chrY",
+		"start": 30000000,
+		"end": 39999999,
+		"value": 8
+	},
+	{
+		"chrom": "chrY",
+		"start": 40000000,
+		"end": 49999999,
+		"value": 8
+	},
+	{
+		"chrom": "chrY",
+		"start": 50000000,
+		"end": 59373566,
+		"value": 8
+	}
+]

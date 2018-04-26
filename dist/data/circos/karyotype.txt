@@ -1,0 +1,12 @@
+chr - chr1 chr1 0 301476924 lred
+chr - chr2 chr2 0 237917468 lred
+chr - chr3 chr3 0 232245527 lred
+chr - chr4 chr4 0 242062272 lred
+chr - chr5 chr5 0 217959525 lred
+chr - chr6 chr6 0 169407836 lred
+chr - chr7 chr7 0 176826311 lred
+chr - chr8 chr8 0 175377492 lred
+chr - chr9 chr9 0 157038028 lred
+chr - chr10 chr10 0 149632204 lred
+chr - Pt Pt 0 140384 lred
+chr - Mt Mt 0 569630 lred

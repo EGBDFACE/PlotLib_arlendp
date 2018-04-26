@@ -8,7 +8,7 @@ import {
   roundNumber
 } from '../Util';
 import defaultConfigs from '../Config';
-export default class BokehRenderer extends BaseRenderer {
+export default class ChartRenderer extends BaseRenderer {
   constructor(elem, options) {
     super(elem, options)
   }
@@ -81,7 +81,15 @@ export default class BokehRenderer extends BaseRenderer {
       .call(yAxis);
 
     function zoom() {
-      content.attr('transform', currentEvent.transform);
+      var node = content.node().glElem;
+      var rootNode = content.node().rootNode;
+      var transform = currentEvent.transform;
+      node.scale.x = transform.k;
+      node.scale.y = transform.k;
+      node.position.x = transform.x;
+      node.position.y = transform.y;
+      rootNode.renderer.render(rootNode.stage);
+      // content.attr('transform', currentEvent.transform);
       cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
       cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
     }
@@ -170,7 +178,7 @@ export default class BokehRenderer extends BaseRenderer {
     }
 
     function getPath(d) {
-      const xCoor = x(new Date(d.date));
+      const xCoor = x(new Date(d.x));
       return (
         'M ' + xCoor + ' ' + y(d.value[0]) + ' ' +
         'V ' + y(d.value[1]) + ' ' +
@@ -283,7 +291,7 @@ export default class BokehRenderer extends BaseRenderer {
       .attr('width', unitSize.w)
       .attr('height', unitSize.h)
       .style('fill', function (d) {
-        return d.color;
+        return d.fill;
       })
     // .on('mouseenter', function (d) {
     //   d3.select('#container')
