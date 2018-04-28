@@ -1,8 +1,8 @@
 import Track from './Track'
 import {parseSpanValueData} from '../data-parser'
 import {arc} from 'd3-shape'
-import assign from 'lodash/assign'
-import forEach from 'lodash/forEach'
+const assign = require('lodash/assign')
+const forEach = require('lodash/forEach')
 import {axes, radial, values, common} from '../configs'
 
 const defaultConf = assign({

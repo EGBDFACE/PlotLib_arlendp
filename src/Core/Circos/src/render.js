@@ -1,5 +1,5 @@
-import forEach from 'lodash/forEach'
-import sortBy from 'lodash/sortBy'
+const forEach = require('lodash/forEach')
+const sortBy = require('lodash/sortBy')
 import renderLayout from './layout/render'
 
 export default function render (ids = [], removeTracks, circos) {

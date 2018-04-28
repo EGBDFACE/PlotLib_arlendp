@@ -1,8 +1,8 @@
 import Track from './Track'
 import {parsePositionValueData} from '../data-parser'
-import assign from 'lodash/assign'
-import reduce from 'lodash/reduce'
-import sortBy from 'lodash/sortBy'
+const assign = require('lodash/assign')
+const reduce = require('lodash/reduce')
+const sortBy = require('lodash/sortBy')
 import {axes, radial, common, values} from '../configs'
 import {curveLinear, radialLine, radialArea} from 'd3-shape'
 

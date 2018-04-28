@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>chords</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		#addData {
+			vertical-align: top;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<canvas width="800" height="800"></canvas>
+	</div>
+	<script src="../build/plot.js"></script>
+	<script>
+		new Plot.circular(document.getElementsByTagName('canvas')[0]).scatter({
+			fileUrl: '/dist/scatter/GRCh37.json',
+			fileType: 'json',
+			configs: {
+				innerRadius: 300,
+				outerRadius: 320,
+				labels: false,
+				ticks: true,
+				tips: function (d) {
+					return d.label
+				}
+			}
+		}, [{
+			circularType: 'highlight',
+			name: 'cytobands',
+			fileUrl: '/dist/scatter/cytobands.csv',
+			fileType: 'csv',
+			configs: {
+				innerRadius: 300,
+				outerRadius: 320
+			}
+		}, {
+			circularType: 'scatter',
+			name: 'snp_250kb',
+			fileUrl: '/dist/scatter/snp_250kb.txt',
+			fileType: 'csv',
+			configs: {
+				innerRadius: 0.65,
+				outerRadius: 0.95,
+				color: function (d) {
+					if (d.value > 0.006) {
+						return '#4caf50'
+					}
+					if (d.value < 0.002) {
+						return 'rgb(249, 83, 44)'
+					}
+					return '#FF9900'
+				},
+				strokeColor: 'grey',
+				strokeWidth: 1,
+				shape: 'circle',
+				size: 14,
+				min: 0,
+				max: 0.013,
+				axes: [{
+						spacing: 0.001,
+						start: 0.006,
+						thickness: 1,
+						color: '#4caf50',
+						opacity: 0.3
+					},
+					{
+						spacing: 0.002,
+						start: 0.006,
+						thickness: 1,
+						color: '#4caf50',
+						opacity: 0.5
+					},
+					{
+						spacing: 0.002,
+						start: 0.002,
+						end: 0.006,
+						thickness: 1,
+						color: '#666',
+						opacity: 0.5
+					},
+					{
+						spacing: 0.001,
+						end: 0.002,
+						thickness: 1,
+						color: '#f44336',
+						opacity: 0.5
+					}
+				],
+				backgrounds: [{
+						start: 0.006,
+						color: '#4caf50',
+						opacity: 0.1
+					},
+					{
+						start: 0.002,
+						end: 0.006,
+						color: '#d3d3d3',
+						opacity: 0.1
+					},
+					{
+						end: 0.002,
+						color: '#FFCCCC',
+						opacity: 0.1
+					}
+				],
+				tips: function (d, i) {
+					return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+				}
+			}
+		}, {
+			circularType: 'scatter',
+			name: 'snp',
+			fileUrl: '/dist/scatter/snp.txt',
+			fileType: 'csv',
+			configs: {
+				color: '#4caf50',
+				strokeColor: 'green',
+				strokeWidth: 1,
+				shape: 'star',
+				size: 10,
+				min: 0.007,
+				max: 0.013,
+				innerRadius: 0.2,
+				outerRadius: 0.3,
+				axes: [{
+						spacing: 0.001,
+						thickness: 1,
+						color: '#4caf50',
+						opacity: 0.3
+					},
+					{
+						spacing: 0.002,
+						thickness: 1,
+						color: '#4caf50',
+						opacity: 0.5
+					}
+				],
+				backgrounds: [{
+						start: 0.007,
+						color: '#4caf50',
+						opacity: 0.1
+					},
+					{
+						start: 0.009,
+						color: '#4caf50',
+						opacity: 0.1
+					},
+					{
+						start: 0.011,
+						color: '#4caf50',
+						opacity: 0.1
+					},
+					{
+						start: 0.013,
+						color: '#4caf50',
+						opacity: 0.1
+					}
+				],
+				tips: function (d, i) {
+					return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+				}
+			}
+		}, {
+			circularType: 'scatter',
+			name: 'snp_1mb',
+			fileUrl: '/dist/scatter/snp_1mb.txt',
+			fileType: 'csv',
+			configs: {
+				color: '#f44336',
+				strokeColor: 'red',
+				strokeWidth: 1,
+				shape: 'cross',
+				size: 10,
+				min: 0,
+				max: 0.002,
+				innerRadius: 0.35,
+				outerRadius: 0.60,
+				axes: [{
+						spacing: 0.0001,
+						thickness: 1,
+						color: '#FF9900',
+						opacity: 0.3
+					},
+					{
+						spacing: 0.0005,
+						thickness: 1,
+						color: '#FF9900',
+						opacity: 0.5
+					}
+				],
+				backgrounds: [{
+						end: 0.0004,
+						color: '#FF9900',
+						opacity: 0.1
+					},
+					{
+						end: 0.0008,
+						color: '#FF9900',
+						opacity: 0.1
+					},
+					{
+						end: 0.0012,
+						color: '#FF9900',
+						opacity: 0.1
+					},
+					{
+						end: 0.0016,
+						color: '#FF9900',
+						opacity: 0.1
+					},
+					{
+						end: 0.002,
+						color: '#FF9900',
+						opacity: 0.1
+					}
+				],
+				tips: function (d, i) {
+					return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+				}
+			}
+		}]);
+	</script>
+	<script>
+	</script>
+</body>
+
+</html>

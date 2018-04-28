@@ -1,7 +1,7 @@
 import Track from './Track'
 import {parsePositionTextData} from '../data-parser'
-import forEach from 'lodash/forEach'
-import assign from 'lodash/assign'
+const forEach = require('lodash/forEach')
+const assign = require('lodash/assign')
 import {common, radial} from '../configs'
 
 const defaultConf = assign({

@@ -1,7 +1,7 @@
-import cloneDeep from 'lodash/cloneDeep'
-import forEach from 'lodash/forEach'
-import isFunction from 'lodash/isFunction'
-import assign from 'lodash/assign'
+const cloneDeep = require('lodash/cloneDeep')
+const forEach = require('lodash/forEach')
+const isFunction = require('lodash/isFunction')
+const assign = require('lodash/assign')
 import {smartBorders} from './utils'
 
 const buildConf = (userConf = {}, defaultConf) => {

@@ -1,7 +1,7 @@
-import cloneDeep from 'lodash/cloneDeep'
-import defaultsDeep from 'lodash/defaultsDeep'
-import reduce from 'lodash/reduce'
-import forEach from 'lodash/forEach'
+const cloneDeep = require('lodash/cloneDeep')
+const defaultsDeep = require('lodash/defaultsDeep')
+const reduce = require('lodash/reduce')
+const forEach = require('lodash/forEach')
 import defaultConf from './conf'
 
 const logger = console

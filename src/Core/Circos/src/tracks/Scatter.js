@@ -1,6 +1,6 @@
 import Track from './Track'
 import {parsePositionValueData} from '../data-parser'
-import assign from 'lodash/assign'
+const assign = require('lodash/assign')
 import {radial, axes, common, values} from '../configs'
 import {
   symbol,

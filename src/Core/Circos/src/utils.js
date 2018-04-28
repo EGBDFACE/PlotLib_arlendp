@@ -1,9 +1,9 @@
-import sortBy from 'lodash/fp/sortBy'
-import flow from 'lodash/fp/flow'
-import concat from 'lodash/fp/concat'
-import filter from 'lodash/fp/filter'
-import first from 'lodash/fp/first'
-import reverse from 'lodash/fp/reverse'
+const sortBy = require('lodash/fp/sortBy')
+const flow = require('lodash/fp/flow')
+const concat = require('lodash/fp/concat')
+const filter = require('lodash/fp/filter')
+const first = require('lodash/fp/first')
+const reverse = require('lodash/fp/reverse')
 import {scaleLog, scaleLinear} from 'd3-scale'
 
 export function smartBorders (conf, layout, tracks) {

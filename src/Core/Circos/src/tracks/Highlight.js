@@ -1,6 +1,6 @@
 import Track from './Track'
 import {parseSpanStringData} from '../data-parser'
-import assign from 'lodash/assign'
+const assign = require('lodash/assign')
 import {radial, common} from '../configs'
 import {arc} from 'd3-shape'
 

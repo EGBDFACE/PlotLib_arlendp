@@ -37,7 +37,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0]).scatter({
 			}
 			return '#FF9900'
 		},
-		strokeColor: 'grey',
+		stroke: 'grey',
 		strokeWidth: 1,
 		shape: 'circle',
 		size: 14,
@@ -101,7 +101,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0]).scatter({
 	fileType: 'csv',
 	configs: {
 		color: '#4caf50',
-		strokeColor: 'green',
+		stroke: 'green',
 		strokeWidth: 1,
 		shape: 'star',
 		size: 10,
@@ -154,7 +154,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0]).scatter({
 	fileType: 'csv',
 	configs: {
 		color: '#f44336',
-		strokeColor: 'red',
+		stroke: 'red',
 		strokeWidth: 1,
 		shape: 'cross',
 		size: 10,

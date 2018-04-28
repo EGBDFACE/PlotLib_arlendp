@@ -1,7 +1,7 @@
-import keys from 'lodash/keys'
-import includes from 'lodash/includes'
-import every from 'lodash/every'
-import map from 'lodash/map'
+const keys = require('lodash/keys')
+const includes = require('lodash/includes')
+const every = require('lodash/every')
+const map = require('lodash/map')
 import {nest} from 'd3-collection'
 import {min, max} from 'd3-array'
 

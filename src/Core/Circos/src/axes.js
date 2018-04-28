@@ -1,5 +1,5 @@
-import range from 'lodash/range'
-import reduce from 'lodash/reduce'
+const range = require('lodash/range')
+const reduce = require('lodash/reduce')
 import {arc} from 'd3-shape'
 import logger from './logger'
 

@@ -8,8 +8,8 @@ import {
 import {
   ribbon
 } from 'd3-chord'
-import assign from 'lodash/assign'
-import isFunction from 'lodash/isFunction'
+const assign = require('lodash/assign')
+const isFunction = require('lodash/isFunction')
 import {
   event
 } from 'd3-selection'

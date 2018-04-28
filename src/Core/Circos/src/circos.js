@@ -1,7 +1,7 @@
-import defaultsDeep from 'lodash/defaultsDeep'
-import forEach from 'lodash/forEach'
-import isArray from 'lodash/isArray'
-import map from 'lodash/map'
+const defaultsDeep = require('lodash/defaultsDeep')
+const forEach = require('lodash/forEach')
+const isArray = require('lodash/isArray')
+const map = require('lodash/map')
 // import {select} from 'd3-selection'
 const d3 = Object.assign({}, require('../../d3-SvgToWebgl'), require('d3-zoom'));
 import {
@@ -53,6 +53,14 @@ class Core {
       this.tip = d3.select('body').append('div')
         .attr('class', 'circos-tooltip')
         .style('opacity', 0)
+        .style('position', 'absolute')
+        .style('text-align', 'center')
+        .style('padding', '5px 10px')
+        .style('background-color', '#111111')
+        .style('color', 'white')
+        .style('border-radius', '5px')
+        .style('pointer-events', 'none')
+        .style('z-index', 9999);
     } else {
       this.tip = d3.select('body').select('.circos-tooltip')
     }
