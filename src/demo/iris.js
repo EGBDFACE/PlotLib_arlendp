@@ -4,16 +4,16 @@ const range = {
   x: [0, 7],
   y: [0, 3]
 }
-const count = 500;
+const count = 5000;
 const data = [];
 for (let i = 0; i < count; i++) {
   data.push(generateData(range, color));
 }
 
 function drawing() {
-  new Plot.chart(document.getElementsByTagName('canvas')[0]).iris(data, {
+  new Plot.chart(document.getElementsByTagName('canvas')[0], {bgColor: 0xff0000}).iris(data, {
     range: range,
-    zoom: true,
+    zoom: true
   })
 }
 // start drawing

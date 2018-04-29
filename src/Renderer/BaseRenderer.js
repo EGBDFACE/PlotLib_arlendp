@@ -7,7 +7,7 @@ export default class BaseRenderer {
       height: elem.height || defaultConfigs.base.canvasSize.h,
       resolution: options && options.resolution || window.devicePixelRatio,
       view: elem,
-      backgroundColor: options && options.bgColor || 0xffffff,
+      backgroundColor: options && options.bgColor,
       antialias: true
     });
     this.renderer.view.style.width = elem.width / 2 + 'px';

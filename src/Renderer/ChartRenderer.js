@@ -79,19 +79,46 @@ export default class ChartRenderer extends BaseRenderer {
     const cY = container.append('g')
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
       .call(yAxis);
-
+    
+    var rootNode = content.node().rootNode;
+    
     function zoom() {
       var node = content.node().glElem;
-      var rootNode = content.node().rootNode;
+      // var xPath = cX.select('path.domain').node().glElem;
+      var xTicks = cX.selectAll('g.tick')._groups[0].map(function (d) {
+        return d.glElem;
+      })
+      var yTicks = cY.selectAll('g.tick')._groups[0].map(function (d) {
+        return d.glElem;
+      })
+      // console.log(xPath, xTicks)
       var transform = currentEvent.transform;
+      xTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.x = (d.oriPos.x * transform.k + transform.x) ;
+      })
+      yTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.y = (d.oriPos.y * transform.k + transform.y);
+      })
       node.scale.x = transform.k;
       node.scale.y = transform.k;
       node.position.x = transform.x;
       node.position.y = transform.y;
       rootNode.renderer.render(rootNode.stage);
       // content.attr('transform', currentEvent.transform);
-      cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
-      cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+      // cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+      // cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
     }
   }
 

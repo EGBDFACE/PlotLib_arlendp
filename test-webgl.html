@@ -9,47 +9,48 @@
 
 <body>
   <div class="container">
-
+<canvas width="400" height="400" id="canvas"></canvas>
   </div>
   <script src="./lib/d3.v4.js"></script>
   <script src="./lib/pixi.js"></script>
   <script src="./lib/d3-svg2webgl.js"></script>
   <script>
-    var svg = d3.select('.container')
-      .append('canvas')
-      .attr('width', 400)
-      .attr('height', 400)
-      .canvasResolution(window.devicePixelRatio)
-      .canvas(true);
-    var container = svg.append('g');
-    container.append('rect')
-      .attr('x', 10)
-      .attr('y', 10)
-      .attr('width', 200)
-      .attr('height', 200)
-      .style('fill', 0xff0000);
+    // var svg = d3.select('.container')
+    //   .append('canvas')
+    //   .attr('width', 400)
+    //   .attr('height', 400)
+    //   .canvasResolution(window.devicePixelRatio)
+    //   .canvas(true);
+    // var container = svg.append('g');
+    // container.append('rect')
+    //   .attr('x', 10)
+    //   .attr('y', 10)
+    //   .attr('width', 200)
+    //   .attr('height', 200)
+    //   .style('fill', 0xff0000);
       
-    container.append('circle')
-      .attr('cx', 100)
-      .attr('cy', 100)
-      .attr('r', 20)
-      .style('fill', 0x00ffff);
+    // container.append('circle')
+    //   .attr('cx', 100)
+    //   .attr('cy', 100)
+    //   .attr('r', 20)
+    //   .style('fill', 0x00ffff);
     // svg.render();
-    // var renderer = new PIXI.autoDetectRenderer({
-    //   width: 400,
-    //   height: 400,
-    //   view: svg.node(),
-    //   resolution: window.devicePixelRatio
-    // });
-    // renderer.view.style.width = 400 + 'px';
-    // renderer.view.style.height = 400 + 'px';
-    // var stage = new PIXI.Container();
-    // var graphic = new PIXI.Graphics();
-    // graphic.beginFill(0xff0000);
-    // graphic.drawRect(10, 10, 100, 100);
-    // graphic.endFill();
-    // stage.addChild(graphic);
-    // renderer.render(stage);
+    var renderer = new PIXI.autoDetectRenderer({
+      width: 400,
+      height: 400,
+      backgroundColor: 0x00ff00,
+      view: document.getElementById('canvas'),
+      resolution: window.devicePixelRatio
+    });
+    renderer.view.style.width = 400 + 'px';
+    renderer.view.style.height = 400 + 'px';
+    var stage = new PIXI.Container();
+    var graphic = new PIXI.Graphics();
+    graphic.beginFill(0xff0000);
+    graphic.drawRect(10, 10, 100, 100);
+    graphic.endFill();
+    stage.addChild(graphic);
+    renderer.render(stage);
   </script>
 </body>
 
