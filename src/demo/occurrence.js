@@ -10,7 +10,7 @@ let count = 50;
 plot(count);
 
 function plot(n) {
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < count; i++) {
     xAxisLabel.push('a' + i);
     yAxisLabel.push('b' + i);
   }
@@ -20,7 +20,7 @@ function plot(n) {
       const block = {
         x: x,
         y: y,
-        names: yAxisLabel[x] + ', ' + xAxisLabel[y],
+        label: yAxisLabel[x] + ', ' + xAxisLabel[y],
         // 对称分布
         count: blocks[y * yAxisLabel.length + x] ? blocks[y * yAxisLabel.length + x].count : Math.floor(Math.random() * (range[1] - range[0])) + range[0]
       };
@@ -33,7 +33,7 @@ function plot(n) {
     h: 12
   };
   const gap = 1;
-  new Plot.chart(document.getElementsByTagName('canvas')[0]).occurrence(blocks, {
+  new Plot.chart(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).occurrence(blocks, {
     contentSize: {
       w: xAxisLabel.length * unitSize.w + (xAxisLabel.length - 1) * gap,
       h: yAxisLabel.length * unitSize.h + (yAxisLabel.length - 1) * gap

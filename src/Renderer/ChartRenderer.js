@@ -301,6 +301,7 @@ export default class ChartRenderer extends BaseRenderer {
     const gap = options.gap;
     const contentSize = options.contentSize;
     const margin = options.canvasMargin;
+    const style = options.style;
     const svg = d3.select(this.renderer.view)
       .toCanvas(this.renderer)
 
@@ -375,6 +376,18 @@ export default class ChartRenderer extends BaseRenderer {
       .attr('y', function (d, i) {
         return i * (unitSize.h + gap) + unitSize.h * 2 / 3;
       });;
+    const tips = d3.select('body')
+      .append('div')
+      .attr('class', 'tip')
+      .style('opacity', 0)
+      .style('position', 'absolute')
+      .style('text-align', 'center')
+      .style('padding', '5px 10px')
+      .style('background-color', '#111111')
+      .style('color', 'white')
+      .style('border-radius', '5px')
+      .style('pointer-events', 'none')
+      .style('z-index', 9999);
 
     content.selectAll('.block')
       .data(data)
@@ -390,35 +403,66 @@ export default class ChartRenderer extends BaseRenderer {
       .attr('width', unitSize.w)
       .attr('height', unitSize.h)
       .style('fill', function (d) {
-        return d.fill;
+        return d.color || style.fill;
       })
-    // .on('mouseenter', function (d) {
-    //   d3.select('#container')
-    //     .append('div')
-    //     .attr('class', 'tip')
-    //     .style('top', d3.event.clientY - 20 + 'px')
-    //     .style('left', d3.event.clientX + 20 + 'px')
-    //     .html(generateTip(d.names, d.count))
-    // })
-    // .on('mouseleave', function (d) {
-    //   d3.select('.tip').remove();
-    // });
+    .on('mouseover', function (d) {
+        tips
+        .style('opacity', 0.9)
+        .style('top', currentEvent.data.originalEvent.clientY - 40 + 'px')
+        .style('left', currentEvent.data.originalEvent.clientX + 'px')
+        .html(d.label)
+    })
+    .on('mouseout', function (d) {
+      tips
+        .style('opacity', 0);
+    });
 
-    function generateTip(date, rate) {
-      return '<ul>' +
-        '<li><span class="title">names: </span>' + date + '</li>' +
-        '<li><span class="title">count: </span>' + rate + '</li>' +
-        '</ul>';
-    }
-
+    // function generateTip(date, rate) {
+    //   return '<ul>' +
+    //     '<li><span class="title">names: </span>' + date + '</li>' +
+    //     '<li><span class="title">count: </span>' + rate + '</li>' +
+    //     '</ul>';
+    // }
+    var rootNode = content.node().rootNode;
     function zoomed() {
-      content.attr('transform', currentEvent.transform);
-      xAxis.attr('y', function (d, i) {
-        return currentEvent.transform.x + (i * (unitSize.w + gap) + unitSize.w * 3 / 4) * currentEvent.transform.k - (currentEvent.transform.k - 1) * 3;
+      var node = content.node().glElem;
+      var xTicks = xAxis._groups[0].map(function (d) {
+        return d.glElem;
       })
-      yAxis.attr('y', function (d, i) {
-        return currentEvent.transform.y + (i * (unitSize.h + gap) + unitSize.h * 3 / 4) * currentEvent.transform.k - (currentEvent.transform.k - 1) * 3;
+      var yTicks = yAxis._groups[0].map(function (d) {
+        return d.glElem;
       })
+      var transform = currentEvent.transform;
+      xTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.y = (d.oriPos.y * transform.k + transform.x);
+      })
+      yTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.y = (d.oriPos.y * transform.k + transform.y);
+      })
+      node.scale.x = transform.k;
+      node.scale.y = transform.k;
+      node.position.x = transform.x;
+      node.position.y = transform.y;
+      rootNode.renderer.render(rootNode.stage);
+      // content.attr('transform', currentEvent.transform);
+      // xAxis.attr('y', function (d, i) {
+      //   return currentEvent.transform.x + (i * (unitSize.w + gap) + unitSize.w * 3 / 4) * currentEvent.transform.k - (currentEvent.transform.k - 1) * 3;
+      // })
+      // yAxis.attr('y', function (d, i) {
+      //   return currentEvent.transform.y + (i * (unitSize.h + gap) + unitSize.h * 3 / 4) * currentEvent.transform.k - (currentEvent.transform.k - 1) * 3;
+      // })
     }
   }
 
