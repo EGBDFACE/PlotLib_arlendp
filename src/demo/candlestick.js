@@ -75,10 +75,10 @@ const data = [{
   }
 ];
 
-new Plot.chart(d3.select('canvas').node()).candleStick(data, {
+new Plot.chart(d3.select('canvas').node(), {bgColor: 0xffffff}).candleStick(data, {
   contentSize: {
     w: 600,
-    h: 400
+    h: 600
   },
   range: {
     x: getTimeRange(data),
@@ -104,7 +104,7 @@ function getMinAndMax(data) {
 
 function getTimeRange(data) {
   const timeArr = data.map(function (v) {
-    return new Date(v.date);
+    return new Date(v.x);
   });
   return [d3.min(timeArr), d3.max(timeArr)];
 }

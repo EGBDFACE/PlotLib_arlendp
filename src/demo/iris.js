@@ -11,7 +11,7 @@ for (let i = 0; i < count; i++) {
 }
 
 function drawing() {
-  new Plot.chart(document.getElementsByTagName('canvas')[0], {bgColor: 0xff0000}).iris(data, {
+  new Plot.chart(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).iris(data, {
     range: range,
     zoom: true
   })

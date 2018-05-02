@@ -37,7 +37,24 @@ export default class ChartRenderer extends BaseRenderer {
       .append('rect')
       .attr('width', contentSize.w)
       .attr('height', contentSize.h);
-
+    // x axis clip
+    container.append('defs')
+      .append('clipPath')
+      .attr('id', 'clipX')
+      .append('rect')
+      .attr('x', -5)
+      .attr('width', contentSize.w + 10)
+      .attr('height', margin.v)
+    // y axis clip
+    container.append('defs')
+      .append('clipPath')
+      .attr('id', 'clipY')
+      .append('rect')
+      .attr('x', -margin.h)
+      .attr('y', -5)
+      .attr('width', margin.h + 1)
+      .attr('height', contentSize.h + 10)
+      
     const content = container.append('g')
       .classed('content', true)
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
@@ -75,9 +92,11 @@ export default class ChartRenderer extends BaseRenderer {
 
     const cX = container.append('g')
       .attr('transform', 'translate(' + margin.h + ', ' + (contentSize.h + margin.v) + ')')
+      .attr('clip-path', 'url(#clipX)')
       .call(xAxis);
     const cY = container.append('g')
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
+      .attr('clip-path', 'url(#clipY)')
       .call(yAxis);
     
     var rootNode = content.node().rootNode;
@@ -162,6 +181,24 @@ export default class ChartRenderer extends BaseRenderer {
       .append('rect')
       .attr('width', contentSize.w)
       .attr('height', contentSize.h);
+    
+    // x axis clip
+    svg.append('defs')
+      .append('clipPath')
+      .attr('id', 'clipX')
+      .append('rect')
+      .attr('x', -5)
+      .attr('width', contentSize.w + 10)
+      .attr('height', margin.v)
+    // y axis clip
+    svg.append('defs')
+      .append('clipPath')
+      .attr('id', 'clipY')
+      .append('rect')
+      .attr('x', -margin.h)
+      .attr('y', -5)
+      .attr('width', margin.h + 1)
+      .attr('height', contentSize.h + 10)
 
     const container = svg.append('g')
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')');
@@ -169,10 +206,12 @@ export default class ChartRenderer extends BaseRenderer {
     const cX = container.append('g')
       .attr('class', 'xAxis')
       .attr('transform', 'translate(0, ' + contentSize.h + ')')
+      .attr('clip-path', 'url(#clipX)')
       .call(xAxis);
 
     const cY = container.append('g')
       .attr('class', 'yAxis')
+      .attr('clip-path', 'url(#clipY)')
       .call(yAxis);
 
     const content = container.append('g')
@@ -197,11 +236,44 @@ export default class ChartRenderer extends BaseRenderer {
       .style('stroke', function (d) {
         return d.stroke || style.stroke
       });
-
+    var rootNode = content.node().rootNode;
     function zoomed() {
-      content.attr('transform', currentEvent.transform);
-      cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
-      cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+      var node = content.node().glElem;
+      // var xPath = cX.select('path.domain').node().glElem;
+      var xTicks = cX.selectAll('g.tick')._groups[0].map(function (d) {
+        return d.glElem;
+      })
+      var yTicks = cY.selectAll('g.tick')._groups[0].map(function (d) {
+        return d.glElem;
+      })
+      // console.log(xPath, xTicks)
+      var transform = currentEvent.transform;
+      xTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.x = (d.oriPos.x * transform.k + transform.x);
+      })
+      yTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.y = (d.oriPos.y * transform.k + transform.y);
+      })
+      node.scale.x = transform.k;
+      node.scale.y = transform.k;
+      node.position.x = transform.x;
+      node.position.y = transform.y;
+      rootNode.renderer.render(rootNode.stage);
+      // content.attr('transform', currentEvent.transform);
+      // cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+      // cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
     }
 
     function getPath(d) {
