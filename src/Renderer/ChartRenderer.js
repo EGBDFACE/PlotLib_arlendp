@@ -492,19 +492,36 @@ export default class ChartRenderer extends BaseRenderer {
       .append('rect')
       .attr('width', contentSize.w)
       .attr('height', contentSize.h);
-    const xClip = defs.append('clipPath')
-      .attr('id', 'x-clip')
+    // x axis clip
+    defs
+      .append('clipPath')
+      .attr('id', 'clipX')
       .append('rect')
-      .attr('width', contentSize.w)
-      .attr('height', margin.v);
+      .attr('x', -5)
+      .attr('width', contentSize.w + 10)
+      .attr('height', margin.v)
+    // y axis clip
+    defs
+      .append('clipPath')
+      .attr('id', 'clipY')
+      .append('rect')
+      .attr('x', -margin.h)
+      .attr('y', -5)
+      .attr('width', margin.h + 1)
+      .attr('height', contentSize.h + 10)
+    // const xClip = defs.append('clipPath')
+    //   .attr('id', 'x-clip')
+    //   .append('rect')
+    //   .attr('width', contentSize.w)
+    //   .attr('height', margin.v);
     // add container
     const container = svg.append("g")
       .attr('clip-path', 'url(#clip)')
-      .attr("transform", "translate(" + 35 + "," + margin.v + ")");
+      .attr("transform", "translate(" + margin.h + "," + margin.v + ")");
     // Move the left axis over 25 pixels, and the top axis over 35 pixels
-    const axisG = svg.append("g").attr("transform", "translate(35, " + margin.v + ')');
-    const axisTopG = svg.append("g").attr("transform", "translate(35, " + (contentSize.h + margin.v) + ')')
-      .attr('clip-path', 'url(#x-clip)');
+    const axisG = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)');
+    const axisTopG = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
+      .attr('clip-path', 'url(#clipX)');
 
     // Setup the group the box plot elements will render in
     const g = container.append("g");
@@ -629,10 +646,50 @@ export default class ChartRenderer extends BaseRenderer {
     const cX = axisTopG.append("g")
       .call(xAxis);
 
+    // function zoomed() {
+    //   g.attr('transform', currentEvent.transform);
+    //   cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+    //   cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+    // }
+    var rootNode = g.node().rootNode;
+
     function zoomed() {
-      g.attr('transform', currentEvent.transform);
-      cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
-      cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+      var node = g.node().glElem;
+      // var xPath = cX.select('path.domain').node().glElem;
+      var xTicks = cX.selectAll('g.tick')._groups[0].map(function (d) {
+        return d.glElem;
+      })
+      var yTicks = cY.selectAll('g.tick')._groups[0].map(function (d) {
+        return d.glElem;
+      })
+      // console.log(xPath, xTicks)
+      var transform = currentEvent.transform;
+      xTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.x = (d.oriPos.x * transform.k + transform.x);
+      })
+      yTicks.forEach(function (d) {
+        if (!d.oriPos) {
+          d.oriPos = {
+            x: d.position.x,
+            y: d.position.y
+          }
+        }
+        d.position.y = (d.oriPos.y * transform.k + transform.y);
+      })
+      node.scale.x = transform.k;
+      node.scale.y = transform.k;
+      node.position.x = transform.x;
+      node.position.y = transform.y;
+      rootNode.renderer.render(rootNode.stage);
+      // content.attr('transform', currentEvent.transform);
+      // cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+      // cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
     }
   }
 }
