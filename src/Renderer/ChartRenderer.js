@@ -354,7 +354,7 @@ export default class ChartRenderer extends BaseRenderer {
       })
       .attr('y', function (d, i) {
         return i * (unitSize.w + gap) + unitSize.w * 2 / 3;
-      });;
+      });
 
     const yAxis = svg.append('g')
       .attr('class', 'yAxisSvg')

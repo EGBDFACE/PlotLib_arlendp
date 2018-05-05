@@ -7,7 +7,7 @@ import {
 } from '../behaviors/tooltip'
 import {
   ribbon
-} from 'd3-chord'
+} from '../../../d3-chord'
 const assign = require('lodash/assign')
 const isFunction = require('lodash/isFunction')
 import {

@@ -1,15 +1,13 @@
-import Plot from '../index.js';
-new Plot.circular(document.getElementsByTagName('canvas')[0]).scatter({
+// import Plot from '../index.js';
+import Plot from '../../build/plot.js';
+new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).scatter({
 	fileUrl: '/dist/scatter/GRCh37.json',
 	fileType: 'json',
 	configs: {
 		innerRadius: 300,
 		outerRadius: 320,
 		labels: false,
-		ticks: true,
-		tips: function (d) {
-			return d.label
-		}
+		ticks: true
 	}
 }, [{
 	circularType: 'highlight',
