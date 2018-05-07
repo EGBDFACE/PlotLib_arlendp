@@ -2,7 +2,7 @@ const forEach = require('lodash/forEach')
 const sortBy = require('lodash/sortBy')
 import renderLayout from './layout/render'
 
-export default function render (ids = [], removeTracks, circos) {
+export default function render(ids = [], removeTracks, circos) {
   const renderAll = ids.length === 0
 
   const svg = circos.svg
@@ -28,27 +28,28 @@ export default function render (ids = [], removeTracks, circos) {
       )
   }
 
+  if (renderAll || 'layout' in ids) {
+    renderLayout(translated, circos)
+  }
+
   forEach(circos.tracks, (track, trackId) => {
     if (renderAll || trackId in ids) {
       track.render(circos, translated, trackId)
     }
   })
-  if (renderAll || 'layout' in ids) {
-    renderLayout(translated, circos)
-  }
 
   // re-order tracks and layout according to z-index
   // const trackContainers = svg.selectAll('.all + g').remove()
-  const trackContainers = svg.select('.all').selectAll('.item-wrapper').remove();
-  const sortedTrackContainers = sortBy(
-    trackContainers._groups[0],
-    (elt) => elt.getAttribute('z-index')
-  )
+  // const trackContainers = svg.select('.all').selectAll('.item-wrapper').remove();
+  // const sortedTrackContainers = sortBy(
+  //   trackContainers._groups[0],
+  //   (elt) => elt.getAttribute('z-index')
+  // )
 
-  svg.select('.all').selectAll('g')
-    .data(sortedTrackContainers)
-    .enter()
-    .append((d) => d)
+  // svg.select('.all').selectAll('g')
+  //   .data(sortedTrackContainers)
+  //   .enter()
+  //   .append((d) => d)
 
   return circos
 }

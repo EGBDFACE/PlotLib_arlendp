@@ -142,6 +142,8 @@ export default function renderLayout (parentElement, instance) {
       d.outerRadius = conf.outerRadius;
       return d;
     })
+    // add opacity for layout
+    .attr('opacity', conf.opacity)
     .attr('fill', (d) => d.color)
     .attr('id', (d) => d.id)
 

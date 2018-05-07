@@ -5,7 +5,7 @@ export function registerTooltip (track, instance, element, trackParams) {
   track.dispatch.on('mouseover', (d) => {
     instance.tip
       .html(trackParams.tooltipContent(d))
-      .transition()
+      // .transition()
       .style('opacity', 0.9)
       .style('left', (event.data.originalEvent.clientX) + 'px')
       .style('top', (event.data.originalEvent.clientY - 40) + 'px')
@@ -13,8 +13,8 @@ export function registerTooltip (track, instance, element, trackParams) {
 
   track.dispatch.on('mouseout', (d) => {
     instance.tip
-      .transition()
-      .duration(500)
+      // .transition()
+      // .duration(500)
       .style('opacity', 0)
   })
 }

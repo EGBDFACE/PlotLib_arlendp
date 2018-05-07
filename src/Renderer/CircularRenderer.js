@@ -43,6 +43,7 @@ export default class CircularRenderer extends BaseRenderer {
             display: layout.configs.labels || false,
             radialOffset: 70
           },
+          opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
@@ -116,6 +117,7 @@ export default class CircularRenderer extends BaseRenderer {
             display: layout.configs.labels || false,
             radialOffset: 70
           },
+          opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
@@ -185,6 +187,7 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
+          opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
@@ -258,6 +261,7 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
+          opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
@@ -341,6 +345,7 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
+          opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
@@ -428,6 +433,7 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
@@ -451,7 +457,7 @@ export default class CircularRenderer extends BaseRenderer {
             innerRadius: data[i].configs.innerRadius,
             outerRadius: data[i].configs.outerRadius,
             color: data[i].configs.color || '#000',
-            stroke: data[i].configs.stroke || '#000',
+            strokeColor: data[i].configs.stroke || '#000',
             strokeWidth: data[i].configs.strokeWidth,
             shape: data[i].configs.shape || 'circle',
             size: data[i].configs.size || 14,
@@ -519,6 +525,7 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
+          opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000
