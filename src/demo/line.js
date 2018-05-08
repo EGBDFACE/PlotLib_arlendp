@@ -1,5 +1,5 @@
 import Plot from '../index.js';
-new Plot.circular(document.getElementsByTagName('canvas')[0]).line({
+new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).line({
 	fileUrl: '/dist/line/GRCh37.json',
 	fileType: 'json',
 	configs: {

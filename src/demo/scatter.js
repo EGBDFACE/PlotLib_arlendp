@@ -1,12 +1,11 @@
-// import Plot from '../index.js';
-import Plot from '../../build/plot.js';
+import Plot from '../index.js';
 new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).scatter({
 	fileUrl: '/dist/scatter/GRCh37.json',
 	fileType: 'json',
 	configs: {
 		innerRadius: 300,
 		outerRadius: 320,
-		labels: false,
+		labels: true,
 		ticks: true
 	}
 }, [{

@@ -28,13 +28,18 @@ function renderLayoutLabels (conf, block) {
   //   .style('fill', conf.labels.color)
   //   .text((d) => d.label)
   const label = block.append('text')
+    // adjust the label to the left
     .attr('transform', function (d) {
-      return 'rotate(' + (d.start + d.end) / 2 / 2 / Math.PI * 360 + ')';
+      // return 'rotate(' + (d.start + d.end) / 2 / 2 / Math.PI * 360 + ')';
+      return 'rotate(' + d.start / 2 / Math.PI * 360 + ')';
     })
-    .attr('x', d => Math.sin((d.start + d.end) / 2) * radius)
-    .attr('y', d => -Math.cos((d.start + d.end) / 2) * radius)
+    // .attr('x', d => Math.sin((d.start + d.end) / 2) * radius)
+    // .attr('y', d => -Math.cos((d.start + d.end) / 2) * radius)
+    .attr('x', d => Math.sin(d.start) * radius)
+    .attr('y', d => -Math.cos(d.start) * radius)
     .style('font-size', '' + conf.labels.size + 'px')
-    .attr('text-anchor', 'middle')
+    // .attr('text-anchor', 'middle')
+    .attr('text-anchor', 'start')
     .style('fill', conf.labels.color)
     .text((d) => d.label)
 }
