@@ -10,11 +10,11 @@ const defaultConf = assign({
     iteratee: true
   },
   strokeColor: {
-    value: '#d3d3d3',
+    value: '#000000',
     iteratee: true
   },
   strokeWidth: {
-    value: 0,
+    value: 1,
     iteratee: true
   }
 }, radial, common)

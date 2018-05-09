@@ -54,13 +54,23 @@ class Core {
         .attr('class', 'circos-tooltip')
         .style('opacity', 0)
         .style('position', 'absolute')
-        .style('text-align', 'center')
+        .style('text-align', 'left')
         .style('padding', '5px 10px')
-        .style('background-color', '#111111')
+        .style('background-color', '#333333')
         .style('color', 'white')
-        .style('border-radius', '5px')
+        .style('border-radius', '4px')
         .style('pointer-events', 'none')
         .style('z-index', 9999);
+      this.tipContent = this.tip.append('div')
+      // add triangle
+      this.tip.append('div')
+        .style('border-top', '8px solid #333333')
+        .style('border-left', '5px solid #333333')
+        .style('border-bottom', '8px solid transparent')
+        .style('border-right', '5px solid transparent')
+        .style('position', 'absolute')
+        .style('top', '95%')
+        .style('left', 0)
     } else {
       this.tip = d3.select('body').select('.circos-tooltip')
     }

@@ -18,7 +18,7 @@ export default class CircularRenderer extends BaseRenderer {
       height: height
     })
 
-    const gieStainColor = defaultConfigs.circos.gieStainColor
+    const gieStainColor = defaultConfigs.circular.gieStainColor
 
     var drawCircos = function (error) {
       let layoutData = arguments[1]
@@ -92,7 +92,7 @@ export default class CircularRenderer extends BaseRenderer {
       height: height
     })
 
-    const gieStainColor = defaultConfigs.circos.gieStainColor
+    const gieStainColor = defaultConfigs.circular.gieStainColor
 
     var drawCircos = function (error) {
       let layoutData = arguments[1]
@@ -225,7 +225,7 @@ export default class CircularRenderer extends BaseRenderer {
       width: width,
       height: height
     })
-    const gieStainColor = defaultConfigs.circos.gieStainColor
+    const gieStainColor = defaultConfigs.circular.gieStainColor
 
     var drawCircos = function (error) {
       let layoutData = arguments[1]
@@ -310,7 +310,7 @@ export default class CircularRenderer extends BaseRenderer {
       height: height
     })
 
-    const gieStainColor = defaultConfigs.circos.gieStainColor
+    const gieStainColor = defaultConfigs.circular.gieStainColor
 
     var drawCircos = function (error) {
       let layoutData = arguments[1]
@@ -398,7 +398,7 @@ export default class CircularRenderer extends BaseRenderer {
       height: height
     })
 
-    const gieStainColor = defaultConfigs.circos.gieStainColor
+    const gieStainColor = defaultConfigs.circular.gieStainColor
 
     var drawCircos = function (error) {
       let layoutData = arguments[1]
@@ -426,6 +426,8 @@ export default class CircularRenderer extends BaseRenderer {
         .layout(layoutData, {
           innerRadius: layout.configs.innerRadius || width / 2 - 100,
           outerRadius: layout.configs.outerRadius || width / 2 - 80,
+          strokeWidth: layout.configs.strokeWidth || 0,
+          stroke: layout.configs.stroke || 'none',
           labels: {
             display: layout.configs.labels || false,
             position: 'center',
@@ -458,8 +460,8 @@ export default class CircularRenderer extends BaseRenderer {
             outerRadius: data[i].configs.outerRadius,
             color: data[i].configs.color || '#000',
             strokeColor: data[i].configs.stroke || '#000',
-            strokeWidth: data[i].configs.strokeWidth,
-            shape: data[i].configs.shape || 'circle',
+            strokeWidth: 0.5,
+            shape: 'circle',
             size: data[i].configs.size || 14,
             min: data[i].configs.min,
             max: data[i].configs.max,
@@ -489,7 +491,7 @@ export default class CircularRenderer extends BaseRenderer {
       height: height
     })
 
-    const gieStainColor = defaultConfigs.circos.gieStainColor
+    const gieStainColor = defaultConfigs.circular.gieStainColor
 
     var drawCircos = function (error) {
       let layoutData = arguments[1]

@@ -1,12 +1,15 @@
 import Plot from '../index.js';
-new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).scatter({
+new Plot.circular(document.getElementsByTagName('canvas')[0], {
+	bgColor: 0xffffff
+}).scatter({
 	fileUrl: '/dist/scatter/GRCh37.json',
 	fileType: 'json',
 	configs: {
-		innerRadius: 300,
+		innerRadius: 320 * 0.95,
 		outerRadius: 320,
 		labels: true,
-		ticks: true
+		ticks: false,
+		opacity: 0
 	}
 }, [{
 	circularType: 'highlight',
@@ -14,192 +17,159 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff
 	fileUrl: '/dist/scatter/cytobands.csv',
 	fileType: 'csv',
 	configs: {
-		innerRadius: 300,
-		outerRadius: 320
-	}
-}, {
-	circularType: 'scatter',
-	name: 'snp_250kb',
-	fileUrl: '/dist/scatter/snp_250kb.txt',
-	fileType: 'csv',
-	configs: {
-		innerRadius: 0.65,
-		outerRadius: 0.95,
-		color: function (d) {
-			if (d.value > 0.006) {
-				return '#4caf50'
-			}
-			if (d.value < 0.002) {
-				return 'rgb(249, 83, 44)'
-			}
-			return '#FF9900'
-		},
-		stroke: 'grey',
-		strokeWidth: 1,
-		shape: 'circle',
-		size: 14,
-		min: 0,
-		max: 0.013,
-		axes: [{
-				spacing: 0.001,
-				start: 0.006,
-				thickness: 1,
-				color: '#4caf50',
-				opacity: 0.3
-			},
-			{
-				spacing: 0.002,
-				start: 0.006,
-				thickness: 1,
-				color: '#4caf50',
-				opacity: 0.5
-			},
-			{
-				spacing: 0.002,
-				start: 0.002,
-				end: 0.006,
-				thickness: 1,
-				color: '#666',
-				opacity: 0.5
-			},
-			{
-				spacing: 0.001,
-				end: 0.002,
-				thickness: 1,
-				color: '#f44336',
-				opacity: 0.5
-			}
-		],
-		backgrounds: [{
-				start: 0.006,
-				color: '#4caf50',
-				opacity: 0.1
-			},
-			{
-				start: 0.002,
-				end: 0.006,
-				color: '#d3d3d3',
-				opacity: 0.1
-			},
-			{
-				end: 0.002,
-				color: '#FFCCCC',
-				opacity: 0.1
-			}
-		],
+		innerRadius: 320 * 0.95,
+		outerRadius: 320,
+		opacity: 1,
 		tips: function (d, i) {
-			return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+			return [{
+				title: 'Name',
+				value: d.name
+			}, {
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'Gie Stain',
+				value: d.gieStain
+			}]
 		}
 	}
 }, {
 	circularType: 'scatter',
-	name: 'snp',
-	fileUrl: '/dist/scatter/snp.txt',
-	fileType: 'csv',
+	name: 'snp_250kb',
+	fileUrl: '/dist/scatter/snp1.txt',
+	fileType: 'json',
 	configs: {
-		color: '#4caf50',
-		stroke: 'green',
-		strokeWidth: 1,
-		shape: 'star',
-		size: 10,
-		min: 0.007,
-		max: 0.013,
-		innerRadius: 0.2,
-		outerRadius: 0.3,
+		innerRadius: 0.65 / 0.95,
+		outerRadius: 0.85 / 0.95,
+		color: '#70A1CE',
+		stroke: '#999999',
+		size: 9 * Math.PI,
+		min: 0,
+		max: 0.01,
 		axes: [{
-				spacing: 0.001,
-				thickness: 1,
-				color: '#4caf50',
-				opacity: 0.3
-			},
-			{
-				spacing: 0.002,
-				thickness: 1,
-				color: '#4caf50',
-				opacity: 0.5
-			}
-		],
+			position: 0.000001,
+			thickness: 1,
+			color: '#70A1CE',
+			opacity: 0.3
+		}, {
+			position: 0.005,
+			thickness: 1,
+			color: '#70A1CE',
+			opacity: 0.5
+		}, {
+			position: 0.01,
+			thickness: 1,
+			color: '#70A1CE',
+			opacity: 0.7
+		}],
 		backgrounds: [{
-				start: 0.007,
-				color: '#4caf50',
-				opacity: 0.1
-			},
-			{
-				start: 0.009,
-				color: '#4caf50',
-				opacity: 0.1
-			},
-			{
-				start: 0.011,
-				color: '#4caf50',
-				opacity: 0.1
-			},
-			{
-				start: 0.013,
-				color: '#4caf50',
-				opacity: 0.1
-			}
-		],
+			start: 0,
+			end: 0.01,
+			color: '#70A1CE',
+			opacity: 0.15
+		}],
 		tips: function (d, i) {
-			return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'Value',
+				value: d.value
+			}]
 		}
 	}
 }, {
 	circularType: 'scatter',
 	name: 'snp_1mb',
-	fileUrl: '/dist/scatter/snp_1mb.txt',
-	fileType: 'csv',
+	fileUrl: '/dist/scatter/snp3.txt',
+	fileType: 'json',
 	configs: {
-		color: '#f44336',
-		stroke: 'red',
-		strokeWidth: 1,
-		shape: 'cross',
-		size: 10,
-		min: 0,
+		color: '#96D06D',
+		stroke: '#999999',
+		size: 9 * Math.PI,
+		min: 0.001,
 		max: 0.002,
-		innerRadius: 0.35,
-		outerRadius: 0.60,
+		innerRadius: 0.4 / 0.95,
+		outerRadius: 0.6 / 0.95,
 		axes: [{
-				spacing: 0.0001,
+				position: 0.001,
 				thickness: 1,
-				color: '#FF9900',
+				color: '#96D06D',
 				opacity: 0.3
 			},
 			{
-				spacing: 0.0005,
+				position: 0.0015,
 				thickness: 1,
-				color: '#FF9900',
+				color: '#96D06D',
 				opacity: 0.5
+			}, {
+				position: 0.002,
+				thickness: 1,
+				color: '#96D06D',
+				opacity: 0.7
 			}
 		],
 		backgrounds: [{
-				end: 0.0004,
-				color: '#FF9900',
-				opacity: 0.1
+			start: 0.001,
+			end: 0.002,
+			color: '#96D06D',
+			opacity: 0.15
+		}],
+		tips: function (d, i) {
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'Value',
+				value: d.value
+			}]
+		}
+	}
+}, {
+	circularType: 'scatter',
+	name: 'snp',
+	fileUrl: '/dist/scatter/snp2.txt',
+	fileType: 'json',
+	configs: {
+		color: '#DEDF5E',
+		stroke: '#999999',
+		size: 9 * Math.PI,
+		min: 0.007,
+		max: 0.01,
+		innerRadius: 0.15 / 0.95,
+		outerRadius: 0.35 / 0.95,
+		axes: [{
+				position: 0.007,
+				thickness: 1,
+				color: '#DEDF5E',
+				opacity: 0.3
 			},
 			{
-				end: 0.0008,
-				color: '#FF9900',
-				opacity: 0.1
-			},
-			{
-				end: 0.0012,
-				color: '#FF9900',
-				opacity: 0.1
-			},
-			{
-				end: 0.0016,
-				color: '#FF9900',
-				opacity: 0.1
-			},
-			{
-				end: 0.002,
-				color: '#FF9900',
-				opacity: 0.1
+				position: 0.0085,
+				thickness: 1,
+				color: '#DEDF5E',
+				opacity: 0.5
+			}, {
+				position: 0.01,
+				thickness: 1,
+				color: '#DEDF5E',
+				opacity: 0.7
 			}
 		],
+		backgrounds: [{
+			start: 0.007,
+			end: 0.01,
+			color: '#DEDF5E',
+			opacity: 0.15
+		}],
 		tips: function (d, i) {
-			return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'Value',
+				value: d.value
+			}]
 		}
 	}
 }]);

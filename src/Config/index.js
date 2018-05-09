@@ -1,8 +1,8 @@
-import circos from './circos'
+import circular from './circular'
 import base from './base'
-import bokeh from './bokeh'
+import chart from './chart'
 export default {
   base,
-  bokeh,
-  circos
+  chart,
+  circular
 }

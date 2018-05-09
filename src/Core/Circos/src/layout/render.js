@@ -140,7 +140,8 @@ export default function renderLayout (parentElement, instance) {
 
   block.append('path')
     .attr('d', entry)
-    .attr('stroke-width', 0)
+    .attr('stroke-width', conf.strokeWidth)
+    .attr('stroke', conf.stroke)
     .attr('pathType', 'arc')
     .attr('pathData', d => {
       d.innerRadius = conf.innerRadius;

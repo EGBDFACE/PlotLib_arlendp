@@ -4,6 +4,8 @@ export default {
   cornerRadius: 0,
   gap: 0.04, // in radian
   opacity: 1,
+  strokeWidth: 0,
+  stroke: '#000000',
   labels: {
     position: 'center',
     display: true,

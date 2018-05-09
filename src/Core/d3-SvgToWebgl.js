@@ -353,9 +353,11 @@ function draw(node, point) {
 		// stroke = width === 0 ? false : stroke;
 		//
 		// Fill
+		var fillValue = node.getValue('fill');
+		var fillOpacityValue = node.getValue('fill-opacity');
 		fill = {
-			color: node.getValue('fill') === 'none' ? undefined : node.getValue('fill') === undefined ? undefined : +color2hex(node.getValue('fill')),
-			alpha: isUndefined(node.getValue('fill-opacity')) ? 1 : +node.getValue('fill-opacity')
+			color: fillValue === 'none' ? undefined : fillValue === undefined ? undefined : +color2hex(fillValue),
+			alpha: isUndefined(fillOpacityValue) ? 1 : +fillOpacityValue
 		};
 		// if (fill) ctx.fillStyle = fill;
 		// fill === 'none' || !fill ? false : fill;
@@ -1146,7 +1148,7 @@ var path$1 = function (node, graphic, stroke, fill, point) {
 	var path, arcFlag = 0;
 	graphic.lineStyle(isUndefined(graphic.lineWidth) ? 1 : graphic.lineWidth, stroke.color || 0, isUndefined(stroke.alpha) ? 1 : +stroke.alpha);
 	// ctx = node.context;
-	if (fill.color) {
+	if (!isUndefined(fill.color)) {
 		graphic.beginFill(fill.color, fill.alpha);
 	}
 	var pathType = node.attrs.get('pathType');
@@ -1162,6 +1164,7 @@ var path$1 = function (node, graphic, stroke, fill, point) {
 				graphic.arc(cx, cy, pathData.outerRadius, pathData.start - Math.PI / 2, pathData.end - Math.PI / 2);
 				graphic.lineTo(pathData.innerRadius * Math.sin(pathData.end) + cx, -pathData.innerRadius * Math.cos(pathData.end) + cy);
 				graphic.arc(cx, cy, pathData.innerRadius, pathData.end - Math.PI / 2, pathData.start - Math.PI / 2, true);
+				graphic.lineTo(pathData.outerRadius * Math.sin(pathData.start) + cx, -pathData.outerRadius * Math.cos(pathData.start) + cy);
 				// } 
 				// else {
 				//     graphic.moveTo(pathData.outerRadius * Math.sin(pathData.start), -pathData.outerRadius * Math.cos(pathData.start));
@@ -1272,7 +1275,7 @@ var path$1 = function (node, graphic, stroke, fill, point) {
 				}
 			}
 		}
-		if (fill.color) {
+		if (!isUndefined(fill.color)) {
 			graphic.endFill();
 		}
 		// graphic.endFill();
