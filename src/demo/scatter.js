@@ -9,6 +9,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		outerRadius: 320,
 		labels: true,
 		ticks: true,
+		labelSuffix: 'M',
 		opacity: 0
 	}
 }, [{

@@ -438,7 +438,8 @@ export default class CircularRenderer extends BaseRenderer {
           opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || ''
           },
           tooltipContent: layout.configs.tips
         })

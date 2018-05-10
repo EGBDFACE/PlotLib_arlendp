@@ -63,6 +63,7 @@ function renderLayoutTicks(conf, layout, instance) {
   }
 
   function displayLabel(v, i) {
+    console.log(v, i)
     if (conf.ticks.labels === false) {
       return null
     } else if (conf.ticks.labelDisplay0 === false && i === 0) {
@@ -113,7 +114,7 @@ function renderLayoutTicks(conf, layout, instance) {
     .style('text-anchor', 'middle')
     .style('font-size', '' + conf.ticks.labelSize + 'px')
     .style('fill', conf.ticks.labelColor)
-    .text((d) => (d.label == 0 || d.label == null) ? '' : d.label + 'M')
+    .text((d) => d.label)
 }
 
 export default function renderLayout(parentElement, instance) {
