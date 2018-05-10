@@ -8,7 +8,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		innerRadius: 320 * 0.95,
 		outerRadius: 320,
 		labels: true,
-		ticks: false,
+		ticks: true,
 		opacity: 0
 	}
 }, [{
@@ -41,7 +41,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	configs: {
 		innerRadius: 0.65 / 0.95,
 		outerRadius: 0.85 / 0.95,
-		color: '#70A1CE',
+		color: '#FFAFE3',
 		stroke: '#999999',
 		size: 9 * Math.PI,
 		min: 0,
@@ -49,23 +49,23 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		axes: [{
 			position: 0.000001,
 			thickness: 1,
-			color: '#70A1CE',
+			color: '#FFAFE3',
 			opacity: 0.3
 		}, {
 			position: 0.005,
 			thickness: 1,
-			color: '#70A1CE',
+			color: '#FFAFE3',
 			opacity: 0.5
 		}, {
 			position: 0.01,
 			thickness: 1,
-			color: '#70A1CE',
+			color: '#FFAFE3',
 			opacity: 0.7
 		}],
 		backgrounds: [{
 			start: 0,
 			end: 0.01,
-			color: '#70A1CE',
+			color: '#FFAFE3',
 			opacity: 0.15
 		}],
 		tips: function (d, i) {
@@ -84,7 +84,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/scatter/snp3.txt',
 	fileType: 'json',
 	configs: {
-		color: '#96D06D',
+		color: '#C7F470',
 		stroke: '#999999',
 		size: 9 * Math.PI,
 		min: 0.001,
@@ -94,25 +94,25 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		axes: [{
 				position: 0.001,
 				thickness: 1,
-				color: '#96D06D',
+				color: '#C7F470',
 				opacity: 0.3
 			},
 			{
 				position: 0.0015,
 				thickness: 1,
-				color: '#96D06D',
+				color: '#C7F470',
 				opacity: 0.5
 			}, {
 				position: 0.002,
 				thickness: 1,
-				color: '#96D06D',
+				color: '#C7F470',
 				opacity: 0.7
 			}
 		],
 		backgrounds: [{
 			start: 0.001,
 			end: 0.002,
-			color: '#96D06D',
+			color: '#C7F470',
 			opacity: 0.15
 		}],
 		tips: function (d, i) {
@@ -131,7 +131,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/scatter/snp2.txt',
 	fileType: 'json',
 	configs: {
-		color: '#DEDF5E',
+		color: '#FFBE91',
 		stroke: '#999999',
 		size: 9 * Math.PI,
 		min: 0.007,
@@ -141,25 +141,25 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		axes: [{
 				position: 0.007,
 				thickness: 1,
-				color: '#DEDF5E',
+				color: '#FFBE91',
 				opacity: 0.3
 			},
 			{
 				position: 0.0085,
 				thickness: 1,
-				color: '#DEDF5E',
+				color: '#FFBE91',
 				opacity: 0.5
 			}, {
 				position: 0.01,
 				thickness: 1,
-				color: '#DEDF5E',
+				color: '#FFBE91',
 				opacity: 0.7
 			}
 		],
 		backgrounds: [{
 			start: 0.007,
 			end: 0.01,
-			color: '#DEDF5E',
+			color: '#FFBE91',
 			opacity: 0.15
 		}],
 		tips: function (d, i) {

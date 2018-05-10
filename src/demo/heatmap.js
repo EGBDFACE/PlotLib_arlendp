@@ -1,5 +1,7 @@
 import Plot from '../index.js';
-new Plot.circular(document.getElementsByTagName('canvas')[0]).chords({
+new Plot.circular(document.getElementsByTagName('canvas')[0], {
+	bgColor: 0xffffff
+}).chords({
 	fileUrl: '/dist/heatmap/10GRCh37.json',
 	fileType: 'json',
 	configs: {

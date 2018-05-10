@@ -1,8 +1,14 @@
-import {arc} from 'd3-shape'
-import {range} from 'd3-array'
-import {event} from 'd3-selection'
+import {
+  arc
+} from 'd3-shape'
+import {
+  range
+} from 'd3-array'
+import {
+  event
+} from 'd3-selection'
 
-function renderLayoutLabels (conf, block) {
+function renderLayoutLabels(conf, block) {
   const radius = conf.innerRadius + conf.labels.radialOffset
 
   // const labelArc = arc()
@@ -44,9 +50,9 @@ function renderLayoutLabels (conf, block) {
     .text((d) => d.label)
 }
 
-function renderLayoutTicks (conf, layout, instance) {
+function renderLayoutTicks(conf, layout, instance) {
   // Returns an array of tick angles and labels, given a block.
-  function blockTicks (d) {
+  function blockTicks(d) {
     const k = (d.end - d.start) / d.len
     return range(0, d.len, conf.ticks.spacing).map((v, i) => {
       return {
@@ -56,7 +62,7 @@ function renderLayoutTicks (conf, layout, instance) {
     })
   }
 
-  function displayLabel (v, i) {
+  function displayLabel(v, i) {
     if (conf.ticks.labels === false) {
       return null
     } else if (conf.ticks.labelDisplay0 === false && i === 0) {
@@ -97,19 +103,20 @@ function renderLayoutTicks (conf, layout, instance) {
     .style('stroke', conf.ticks.color)
 
   ticks.append('text')
-    .attr('x', 8)
-    .attr('dy', '.35em')
+    .attr('x', 10)
+    .attr('dy', '0.25em')
     .attr(
       'transform',
-      (d) => d.angle > Math.PI ? 'rotate(180)translate(-16)' : null
+      (d) => d.angle > Math.PI ? 'rotate(90)translate(-16)' : 'rotate(90)'
     )
-    .style('text-anchor', (d) => d.angle > Math.PI ? 'end' : null)
+    // .style('text-anchor', (d) => d.angle > Math.PI ? 'middle' : 'middle')
+    .style('text-anchor', 'middle')
     .style('font-size', '' + conf.ticks.labelSize + 'px')
     .style('fill', conf.ticks.labelColor)
-    .text((d) => d.label)
+    .text((d) => (d.label == 0 || d.label == null) ? '' : d.label + 'M')
 }
 
-export default function renderLayout (parentElement, instance) {
+export default function renderLayout(parentElement, instance) {
   const conf = instance._layout.conf
   parentElement.select('.cs-layout').remove()
 
@@ -128,7 +135,9 @@ export default function renderLayout (parentElement, instance) {
     .attr('opacity', conf.opacity)
 
   Object.keys(conf.events).forEach((eventName) => {
-    block.on(eventName, function (d, i, nodes) { conf.events[eventName](d, i, nodes, event) })
+    block.on(eventName, function (d, i, nodes) {
+      conf.events[eventName](d, i, nodes, event)
+    })
   })
 
   const entry = arc()

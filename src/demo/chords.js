@@ -5,7 +5,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff
 	configs: {
 		innerRadius: 300,
 		outerRadius: 320,
-		labels: false,
+		labels: true,
 		ticks: true,
 		tips: function (d) {
 			return d.label

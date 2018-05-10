@@ -433,7 +433,7 @@ export default class CircularRenderer extends BaseRenderer {
             position: 'center',
             size: 14,
             color: '#000',
-            radialOffset: 30
+            radialOffset: 26
           },
           opacity: layout.configs.opacity,
           ticks: {
