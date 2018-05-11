@@ -7,9 +7,9 @@ export default {
   strokeWidth: 0,
   stroke: '#000000',
   labels: {
-    position: 'center',
+    position: 'left',
     display: true,
-    size: 14,
+    size: 15,
     color: '#000',
     radialOffset: 20
   },
@@ -22,7 +22,7 @@ export default {
     labelSuffix: '',
     labelDenominator: 1,
     labelDisplay0: false,
-    labelSize: 10,
+    labelSize: 12,
     labelColor: '#000',
     labelFont: 'default',
     majorSpacing: 5,

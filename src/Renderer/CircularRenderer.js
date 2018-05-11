@@ -430,9 +430,6 @@ export default class CircularRenderer extends BaseRenderer {
           stroke: layout.configs.stroke || 'none',
           labels: {
             display: layout.configs.labels || false,
-            position: 'center',
-            size: 14,
-            color: '#000',
             radialOffset: 26
           },
           opacity: layout.configs.opacity,
