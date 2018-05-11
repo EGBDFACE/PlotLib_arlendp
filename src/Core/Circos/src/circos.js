@@ -69,7 +69,7 @@ class Core {
         .style('border-bottom', '8px solid transparent')
         .style('border-right', '5px solid transparent')
         .style('position', 'absolute')
-        .style('top', '95%')
+        .style('top', 'calc(100% - 5px)')
         .style('left', 0)
     } else {
       this.tip = d3.select('body').select('.circos-tooltip')
