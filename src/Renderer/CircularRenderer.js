@@ -462,6 +462,7 @@ export default class CircularRenderer extends BaseRenderer {
             color: data[i].configs.color || '#000',
             strokeColor: data[i].configs.stroke || '#000',
             strokeWidth: 0.5,
+            fillOpacity: data[i].configs.fillOpacity || 1,
             shape: 'circle',
             size: data[i].configs.size || 14,
             min: data[i].configs.min,

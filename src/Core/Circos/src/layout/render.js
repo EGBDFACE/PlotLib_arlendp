@@ -63,7 +63,6 @@ function renderLayoutTicks(conf, layout, instance) {
   }
 
   function displayLabel(v, i) {
-    console.log(v, i)
     if (conf.ticks.labels === false) {
       return null
     } else if (conf.ticks.labelDisplay0 === false && i === 0) {

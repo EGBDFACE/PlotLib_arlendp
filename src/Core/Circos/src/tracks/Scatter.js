@@ -18,6 +18,10 @@ const defaultConf = assign({
     value: 'out',
     iteratee: false
   },
+  fillOpacity: {
+    value: 1,
+    iteratee: true
+  },
   color: {
     value: '#fd6a62',
     iteratee: true
@@ -87,6 +91,7 @@ export default class Scatter extends Track {
       .enter().append('path')
       .attr('class', 'point')
       .attr('opacity', conf.opacity)
+      .attr('fill-opacity', conf.fillOpacity)
       .attr('d', (d, i, j) => d.symbol(d, i, j))
       .attr('transform', (d) => {
         return `

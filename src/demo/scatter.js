@@ -1,4 +1,7 @@
 import Plot from '../index.js';
+import {
+	scaleLinear
+} from 'd3-scale';
 new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	bgColor: 0xffffff
 }).scatter({
@@ -45,6 +48,10 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		color: '#FFAFE3',
 		stroke: '#999999',
 		size: 9 * Math.PI,
+		fillOpacity: function (d) {
+			var i = scaleLinear().domain([0, 0.01]).range([0.5, 1]).clamp(true)(d.value)
+			return i;
+		},
 		min: 0,
 		max: 0.01,
 		axes: [{
@@ -88,6 +95,10 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		color: '#C7F470',
 		stroke: '#999999',
 		size: 9 * Math.PI,
+		fillOpacity: function (d) {
+			var i = scaleLinear().domain([0.001, 0.002]).range([0.5, 1]).clamp(true)(d.value)
+			return i;
+		},
 		min: 0.001,
 		max: 0.002,
 		innerRadius: 0.4 / 0.95,
@@ -137,6 +148,10 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 		size: 9 * Math.PI,
 		min: 0.007,
 		max: 0.01,
+		fillOpacity: function (d) {
+			var i = scaleLinear().domain([0.007, 0.01]).range([0.5, 1]).clamp(true)(d.value)
+			return i;
+		},
 		innerRadius: 0.15 / 0.95,
 		outerRadius: 0.35 / 0.95,
 		axes: [{
