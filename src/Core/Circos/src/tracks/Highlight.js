@@ -10,7 +10,7 @@ const defaultConf = assign({
     iteratee: true
   },
   strokeColor: {
-    value: '#000000',
+    value: '#dddddd',
     iteratee: true
   },
   strokeWidth: {
