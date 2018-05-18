@@ -1,7 +1,15 @@
-import {slice} from "./array";
+import {
+  slice
+} from "./array";
 import constant from "./constant";
-import {cos, halfPi, sin} from "./math";
-import {path} from "d3-path";
+import {
+  cos,
+  halfPi,
+  sin
+} from "./math";
+import {
+  path
+} from "../../d3-path";
 
 function defaultSource(d) {
   return d.source;
@@ -23,36 +31,49 @@ function defaultEndAngle(d) {
   return d.endAngle;
 }
 
-export default function() {
+export default function () {
   var source = defaultSource,
-      target = defaultTarget,
-      radius = defaultRadius,
-      startAngle = defaultStartAngle,
-      endAngle = defaultEndAngle,
-      context = null;
+    target = defaultTarget,
+    radius = defaultRadius,
+    startAngle = defaultStartAngle,
+    endAngle = defaultEndAngle,
+    context = null;
 
   function ribbon() {
     var buffer,
-        argv = slice.call(arguments),
-        s = source.apply(this, argv),
-        t = target.apply(this, argv),
-        sr = +radius.apply(this, (argv[0] = s, argv)),
-        sa0 = startAngle.apply(this, argv) - halfPi,
-        sa1 = endAngle.apply(this, argv) - halfPi,
-        sx0 = sr * cos(sa0),
-        sy0 = sr * sin(sa0),
-        tr = +radius.apply(this, (argv[0] = t, argv)),
-        ta0 = startAngle.apply(this, argv) - halfPi,
-        ta1 = endAngle.apply(this, argv) - halfPi,
-        arcs = [];
+      argv = slice.call(arguments),
+      s = source.apply(this, argv),
+      t = target.apply(this, argv),
+      sr = +radius.apply(this, (argv[0] = s, argv)),
+      sa0 = startAngle.apply(this, argv) - halfPi,
+      sa1 = endAngle.apply(this, argv) - halfPi,
+      sx0 = sr * cos(sa0),
+      sy0 = sr * sin(sa0),
+      tr = +radius.apply(this, (argv[0] = t, argv)),
+      ta0 = startAngle.apply(this, argv) - halfPi,
+      ta1 = endAngle.apply(this, argv) - halfPi,
+      arcs = [];
 
     if (!context) context = buffer = path();
 
     context.moveTo(sx0, sy0);
-    context.arc(0, 0, sr, sa0, sa1) && arcs.push({cx: 0, cy: 0, radius: sr, startAngle: sa0, endAngle: sa1});
+    context.arc(0, 0, sr, sa0, sa1) && arcs.push({
+      cx: 0,
+      cy: 0,
+      radius: sr,
+      startAngle: sa0,
+      endAngle: sa1
+    });
+
     if (sa0 !== ta0 || sa1 !== ta1) { // TODO sr !== tr?
       context.quadraticCurveTo(0, 0, tr * cos(ta0), tr * sin(ta0));
-      context.arc(0, 0, tr, ta0, ta1) && arcs.push({cx: 0, cy: 0, radius: tr, startAngle: ta0, endAngle: ta1});
+      context.arc(0, 0, tr, ta0, ta1) && arcs.push({
+        cx: 0,
+        cy: 0,
+        radius: tr,
+        startAngle: ta0,
+        endAngle: ta1
+      });
     }
     context.quadraticCurveTo(0, 0, sx0, sy0);
     context.closePath();
@@ -61,27 +82,27 @@ export default function() {
     if (buffer) return context = null, buffer || null;
   }
 
-  ribbon.radius = function(_) {
+  ribbon.radius = function (_) {
     return arguments.length ? (radius = typeof _ === "function" ? _ : constant(+_), ribbon) : radius;
   };
 
-  ribbon.startAngle = function(_) {
+  ribbon.startAngle = function (_) {
     return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant(+_), ribbon) : startAngle;
   };
 
-  ribbon.endAngle = function(_) {
+  ribbon.endAngle = function (_) {
     return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant(+_), ribbon) : endAngle;
   };
 
-  ribbon.source = function(_) {
+  ribbon.source = function (_) {
     return arguments.length ? (source = _, ribbon) : source;
   };
 
-  ribbon.target = function(_) {
+  ribbon.target = function (_) {
     return arguments.length ? (target = _, ribbon) : target;
   };
 
-  ribbon.context = function(_) {
+  ribbon.context = function (_) {
     return arguments.length ? ((context = _ == null ? null : _), ribbon) : context;
   };
 

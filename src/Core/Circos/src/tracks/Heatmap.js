@@ -44,6 +44,8 @@ export default class Heatmap extends Track {
           .startAngle((d, i) => this.theta(d.start, layout.blocks[d.block_id]))
           .endAngle((d, i) => this.theta(d.end, layout.blocks[d.block_id]))
         )
-        .attr('fill', conf.colorValue)
+        .attr('fill', function (d) {
+          return conf.colorValue(d, conf.min === null ? conf.cmin : conf.min, conf.max === null ? conf.cmax : conf.max)
+        })
   }
 }

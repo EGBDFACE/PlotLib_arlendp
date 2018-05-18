@@ -1,4 +1,4 @@
-const d3 = Object.assign({}, require('d3-selection'), require('d3-zoom'), require('d3-scale'), require('d3-axis'), require('d3-format'), require('../Core/d3-SvgToWebgl'));
+const d3 = Object.assign({}, require('d3-selection'), require('d3-array'), require('d3-zoom'), require('d3-scale'), require('d3-axis'), require('d3-request'), require('d3-format'), require('../Core/d3-SvgToWebgl'));
 import BaseRenderer from './BaseRenderer';
 // deal with d3.event is null error
 import {
@@ -8,6 +8,9 @@ import {
   roundNumber
 } from '../Util';
 import defaultConfigs from '../Config';
+import {
+  CanvasSpriteRenderer
+} from 'pixi.js';
 export default class ChartRenderer extends BaseRenderer {
   constructor(elem, options) {
     super(elem, options)
@@ -54,7 +57,7 @@ export default class ChartRenderer extends BaseRenderer {
       .attr('y', -5)
       .attr('width', margin.h + 1)
       .attr('height', contentSize.h + 10)
-      
+
     const content = container.append('g')
       .classed('content', true)
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
@@ -98,9 +101,9 @@ export default class ChartRenderer extends BaseRenderer {
       .attr('transform', 'translate(' + margin.h + ', ' + margin.v + ')')
       .attr('clip-path', 'url(#clipY)')
       .call(yAxis);
-    
+
     var rootNode = content.node().rootNode;
-    
+
     function zoom() {
       var node = content.node().glElem;
       // var xPath = cX.select('path.domain').node().glElem;
@@ -119,7 +122,7 @@ export default class ChartRenderer extends BaseRenderer {
             y: d.position.y
           }
         }
-        d.position.x = (d.oriPos.x * transform.k + transform.x) ;
+        d.position.x = (d.oriPos.x * transform.k + transform.x);
       })
       yTicks.forEach(function (d) {
         if (!d.oriPos) {
@@ -181,7 +184,7 @@ export default class ChartRenderer extends BaseRenderer {
       .append('rect')
       .attr('width', contentSize.w)
       .attr('height', contentSize.h);
-    
+
     // x axis clip
     svg.append('defs')
       .append('clipPath')
@@ -237,6 +240,7 @@ export default class ChartRenderer extends BaseRenderer {
         return d.stroke || style.stroke
       });
     var rootNode = content.node().rootNode;
+
     function zoomed() {
       var node = content.node().glElem;
       // var xPath = cX.select('path.domain').node().glElem;
@@ -405,17 +409,17 @@ export default class ChartRenderer extends BaseRenderer {
       .style('fill', function (d) {
         return d.color || style.fill;
       })
-    .on('mouseover', function (d) {
+      .on('mouseover', function (d) {
         tips
-        .style('opacity', 0.9)
-        .style('top', currentEvent.data.originalEvent.clientY - 40 + 'px')
-        .style('left', currentEvent.data.originalEvent.clientX + 'px')
-        .html(d.label)
-    })
-    .on('mouseout', function (d) {
-      tips
-        .style('opacity', 0);
-    });
+          .style('opacity', 0.9)
+          .style('top', currentEvent.data.originalEvent.clientY - 40 + 'px')
+          .style('left', currentEvent.data.originalEvent.clientX + 'px')
+          .html(d.label)
+      })
+      .on('mouseout', function (d) {
+        tips
+          .style('opacity', 0);
+      });
 
     // function generateTip(date, rate) {
     //   return '<ul>' +
@@ -424,6 +428,7 @@ export default class ChartRenderer extends BaseRenderer {
     //     '</ul>';
     // }
     var rootNode = content.node().rootNode;
+
     function zoomed() {
       var node = content.node().glElem;
       var xTicks = xAxis._groups[0].map(function (d) {
@@ -473,223 +478,247 @@ export default class ChartRenderer extends BaseRenderer {
     const margin = options.canvasMargin;
     const barWidth = options.barWidth;
     const ticks = options.ticks;
-    let x = d3.scaleLinear().domain(options.range.x).range([0, contentSize.w]);
-    let y = d3.scaleLinear().domain(options.range.y).range([contentSize.h, 0]);
-    const xAxis = d3.axisBottom(x).tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));
-    const yAxis = d3.axisLeft(y);
+    // let x = d3.scaleLinear().domain(options.range.x).range([0, contentSize.w]);
+    // let y = d3.scaleLinear().domain(options.range.y).range([contentSize.h, 0]);
+    // const xAxis = d3.axisBottom(x).tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));
+    // const yAxis = d3.axisLeft(y);
     const style = options.style;
-    // Setup the svg and group we will draw the box plot in
-    const svg = d3.select(this.renderer.view)
-      .toCanvas(this.renderer);
+    const self = this;
+    // deal with data
+    if (data.fileUrl) {
+      d3[data.fileType](data.fileUrl, function (data) {
+        let columns = data.columns;
+        let dataRecord = data.reduce(function (acc, v, i) {
+          const key = v.key;
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(v);
+          return acc;
+        }, {})
+        const recordMinandMax = {};
+        const recordQuantile = {};
+        const recordOutlier = {}
+        const xAxisData = Object.keys(dataRecord);
+        // sort data record
+        xAxisData.forEach(function (key) {
+          dataRecord[key].sort(function (a, b) {
+            return a.value - b.value
+          })
+          recordMinandMax[key] = {
+            min: +dataRecord[key][0].value,
+            max: +dataRecord[key][dataRecord[key].length - 1].value
+          }
+          recordQuantile[key] = getQuantile(dataRecord[key].map(function (v) {
+            return +v.value
+          }))
+          const IQR = recordQuantile[key][2] - recordQuantile[key][0]
+          const min = recordQuantile[key][0] - 1.5 * IQR;
+          const max = recordQuantile[key][2] + 1.5 * IQR;
+          recordOutlier[key] = {
+            low: dataRecord[key].filter(function (d) {
+              return +d.value < min
+            }),
+            high: dataRecord[key].filter(function (d) {
+              return +d.value > max
+            })
+          }
+        })
+        // calculate the xscale and yscale
+        let xScale = d3.scalePoint().domain(xAxisData).range([0, contentSize.w]);
+        xScale.padding([barWidth * 3 / 4 / xScale.step()]);
+        let yScale = d3.scaleLinear().domain([
+          d3.min(Object.values(recordMinandMax), function (v) {
+            return v.min
+          }),
+          d3.max(Object.values(recordMinandMax), function (v) {
+            return v.max
+          })
+        ]).range([contentSize.h, 0])
+        const svg = d3.select(self.renderer.view)
+          .toCanvas(self.renderer);
 
-    options.zoom && svg.call(d3.zoom().on('zoom', zoomed));
+        options.zoom && svg.call(d3.zoom().on('zoom', zoomed));
 
-    // add clipPath
-    const defs = svg.append('defs');
-    const clip = defs
-      .append('clipPath')
-      .attr('id', 'clip')
-      .append('rect')
-      .attr('width', contentSize.w)
-      .attr('height', contentSize.h);
-    // x axis clip
-    defs
-      .append('clipPath')
-      .attr('id', 'clipX')
-      .append('rect')
-      .attr('x', -5)
-      .attr('width', contentSize.w + 10)
-      .attr('height', margin.v)
-    // y axis clip
-    defs
-      .append('clipPath')
-      .attr('id', 'clipY')
-      .append('rect')
-      .attr('x', -margin.h)
-      .attr('y', -5)
-      .attr('width', margin.h + 1)
-      .attr('height', contentSize.h + 10)
-    // const xClip = defs.append('clipPath')
-    //   .attr('id', 'x-clip')
-    //   .append('rect')
-    //   .attr('width', contentSize.w)
-    //   .attr('height', margin.v);
-    // add container
-    const container = svg.append("g")
-      .attr('clip-path', 'url(#clip)')
-      .attr("transform", "translate(" + margin.h + "," + margin.v + ")");
-    // Move the left axis over 25 pixels, and the top axis over 35 pixels
-    const axisG = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)');
-    const axisTopG = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
-      .attr('clip-path', 'url(#clipX)');
+        // add clipPath
+        const defs = svg.append('defs');
+        const clip = defs
+          .append('clipPath')
+          .attr('id', 'clip')
+          .append('rect')
+          .attr('width', contentSize.w)
+          .attr('height', contentSize.h);
+        // x axis clip
+        defs
+          .append('clipPath')
+          .attr('id', 'clipX')
+          .append('rect')
+          .attr('x', -5)
+          .attr('width', contentSize.w + 10)
+          .attr('height', margin.v)
+        // y axis clip
+        defs
+          .append('clipPath')
+          .attr('id', 'clipY')
+          .append('rect')
+          .attr('x', -margin.h)
+          .attr('y', -5)
+          .attr('width', margin.h + 1)
+          .attr('height', contentSize.h + 10)
+        // add container
+        const container = svg.append("g")
+          .attr('clip-path', 'url(#clip)')
+          .attr("transform", "translate(" + margin.h + "," + margin.v + ")");
 
-    // Setup the group the box plot elements will render in
-    const g = container.append("g");
+        const axisY = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)');
+        const axisX = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
+          .attr('clip-path', 'url(#clipX)');
 
-    // Draw the box plot vertical lines
-    const verticalLines = g.selectAll(".verticalLines")
-      .data(data)
-      .enter()
-      .append("line")
-      .attr("x1", function (datum) {
-        return x(datum.key);
-      })
-      .attr("y1", function (datum) {
-        const whisker = datum.whiskers[0];
-        return y(whisker);
-      })
-      .attr("x2", function (datum) {
-        return x(datum.key);
-      })
-      .attr("y2", function (datum) {
-        const whisker = datum.whiskers[1];
-        return y(whisker);
-      })
-      .attr("stroke", style.stroke)
-      .attr("stroke-width", style.strokeWidth)
-      .attr("fill", "none");
+        // group the boxplot
+        const content = container.append("g");
+        xAxisData.forEach(function (key) {
+          const lines = [{
+            y1: recordQuantile[key][2]
+          }, {
+            y2: recordQuantile[key][0]
+          }];
+          if (recordOutlier[key].high.length) {
+            lines[0].y2 = recordQuantile[key][2] + 1.5 * (recordQuantile[key][2] - recordQuantile[key][0]);
+          } else {
+            lines[0].y2 = recordMinandMax[key].max
+          }
+          if (recordOutlier[key].low.length) {
+            lines[1].y1 = recordQuantile[key][0] - 1.5 * (recordQuantile[key][2] - recordQuantile[key][0]);
+          } else {
+            lines[1].y1 = recordMinandMax[key].min
+          }
+          // Draw the box plot vertical lines
+          const verticalLines = content.selectAll(".verticalLines")
+            .data(lines)
+            .enter()
+            .append("line")
+            .attr("x1", function (d) {
+              return xScale(key);
+            })
+            .attr("y1", function (d) {
+              return yScale(d.y1);
+            })
+            .attr("x2", function (d) {
+              return xScale(key);
+            })
+            .attr("y2", function (d) {
+              return yScale(d.y2);
+            })
+            .attr("stroke", style.stroke)
+            .attr("stroke-width", style.strokeWidth)
+            .attr("fill", "none");
 
-    // Draw the boxes of the box plot, filled in white and on top of vertical lines
-    const rects = g.selectAll("rect")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("width", barWidth)
-      .attr("height", function (datum) {
-        const quartiles = datum.quartile;
-        const height = y(quartiles[0]) - y(quartiles[2]);
-        return height;
-      })
-      .attr("x", function (datum) {
-        return x(datum.key) - barWidth / 2;
-      })
-      .attr("y", function (datum) {
-        return y(datum.quartile[2]);
-      })
-      .attr("fill", function (datum) {
-        return datum.color || style.fill;
-      })
-      .attr("stroke", style.stroke)
-      .attr("stroke-width", style.strokeWidth);
+          // Draw the boxes of the box plot, filled in white and on top of vertical lines
+          const rects = content.selectAll(".rect")
+            .data([recordQuantile[key]])
+            .enter()
+            .append("rect")
+            .attr("width", barWidth)
+            .attr("height", function (d) {
+              return yScale(d[0]) - yScale(d[2]);
+            })
+            .attr("x", function (d) {
+              return xScale(key) - barWidth / 2;
+            })
+            .attr("y", function (d) {
+              return yScale(d[2]);
+            })
+            .attr("fill", function (d) {
+              return d.color || style.fill;
+            })
+            .attr("stroke", style.stroke)
+            .attr("stroke-width", style.strokeWidth);
 
-    // Now render all the horizontal lines at once - the whiskers and the median
-    const horizontalLineConfigs = [
-      // Top whisker
-      {
-        x1: function (datum) {
-          return x(datum.key) - barWidth / 2
-        },
-        y1: function (datum) {
-          return y(datum.whiskers[0])
-        },
-        x2: function (datum) {
-          return x(datum.key) + barWidth / 2;
-        },
-        y2: function (datum) {
-          return y(datum.whiskers[0])
+          const horizontalLine = content.selectAll(".whiskers")
+            .data([recordQuantile[key][1]])
+            .enter()
+            .append("line")
+            .attr("x1", function (d) {
+              return xScale(key) - barWidth / 2
+            })
+            .attr("y1", function (d) {
+              return yScale(d)
+            })
+            .attr("x2", function (d) {
+              return xScale(key) + barWidth / 2
+            })
+            .attr("y2", function (d) {
+              return yScale(d)
+            })
+            .attr("stroke", style.stroke)
+            .attr("stroke-width", style.strokeWidth)
+            .attr("fill", "none");
+        })
+        const xAxis = d3.axisBottom(xScale);
+        // .tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));
+        const yAxis = d3.axisLeft(yScale);
+        // Setup a scale on the left
+        const cY = axisY.append("g")
+          .call(yAxis);
+
+        // Setup a series axis on the top
+        const cX = axisX.append("g")
+          .call(xAxis);
+
+        // function zoomed() {
+        //   g.attr('transform', currentEvent.transform);
+        //   cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+        //   cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+        // }
+        var rootNode = content.node().rootNode;
+
+        function zoomed() {
+          var node = content.node().glElem;
+          // var xPath = cX.select('path.domain').node().glElem;
+          var xTicks = cX.selectAll('g.tick')._groups[0].map(function (d) {
+            return d.glElem;
+          })
+          var yTicks = cY.selectAll('g.tick')._groups[0].map(function (d) {
+            return d.glElem;
+          })
+          // console.log(xPath, xTicks)
+          var transform = currentEvent.transform;
+          xTicks.forEach(function (d) {
+            if (!d.oriPos) {
+              d.oriPos = {
+                x: d.position.x,
+                y: d.position.y
+              }
+            }
+            d.position.x = (d.oriPos.x * transform.k + transform.x);
+          })
+          yTicks.forEach(function (d) {
+            if (!d.oriPos) {
+              d.oriPos = {
+                x: d.position.x,
+                y: d.position.y
+              }
+            }
+            d.position.y = (d.oriPos.y * transform.k + transform.y);
+          })
+          node.scale.x = transform.k;
+          node.scale.y = transform.k;
+          node.position.x = transform.x;
+          node.position.y = transform.y;
+          rootNode.renderer.render(rootNode.stage);
+          // content.attr('transform', currentEvent.transform);
+          // cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
+          // cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
         }
-      },
-      // Median line
-      {
-        x1: function (datum) {
-          return x(datum.key) - barWidth / 2
-        },
-        y1: function (datum) {
-          return y(datum.quartile[1])
-        },
-        x2: function (datum) {
-          return x(datum.key) + barWidth / 2
-        },
-        y2: function (datum) {
-          return y(datum.quartile[1])
-        }
-      },
-      // Bottom whisker
-      {
-        x1: function (datum) {
-          return x(datum.key) - barWidth / 2
-        },
-        y1: function (datum) {
-          return y(datum.whiskers[1])
-        },
-        x2: function (datum) {
-          return x(datum.key) + barWidth / 2
-        },
-        y2: function (datum) {
-          return y(datum.whiskers[1])
-        }
-      }
-    ];
-
-    for (let i = 0; i < horizontalLineConfigs.length; i++) {
-      const lineConfig = horizontalLineConfigs[i];
-
-      // Draw the whiskers at the min for this series
-      const horizontalLine = g.selectAll(".whiskers")
-        .data(data)
-        .enter()
-        .append("line")
-        .attr("x1", lineConfig.x1)
-        .attr("y1", lineConfig.y1)
-        .attr("x2", lineConfig.x2)
-        .attr("y2", lineConfig.y2)
-        .attr("stroke", style.stroke)
-        .attr("stroke-width", style.strokeWidth)
-        .attr("fill", "none");
+      })
     }
 
-    // Setup a scale on the left
-    const cY = axisG.append("g")
-      .call(yAxis);
-
-    // Setup a series axis on the top
-    const cX = axisTopG.append("g")
-      .call(xAxis);
-
-    // function zoomed() {
-    //   g.attr('transform', currentEvent.transform);
-    //   cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
-    //   cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
-    // }
-    var rootNode = g.node().rootNode;
-
-    function zoomed() {
-      var node = g.node().glElem;
-      // var xPath = cX.select('path.domain').node().glElem;
-      var xTicks = cX.selectAll('g.tick')._groups[0].map(function (d) {
-        return d.glElem;
-      })
-      var yTicks = cY.selectAll('g.tick')._groups[0].map(function (d) {
-        return d.glElem;
-      })
-      // console.log(xPath, xTicks)
-      var transform = currentEvent.transform;
-      xTicks.forEach(function (d) {
-        if (!d.oriPos) {
-          d.oriPos = {
-            x: d.position.x,
-            y: d.position.y
-          }
-        }
-        d.position.x = (d.oriPos.x * transform.k + transform.x);
-      })
-      yTicks.forEach(function (d) {
-        if (!d.oriPos) {
-          d.oriPos = {
-            x: d.position.x,
-            y: d.position.y
-          }
-        }
-        d.position.y = (d.oriPos.y * transform.k + transform.y);
-      })
-      node.scale.x = transform.k;
-      node.scale.y = transform.k;
-      node.position.x = transform.x;
-      node.position.y = transform.y;
-      rootNode.renderer.render(rootNode.stage);
-      // content.attr('transform', currentEvent.transform);
-      // cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
-      // cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
+    function getQuantile(d) {
+      return [
+        d3.quantile(d, 0.25),
+        d3.quantile(d, 0.5),
+        d3.quantile(d, 0.75)
+      ]
     }
   }
 }

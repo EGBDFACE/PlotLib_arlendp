@@ -32,6 +32,13 @@ export default class CircularRenderer extends BaseRenderer {
               d.value = parseFloat(d.value || 0);
               return d;
           })
+        } else if (data[i].circularType === 'scatter') {
+          fileData[i] = fileData[i].map(function (d) {
+            d.block_id = d.chrom;
+            d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
+            d.value = parseFloat(d.value || 0);
+            return d;
+          })
         }
       })
 
@@ -41,12 +48,14 @@ export default class CircularRenderer extends BaseRenderer {
           outerRadius: layout.configs.outerRadius || width / 2 - 80,
           labels: {
             display: layout.configs.labels || false,
-            radialOffset: 70
+            radialOffset: 26
           },
           opacity : layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5
           },
           tooltipContent: layout.configs.tips
         })
@@ -68,6 +77,22 @@ export default class CircularRenderer extends BaseRenderer {
             color: 'none',
             stroke: data[i].configs.stroke || '#000000',
             strokeWidth: data[i].configs.strokeWidth || 1,
+            tooltipContent: data[i].configs.tips
+          })
+        } else if (data[i].circularType === 'scatter') {
+          circular = circular.scatter(data[i].name, fileData[i], {
+            innerRadius: data[i].configs.innerRadius,
+            outerRadius: data[i].configs.outerRadius,
+            color: data[i].configs.color || '#000',
+            strokeColor: data[i].configs.stroke || '#000',
+            strokeWidth: 0.5,
+            fillOpacity: data[i].configs.fillOpacity || 1,
+            shape: 'circle',
+            size: data[i].configs.size || 14,
+            min: data[i].configs.min,
+            max: data[i].configs.max,
+            axes: data[i].configs.axes,
+            backgrounds: data[i].configs.backgrounds,
             tooltipContent: data[i].configs.tips
           })
         }

@@ -1,15 +1,19 @@
 import Plot from '../index.js';
-new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff}).chords({
+import {
+	scaleQuantize
+} from 'd3-scale';
+new Plot.circular(document.getElementsByTagName('canvas')[0], {
+	bgColor: 0xffffff
+}).chords({
 	fileUrl: '/dist/chords/10GRCh37.json',
 	fileType: 'json',
 	configs: {
-		innerRadius: 300,
+		innerRadius: 320 * 0.95,
 		outerRadius: 320,
 		labels: true,
 		ticks: true,
-		tips: function (d) {
-			return d.label
-		}
+		labelSuffix: 'M',
+		labelSpacing: 10
 	}
 }, [{
 	circularType: 'heatmap',
@@ -17,8 +21,20 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff
 	fileUrl: '/dist/chords/CHG.v3.bed',
 	fileType: 'tsv',
 	configs: {
-		innerRadius: 0.8,
-		outerRadius: 0.98
+		innerRadius: 0.75 / 0.95,
+		outerRadius: 0.9 / 0.95,
+		color: function (d, min, max) {
+			return scaleQuantize().domain([min, max]).range(['#fc9999', '#fd8bb5', '#ff88d9', '#e288ff', '#c488ff', '#ab88ff', '#8f88ff', '#889fff', '#6487ff', '#64bdff', '#64daff', '#4df2ff'])(d.value)
+		},
+		tips: function (d) {
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'value',
+				value: d.value
+			}]
+		}
 	}
 }, {
 	circularType: 'heatmap',
@@ -26,8 +42,60 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff
 	fileUrl: '/dist/chords/CpG.v3.bed',
 	fileType: 'tsv',
 	configs: {
-		innerRadius: 0.7,
-		outerRadius: 0.79
+		innerRadius: 0.55 / 0.95,
+		outerRadius: 0.7 / 0.95,
+		color: function (d, min, max) {
+			return scaleQuantize().domain([min, max]).range(['#fc9999', '#fd8bb5', '#ff88d9', '#e288ff', '#c488ff', '#ab88ff', '#8f88ff', '#889fff', '#6487ff', '#64bdff', '#64daff', '#4df2ff'])(d.value)
+		}
+	}
+}, {
+	circularType: 'scatter',
+	name: 'lncRNA',
+	fileUrl: '/dist/chords/lncRNA.bed',
+	fileType: 'tsv',
+	configs: {
+		innerRadius: 0.35 / 0.95,
+		outerRadius: 0.5 / 0.95,
+		color: '#FFAFE3',
+		stroke: '#999999',
+		size: 9 * Math.PI,
+		// fillOpacity: function (d) {
+		// 	var i = scaleLinear().domain([0, 0.01]).range([0.5, 1]).clamp(true)(d.value)
+		// 	return i;
+		// },
+		// min: 0,
+		// max: 6,
+		// axes: [{
+		// 	position: 0.000001,
+		// 	thickness: 1,
+		// 	color: '#FFAFE3',
+		// 	opacity: 0.3
+		// }, {
+		// 	position: 0.005,
+		// 	thickness: 1,
+		// 	color: '#FFAFE3',
+		// 	opacity: 0.5
+		// }, {
+		// 	position: 0.01,
+		// 	thickness: 1,
+		// 	color: '#FFAFE3',
+		// 	opacity: 0.7
+		// }],
+		// backgrounds: [{
+		// 	start: 0,
+		// 	end: 0.01,
+		// 	color: '#FFAFE3',
+		// 	opacity: 0.15
+		// }],
+		tips: function (d, i) {
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'Value',
+				value: d.value
+			}]
+		}
 	}
 }, {
 	circularType: 'chords',
@@ -35,14 +103,9 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff
 	fileUrl: '/dist/chords/interchr.json',
 	fileType: 'json',
 	configs: {
-		stroke: '#FF9900',
+		stroke: '#65F7E0',
 		strokeWidth: 1,
-		radius: function (d) {
-			return 0.7;
-		},
-		tips: function (d) {
-			return d.source.id + ' => ' + d.target.id
-		}
+		radius: 0.33 / 0.95
 	}
 }, {
 	circularType: 'chords',
@@ -50,10 +113,8 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {bgColor: 0xffffff
 	fileUrl: '/dist/chords/intrachr.json',
 	fileType: 'json',
 	configs: {
-		stroke: '#666600',
+		stroke: '#FF6079',
 		strokeWidth: 1,
-		radius: function (d) {
-			return 0.7;
-		}
+		radius: 0.33 / 0.95
 	}
 }]);
