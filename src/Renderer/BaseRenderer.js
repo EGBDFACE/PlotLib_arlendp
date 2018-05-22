@@ -8,9 +8,10 @@ export default class BaseRenderer {
       resolution: options && options.resolution || window.devicePixelRatio,
       view: elem,
       backgroundColor: options && options.bgColor,
+      transparent: options && options.transparent || false,
       antialias: true
     });
-    this.renderer.view.style.width = elem.width / 2 + 'px';
-    this.renderer.view.style.height = elem.height / 2 + 'px';
+    this.renderer.view.style.width = elem.width / this.renderer.resolution + 'px';
+    this.renderer.view.style.height = elem.height / this.renderer.resolution + 'px';
   }
 }

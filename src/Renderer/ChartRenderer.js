@@ -384,8 +384,8 @@ export default class ChartRenderer extends BaseRenderer {
       .append('div')
       .attr('class', 'tip')
       .style('opacity', 0)
-      .style('position', 'absolute')
-      .style('text-align', 'center')
+      .style('position', 'fixed')
+      .style('text-align', 'left')
       .style('padding', '5px 10px')
       .style('background-color', '#111111')
       .style('color', 'white')
@@ -410,11 +410,29 @@ export default class ChartRenderer extends BaseRenderer {
         return d.color || style.fill;
       })
       .on('mouseover', function (d) {
+        var tipStr = '';
+        var tipContent = d.label;
+        for (var i = 0; i < tipContent.length; i++) {
+          var li = document.createElement('li');
+          li.style.fontSize = '12px';
+          li.style.color = '#ffffff';
+          li.style.listStyle = 'none';
+          var title = tipContent[i].title;
+          var value = tipContent[i].value;
+          var titleNode = document.createElement('span');
+          titleNode.style.color = '#dddddd';
+          titleNode.innerText = title + ': ';
+          li.appendChild(titleNode);
+          var valueNode = document.createTextNode(value);
+          li.appendChild(valueNode);
+          var serializer = new XMLSerializer();
+          tipStr += serializer.serializeToString(li);
+        }
         tips
           .style('opacity', 0.9)
-          .style('top', currentEvent.data.originalEvent.clientY - 40 + 'px')
+          .style('top', currentEvent.data.originalEvent.clientY - tips.node().clientHeight - 20 + 'px')
           .style('left', currentEvent.data.originalEvent.clientX + 'px')
-          .html(d.label)
+          .html(tipStr)
       })
       .on('mouseout', function (d) {
         tips

@@ -9,8 +9,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw chords
   chords(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -26,11 +26,11 @@ export default class CircularRenderer extends BaseRenderer {
       fileData.forEach(function (d, i) {
         if (data[i].circularType === 'heatmap') {
           fileData[i] = fileData[i].map(function (d) {
-              d.block_id = d.chrom;
-              d.start = parseInt(d.start);
-              d.end = parseInt(d.end);
-              d.value = parseFloat(d.value || 0);
-              return d;
+            d.block_id = d.chrom;
+            d.start = parseInt(d.start);
+            d.end = parseInt(d.end);
+            d.value = parseFloat(d.value || 0);
+            return d;
           })
         } else if (data[i].circularType === 'scatter') {
           fileData[i] = fileData[i].map(function (d) {
@@ -50,12 +50,13 @@ export default class CircularRenderer extends BaseRenderer {
             display: layout.configs.labels || false,
             radialOffset: 26
           },
-          opacity : layout.configs.opacity,
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000,
             labelSuffix: layout.configs.labelSuffix || '',
-            labelSpacing: layout.configs.labelSpacing || 5
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           tooltipContent: layout.configs.tips
         })
@@ -108,8 +109,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw highlight
   highlight(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -142,10 +143,13 @@ export default class CircularRenderer extends BaseRenderer {
             display: layout.configs.labels || false,
             radialOffset: 70
           },
-          opacity : layout.configs.opacity,
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           // events: {
           //   'click.demo': function (d, i, nodes, event) {
@@ -160,7 +164,7 @@ export default class CircularRenderer extends BaseRenderer {
           circular = circular.highlight(data[i].name, fileData[i], {
             innerRadius: data[i].configs.innerRadius,
             outerRadius: data[i].configs.outerRadius,
-            opacity: data[i].configs.opacity || 0.5,
+            opacity: data[i].configs.opacity || 0.6,
             color: data[i].configs.color || function (d) {
               return gieStainColor[d.gieStain] || '#000'
             }
@@ -178,8 +182,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw heatmap
   heatmap(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -212,10 +216,13 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
-          opacity : layout.configs.opacity,
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           tooltipContent: layout.configs.tips
         })
@@ -242,8 +249,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw histogram
   histogram(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -286,10 +293,13 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
-          opacity : layout.configs.opacity,
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           tooltipContent: layout.configs.tips
         })
@@ -326,8 +336,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw line
   line(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -351,10 +361,10 @@ export default class CircularRenderer extends BaseRenderer {
           })
         } else if (data[i].circularType === 'line') {
           fileData[i] = fileData[i].map(function (d) {
-              d.block_id = d.chrom;
-              d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
-              d.value = parseFloat(d.value || 0);
-              return d;
+            d.block_id = d.chrom;
+            d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
+            d.value = parseFloat(d.value || 0);
+            return d;
           })
         }
       })
@@ -370,10 +380,13 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
-          opacity : layout.configs.opacity,
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           tooltipContent: layout.configs.tips
         })
@@ -414,8 +427,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw scatter
   scatter(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -439,10 +452,10 @@ export default class CircularRenderer extends BaseRenderer {
           })
         } else if (data[i].circularType === 'scatter') {
           fileData[i] = fileData[i].map(function (d) {
-              d.block_id = d.chrom;
-              d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
-              d.value = parseFloat(d.value || 0);
-              return d;
+            d.block_id = d.chrom;
+            d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
+            d.value = parseFloat(d.value || 0);
+            return d;
           })
         }
       })
@@ -461,7 +474,9 @@ export default class CircularRenderer extends BaseRenderer {
           ticks: {
             display: layout.configs.ticks || false,
             labelDenominator: layout.configs.tickScale || 1000000,
-            labelSuffix: layout.configs.labelSuffix || ''
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           tooltipContent: layout.configs.tips
         })
@@ -506,8 +521,8 @@ export default class CircularRenderer extends BaseRenderer {
   }
   // draw stack
   stack(layout, data) {
-    const width = this.renderer.view.clientWidth
-    const height = this.renderer.view.clientHeight
+    const width = this.renderer.view.width / this.renderer.resolution
+    const height = this.renderer.view.height / this.renderer.resolution
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -551,10 +566,13 @@ export default class CircularRenderer extends BaseRenderer {
             color: '#000',
             radialOffset: 30
           },
-          opacity : layout.configs.opacity,
+          opacity: layout.configs.opacity,
           ticks: {
             display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000
+            labelDenominator: layout.configs.tickScale || 1000000,
+            labelSuffix: layout.configs.labelSuffix || '',
+            labelSpacing: layout.configs.labelSpacing || 5,
+            labelDisplay0: layout.configs.labelDisplay0 || false
           },
           tooltipContent: layout.configs.tips
         })

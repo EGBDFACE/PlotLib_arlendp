@@ -49,11 +49,11 @@ class Core {
     };
     zoomed = zoomed.bind(this.svg);
     this.svgContainer.call(d3.zoom().on('zoom', zoomed))
-    if (d3.select('body').select('.circos-tooltip').empty()) {
+    if (d3.select('body').select('.circular-tooltip').empty()) {
       this.tip = d3.select('body').append('div')
-        .attr('class', 'circos-tooltip')
+        .attr('class', 'circular-tooltip')
         .style('opacity', 0)
-        .style('position', 'absolute')
+        .style('position', 'fixed')
         .style('text-align', 'left')
         .style('padding', '5px 10px')
         .style('background-color', '#333333')
@@ -62,6 +62,7 @@ class Core {
         .style('pointer-events', 'none')
         .style('z-index', 9999);
       this.tipContent = this.tip.append('div')
+        .attr('class', 'circular-tooltip-content')
       // add triangle
       this.tip.append('div')
         .style('border-top', '8px solid #333333')
@@ -72,7 +73,8 @@ class Core {
         .style('top', 'calc(100% - 5px)')
         .style('left', 0)
     } else {
-      this.tip = d3.select('body').select('.circos-tooltip')
+      this.tip = d3.select('body').select('.circular-tooltip')
+      this.tipContent = this.tip.select('.circular-tooltip-content')
     }
 
     // this.clipboard = initClipboard(this.conf.container)
