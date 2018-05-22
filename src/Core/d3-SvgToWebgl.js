@@ -1111,7 +1111,7 @@ var circle = function (node, graphic, stroke, fill, point) {
 	var attrs = node.attrs,
 		ctx = node.context,
 		f = node.factor;
-	graphic.lineStyle(graphic.lineWidth || 1, stroke.color || 0, stroke.alpha || 1);
+	graphic.lineStyle(isUndefined(graphic.lineWidth) ? 1 : graphic.lineWidth, stroke.color || 0, stroke.alpha || 1);
 	graphic.beginFill(fill.color || 0, fill.alpha || 1);
 	// ctx.arc(f * attrs.get('cx', 0), f * attrs.get('cy', 0), f * attrs.get('r', 0), 0, 2 * Math.PI);
 	// ctx.arc(attrs.get('cx', 0), attrs.get('cy', 0), attrs.get('r', 0), 0, 2 * Math.PI);
@@ -1135,7 +1135,7 @@ sizeTags.circle = function (node) {
 var line = function (node, graphic, stroke, fill, point) {
 	var attrs = node.attrs,
 		ctx = node.context;
-	graphic.lineStyle(graphic.lineWidth || 1, stroke.color || 0, stroke.alpha || 1);
+	graphic.lineStyle(isUndefined(graphic.lineWidth) ? 1 : graphic.lineWidth, stroke.color || 0, stroke.alpha || 1);
 	graphic.moveTo(attrs.get('x1') || 0, attrs.get('y1') || 0);
 	graphic.lineTo(attrs.get('x2') || 0, attrs.get('y2') || 0);
 	// if (stroke) ctx.stroke();
@@ -1324,7 +1324,7 @@ var rect = function (node, graphic, stroke, fill, point) {
 		height = attrs.get('height') || 0,
 		width = attrs.get('width') || 0;
 	// if (width && height && height !== width) ctx.scale(1.0, height / width);
-	graphic.lineStyle(graphic.lineWidth, stroke.color || 0, stroke.alpha || 1);
+	graphic.lineStyle(isUndefined(graphic.lineWidth) ? 1 : graphic.lineWidth, stroke.color || 0, stroke.alpha || 1);
 	fill.color && graphic.beginFill(fill.color, fill.alpha || 1);
 	graphic.drawRect(x, y, width, height);
 	fill.color && graphic.endFill();

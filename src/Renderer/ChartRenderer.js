@@ -1,6 +1,7 @@
 const d3 = Object.assign({}, require('d3-selection'), require('d3-array'), require('d3-zoom'), require('d3-scale'), require('d3-axis'), require('d3-request'), require('d3-format'), require('../Core/d3-SvgToWebgl'));
 import BaseRenderer from './BaseRenderer';
 // deal with d3.event is null error
+const merge = require('lodash/merge')
 import {
   event as currentEvent
 } from 'd3-selection';
@@ -16,7 +17,7 @@ export default class ChartRenderer extends BaseRenderer {
     super(elem, options)
   }
   iris(data, configs) {
-    const options = Object.assign({}, defaultConfigs.base, configs);
+    const options = merge({}, defaultConfigs.base, configs);
     const margin = options.canvasMargin;
     const contentSize = options.contentSize;
     const range = options.range;
@@ -146,7 +147,7 @@ export default class ChartRenderer extends BaseRenderer {
 
   // draw candleStick chart
   candleStick(data, configs) {
-    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.chart.candleStick, configs);
+    const options = merge({}, defaultConfigs.base, defaultConfigs.chart.candleStick, configs);
     const contentSize = options.contentSize;
     const margin = options.canvasMargin;
     const blockWidth = options.blockWidth;
@@ -298,7 +299,7 @@ export default class ChartRenderer extends BaseRenderer {
 
   // draw occurrence chart
   occurrence(data, configs) {
-    const options = Object.assign({}, defaultConfigs.base, defaultConfigs.chart.occurrence, configs);
+    const options = merge({}, defaultConfigs.base, defaultConfigs.chart.occurrence, configs);
     const xAxisLabel = options.range.x;
     const yAxisLabel = options.range.y;
     const unitSize = options.unitSize;
@@ -491,7 +492,7 @@ export default class ChartRenderer extends BaseRenderer {
 
   // draw boxplot
   boxplot(data, configs) {
-    const options = Object.assign({}, defaultConfigs.base, configs);
+    const options = merge({}, defaultConfigs.base, configs);
     const contentSize = options.contentSize;
     const margin = options.canvasMargin;
     const barWidth = options.barWidth;
@@ -500,7 +501,7 @@ export default class ChartRenderer extends BaseRenderer {
     // let y = d3.scaleLinear().domain(options.range.y).range([contentSize.h, 0]);
     // const xAxis = d3.axisBottom(x).tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));
     // const yAxis = d3.axisLeft(y);
-    const style = options.style;
+    const style = merge({}, options.style, configs.style);
     const self = this;
     // deal with data
     if (data.fileUrl) {
@@ -647,7 +648,7 @@ export default class ChartRenderer extends BaseRenderer {
               return yScale(d[2]);
             })
             .attr("fill", function (d) {
-              return d.color || style.fill;
+              return '#ffffff';
             })
             .attr("stroke", style.stroke)
             .attr("stroke-width", style.strokeWidth);
@@ -669,8 +670,21 @@ export default class ChartRenderer extends BaseRenderer {
               return yScale(d)
             })
             .attr("stroke", style.stroke)
-            .attr("stroke-width", style.strokeWidth)
+            .attr("stroke-width", style.strokeWidth + 1)
             .attr("fill", "none");
+          
+            const circles = content.selectAll(".circles")
+              .data(recordOutlier[key].low.concat(recordOutlier[key].high))
+              .enter()
+              .append('circle')
+              .attr('cx', xScale(key))
+              .attr('cy', function (d) {
+                return yScale(+d.value)
+              })
+              .attr('r', 2)
+              .attr('fill', style.fill)
+              .attr('stroke-width', 0)
+              .attr('stroke', 'none')
         })
         const xAxis = d3.axisBottom(xScale);
         // .tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));

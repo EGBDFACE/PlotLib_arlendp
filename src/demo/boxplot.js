@@ -10,6 +10,10 @@ new Plot.chart(document.getElementsByTagName('canvas')[0], {
     w: 600,
     h: 600
   },
+  style: {
+    fill: 'rgb(225, 123, 109)',
+    stroke: 'rgb(225, 123, 109)'
+  },
   zoom: true
 })
 
