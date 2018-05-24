@@ -25,6 +25,13 @@ function plot(n) {
         count: blocks[y * yAxisLabel.length + x] ? blocks[y * yAxisLabel.length + x].count : Math.floor(Math.random() * (range[1] - range[0])) + range[0]
       };
       block.color = getColor(block);
+      block.label = [{
+        title: 'Name',
+        value: block.label
+      }, {
+        title: 'Count',
+        value: block.count
+      }]
       blocks.push(block);
     }
   }

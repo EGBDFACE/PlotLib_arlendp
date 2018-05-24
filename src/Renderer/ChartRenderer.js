@@ -407,6 +407,7 @@ export default class ChartRenderer extends BaseRenderer {
       })
       .attr('width', unitSize.w)
       .attr('height', unitSize.h)
+      .attr('stroke-width', 0)
       .style('fill', function (d) {
         return d.color || style.fill;
       })
