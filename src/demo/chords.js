@@ -21,7 +21,7 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/chords/CHG.v3.bed',
 	fileType: 'tsv',
 	configs: {
-		innerRadius: 0.75 / 0.95,
+		innerRadius: 0.85 / 0.95,
 		outerRadius: 0.9 / 0.95,
 		color: function (d, min, max) {
 			return scaleQuantize().domain([min, max]).range(['#fc9999', '#fd8bb5', '#ff88d9', '#e288ff', '#c488ff', '#ab88ff', '#8f88ff', '#889fff', '#6487ff', '#64bdff', '#64daff', '#4df2ff'])(d.value)
@@ -42,10 +42,61 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/chords/CpG.v3.bed',
 	fileType: 'tsv',
 	configs: {
-		innerRadius: 0.55 / 0.95,
+		innerRadius: 0.75 / 0.95,
+		outerRadius: 0.8 / 0.95,
+		color: function (d, min, max) {
+			return scaleQuantize().domain([min, max]).range(['#fc9999', '#fd8bb5', '#ff88d9', '#e288ff', '#c488ff', '#ab88ff', '#8f88ff', '#889fff', '#6487ff', '#64bdff', '#64daff', '#4df2ff'])(d.value)
+		},
+		tips: function (d) {
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'value',
+				value: d.value
+			}]
+		}
+	}
+}, {
+	circularType: 'heatmap',
+	name: 'CHG1',
+	fileUrl: '/dist/chords/CHG.v3.bed',
+	fileType: 'tsv',
+	configs: {
+		innerRadius: 0.65 / 0.95,
 		outerRadius: 0.7 / 0.95,
 		color: function (d, min, max) {
 			return scaleQuantize().domain([min, max]).range(['#fc9999', '#fd8bb5', '#ff88d9', '#e288ff', '#c488ff', '#ab88ff', '#8f88ff', '#889fff', '#6487ff', '#64bdff', '#64daff', '#4df2ff'])(d.value)
+		},
+		tips: function (d) {
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'value',
+				value: d.value
+			}]
+		}
+	}
+}, {
+	circularType: 'heatmap',
+	name: 'CHG2',
+	fileUrl: '/dist/chords/CHG.v3.bed',
+	fileType: 'tsv',
+	configs: {
+		innerRadius: 0.55 / 0.95,
+		outerRadius: 0.6 / 0.95,
+		color: function (d, min, max) {
+			return scaleQuantize().domain([min, max]).range(['#fc9999', '#fd8bb5', '#ff88d9', '#e288ff', '#c488ff', '#ab88ff', '#8f88ff', '#889fff', '#6487ff', '#64bdff', '#64daff', '#4df2ff'])(d.value)
+		},
+		tips: function (d) {
+			return [{
+				title: 'Chrom',
+				value: d.chrom
+			}, {
+				title: 'value',
+				value: d.value
+			}]
 		}
 	}
 }, {
