@@ -54,6 +54,7 @@ class Core {
         .attr('class', 'circular-tooltip')
         .style('opacity', 0)
         .style('position', 'fixed')
+        .style('font-family', 'AvenirNext-Medium, Baskerville, Palatino-Roman, Helvetica, "Times New Roman"')
         .style('text-align', 'left')
         .style('padding', '5px 10px')
         .style('background-color', '#333333')

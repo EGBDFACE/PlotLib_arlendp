@@ -24,7 +24,7 @@ export default {
     labelDisplay0: false,
     labelSize: 12,
     labelColor: '#000',
-    labelFont: 'default',
+    labelFont: 'AvenirNext-Medium, Baskerville, Palatino-Roman, Helvetica, "Times New Roman"',
     majorSpacing: 5,
     size: {
       minor: 2,

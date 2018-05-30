@@ -46,6 +46,7 @@ function renderLayoutLabels(conf, block) {
     .style('font-size', '' + conf.labels.size + 'px')
     // .attr('text-anchor', 'middle')
     .attr('text-anchor', 'start')
+    .attr('font-family', conf.ticks.labelFont)
     .style('fill', conf.labels.color)
     .text((d) => d.label)
 }
@@ -112,6 +113,7 @@ function renderLayoutTicks(conf, layout, instance) {
     // .style('text-anchor', (d) => d.angle > Math.PI ? 'middle' : 'middle')
     .style('text-anchor', 'middle')
     .style('font-size', '' + conf.ticks.labelSize + 'px')
+    .style('font-family', conf.ticks.labelFont)
     .style('fill', conf.ticks.labelColor)
     .text((d) => d.label)
 }
