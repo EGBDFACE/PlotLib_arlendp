@@ -17,7 +17,6 @@ import Heatmap from './tracks/Heatmap'
 import Line from './tracks/Line'
 import Scatter from './tracks/Scatter'
 import Stack from './tracks/Stack'
-// import {initClipboard} from './clipboard'
 
 const defaultConf = {
   width: 700,
@@ -31,9 +30,6 @@ class Core {
     this.tracks = {}
     this._layout = null
     this.conf = defaultsDeep(conf, defaultConf)
-    // const container = d3.select(this.conf.container).append('div')
-    //   .style('position', 'relative')
-    // this.svg = container.append('svg')
     this.svgContainer = d3.select(this.conf.container).toCanvas(this.conf.renderer);
     this.svg = this.svgContainer.append('g')
       .attr('class', 'content');
@@ -77,8 +73,6 @@ class Core {
       this.tip = d3.select('body').select('.circular-tooltip')
       this.tipContent = this.tip.select('.circular-tooltip-content')
     }
-
-    // this.clipboard = initClipboard(this.conf.container)
   }
 
   removeTracks(trackIds) {

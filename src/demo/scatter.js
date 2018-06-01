@@ -1,12 +1,9 @@
 import Plot from '../index.js';
-import {
-	scaleLinear
-} from 'd3-scale';
 var canvas = document.getElementsByTagName('canvas')[0];
 canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
 new Plot.circular(document.getElementsByTagName('canvas')[0], {
-	bgColor: 0xffffff
+	bgColor: 0xF4F4F4
 }).scatter({
 	fileUrl: '/dist/scatter/GRCh37.json',
 	fileType: 'json',
@@ -46,38 +43,37 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/scatter/snp1.txt',
 	fileType: 'json',
 	configs: {
-		innerRadius: 0.65 / 0.95,
-		outerRadius: 0.85 / 0.95,
-		color: '#FFAFE3',
-		stroke: '#999999',
-		size: 9 * Math.PI,
-		fillOpacity: function (d) {
-			var i = scaleLinear().domain([0, 0.01]).range([0.5, 1]).clamp(true)(d.value)
-			return i;
-		},
+		innerRadius: 0.55 / 0.95,
+		outerRadius: 0.9 / 0.95,
+		color: '#DC4035',
+		opacity: 0.8,
+		stroke: '#FFFFFF',
+		thickness: 0.5,
+		size: 6 * Math.PI,
 		min: 0,
 		max: 0.01,
 		axes: [{
 			position: 0.000001,
-			thickness: 1,
-			color: '#FFAFE3',
+			thickness: 0.5,
+			color: '#DC4035',
 			opacity: 0.3
 		}, {
 			position: 0.005,
-			thickness: 1,
-			color: '#FFAFE3',
+			thickness: 0.5,
+			color: '#DC4035',
 			opacity: 0.5
 		}, {
 			position: 0.01,
-			thickness: 1,
-			color: '#FFAFE3',
-			opacity: 0.7
+			thickness: 0.5,
+			color: '#DC4035',
+			opacity: 0.8
 		}],
 		backgrounds: [{
 			start: 0,
 			end: 0.01,
-			color: '#FFAFE3',
-			opacity: 0.15
+			color: '#DC4035',
+			/* Rectangle Copy: */
+			opacity: 0.06
 		}],
 		tips: function (d, i) {
 			return [{
@@ -95,40 +91,38 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/scatter/snp3.txt',
 	fileType: 'json',
 	configs: {
-		color: '#C7F470',
-		stroke: '#999999',
-		size: 9 * Math.PI,
-		fillOpacity: function (d) {
-			var i = scaleLinear().domain([0.001, 0.002]).range([0.5, 1]).clamp(true)(d.value)
-			return i;
-		},
+		color: '#E0619D',
+		opacity: 0.8,
+		stroke: '#FFFFFF',
+		size: 6 * Math.PI,
+		thickness: 0.5,
 		min: 0.001,
 		max: 0.002,
-		innerRadius: 0.4 / 0.95,
-		outerRadius: 0.6 / 0.95,
+		innerRadius: 0.25 / 0.95,
+		outerRadius: 0.5 / 0.95,
 		axes: [{
 				position: 0.001,
-				thickness: 1,
-				color: '#C7F470',
+				thickness: 0.5,
+				color: '#E0619D',
 				opacity: 0.3
 			},
 			{
 				position: 0.0015,
-				thickness: 1,
-				color: '#C7F470',
+				thickness: 0.5,
+				color: '#E0619D',
 				opacity: 0.5
 			}, {
 				position: 0.002,
-				thickness: 1,
-				color: '#C7F470',
-				opacity: 0.7
+				thickness: 0.5,
+				color: '#E0619D',
+				opacity: 0.8
 			}
 		],
 		backgrounds: [{
 			start: 0.001,
 			end: 0.002,
-			color: '#C7F470',
-			opacity: 0.15
+			color: '#E0619D',
+			opacity: 0.06
 		}],
 		tips: function (d, i) {
 			return [{
@@ -146,40 +140,38 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	fileUrl: '/dist/scatter/snp2.txt',
 	fileType: 'json',
 	configs: {
-		color: '#FFBE91',
-		stroke: '#999999',
-		size: 9 * Math.PI,
+		color: '#3247A6',
+		opacity: 0.8,
+		stroke: '#FFFFFF',
+		thickness: 0.5,
+		size: 6 * Math.PI,
 		min: 0.007,
 		max: 0.01,
-		fillOpacity: function (d) {
-			var i = scaleLinear().domain([0.007, 0.01]).range([0.5, 1]).clamp(true)(d.value)
-			return i;
-		},
-		innerRadius: 0.15 / 0.95,
-		outerRadius: 0.35 / 0.95,
+		innerRadius: 0.05 / 0.95,
+		outerRadius: 0.2 / 0.95,
 		axes: [{
 				position: 0.007,
-				thickness: 1,
-				color: '#FFBE91',
+				thickness: 0.5,
+				color: '#3247A6',
 				opacity: 0.3
 			},
 			{
 				position: 0.0085,
-				thickness: 1,
-				color: '#FFBE91',
+				thickness: 0.5,
+				color: '#3247A6',
 				opacity: 0.5
 			}, {
 				position: 0.01,
-				thickness: 1,
-				color: '#FFBE91',
-				opacity: 0.7
+				thickness: 0.5,
+				color: '#3247A6',
+				opacity: 0.8
 			}
 		],
 		backgrounds: [{
 			start: 0.007,
 			end: 0.01,
-			color: '#FFBE91',
-			opacity: 0.15
+			color: '#3247A6',
+			opacity: 0.06
 		}],
 		tips: function (d, i) {
 			return [{
