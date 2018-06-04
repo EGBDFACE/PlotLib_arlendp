@@ -590,10 +590,10 @@ export default class ChartRenderer extends BaseRenderer {
           .attr('clip-path', 'url(#clip)')
           .attr("transform", "translate(" + margin.h + "," + margin.v + ")");
 
-        const axisY = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)');
+        const axisY = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)')
         const axisX = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
-          .attr('clip-path', 'url(#clipX)');
-
+          .attr('clip-path', 'url(#clipX)')
+        
         // group the boxplot
         const content = container.append("g");
         xAxisData.forEach(function (key) {
@@ -692,11 +692,13 @@ export default class ChartRenderer extends BaseRenderer {
         const yAxis = d3.axisLeft(yScale);
         // Setup a scale on the left
         const cY = axisY.append("g")
-          .call(yAxis);
+          .call(yAxis)
+          .style('font-family', style.fontFamily);
 
         // Setup a series axis on the top
         const cX = axisX.append("g")
-          .call(xAxis);
+          .call(xAxis)
+          .style('font-family', style.fontFamily);
 
         // function zoomed() {
         //   g.attr('transform', currentEvent.transform);

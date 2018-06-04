@@ -1365,7 +1365,7 @@ var text = function (node) {
 		trans = node.attrs.get('transform');
 	var text = new PIXI.Text(node.textContent || '');
 	text.style.fontSize = size;
-	text.style.fontFamily = node.getValue('font-family') || 'sans-serif';
+	text.style.fontFamily = node.getValue('font-family') || 'AvenirNext-Medium, Baskerville, Palatino-Roman, Helvetica, "Times New Roman"';
 	// text.style.align = textAlign[node.getValue('text-anchor')] || textAlign.middle;
 	var textAnchor = node.getValue('text-anchor');
 	if (textAnchor === 'middle') {
