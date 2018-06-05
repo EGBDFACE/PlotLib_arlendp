@@ -352,12 +352,6 @@ export default class ChartRenderer extends BaseRenderer {
       .append('text')
       .attr('class', 'x-axis')
       .attr('x', unitSize.w)
-      // deal with fontSize less than 12px
-      .attr('transform', function () {
-        if (unitSize.w < 12) {
-          return 'scale(' + unitSize.w / 12 + ')';
-        }
-      })
       .style('font-size', unitSize.w + 'px')
       .style('text-anchor', 'start')
       .text(function (d) {
@@ -379,11 +373,6 @@ export default class ChartRenderer extends BaseRenderer {
       .append('text')
       .attr('class', 'y-axis')
       .attr('x', margin.h - unitSize.w)
-      .attr('transform', function () {
-        if (unitSize.h < 12) {
-          return 'scale(' + unitSize.h / 12 + ')';
-        }
-      })
       .style('text-anchor', 'end')
       .style('font-size', unitSize.h + 'px')
       .text(function (d) {
@@ -604,7 +593,7 @@ export default class ChartRenderer extends BaseRenderer {
         const axisY = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)')
         const axisX = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
           .attr('clip-path', 'url(#clipX)')
-
+        
         // group the boxplot
         const content = container.append("g");
         xAxisData.forEach(function (key) {
@@ -684,19 +673,19 @@ export default class ChartRenderer extends BaseRenderer {
             .attr("stroke", style.stroke)
             .attr("stroke-width", style.strokeWidth + 1)
             .attr("fill", "none");
-
-          const circles = content.selectAll(".circles")
-            .data(recordOutlier[key].low.concat(recordOutlier[key].high))
-            .enter()
-            .append('circle')
-            .attr('cx', xScale(key))
-            .attr('cy', function (d) {
-              return yScale(+d.value)
-            })
-            .attr('r', 2)
-            .attr('fill', style.fill)
-            .attr('stroke-width', 0)
-            .attr('stroke', 'none')
+          
+            const circles = content.selectAll(".circles")
+              .data(recordOutlier[key].low.concat(recordOutlier[key].high))
+              .enter()
+              .append('circle')
+              .attr('cx', xScale(key))
+              .attr('cy', function (d) {
+                return yScale(+d.value)
+              })
+              .attr('r', 2)
+              .attr('fill', style.fill)
+              .attr('stroke-width', 0)
+              .attr('stroke', 'none')
         })
         const xAxis = d3.axisBottom(xScale);
         // .tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));

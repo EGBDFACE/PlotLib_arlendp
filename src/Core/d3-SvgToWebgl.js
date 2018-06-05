@@ -260,6 +260,7 @@ function getTrans(x, y, sx, sy, rotation, trans) {
 			index2 = s.indexOf(')');
 			bits = s.substring(0, index2).split(',');
 			sx = +bits[0];
+			sy = sx;
 			if (bits.length === 2) sy = +bits[1];
 		}
 	} else if (trans) {
@@ -268,9 +269,9 @@ function getTrans(x, y, sx, sy, rotation, trans) {
 		sx = trans.k;
 		sy = trans.k;
 	}
-	// if (sx) {
-	sy = sy || sx;
-	// }
+	// // if (sx) {
+	// sy = sy || sx;
+	// // }
 	return {
 		x: x,
 		y: y,
@@ -1380,6 +1381,8 @@ var text = function (node) {
 	if (trans) {
 		const transResult = getTrans(0, 0, 1, 1, 0, trans);
 		// text.setTransform(transResult.x || 0, transResult.y || 0, transResult.sx || 1, transResult.sy || 1, 0);
+		text.scale.x = transResult.sx;
+		text.scale.y = transResult.sy;
 		text.rotation = transResult.rotation || 0;
 	}
 	return text;
