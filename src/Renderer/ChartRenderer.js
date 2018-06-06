@@ -8,10 +8,14 @@ import {
 import {
   roundNumber
 } from '../Util';
+import baseConfig from '../Config/base';
 import defaultConfigs from '../Config';
 import {
   CanvasSpriteRenderer
 } from 'pixi.js';
+import {
+  SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION
+} from 'constants';
 export default class ChartRenderer extends BaseRenderer {
   constructor(elem, options) {
     super(elem, options)
@@ -392,19 +396,9 @@ export default class ChartRenderer extends BaseRenderer {
       .attr('y', function (d, i) {
         return i * (unitSize.h + gap) + unitSize.h * 2 / 3;
       });
-    const tips = d3.select('body')
-      .append('div')
-      .attr('class', 'tip')
-      .style('opacity', 0)
-      .style('position', 'fixed')
-      .style('text-align', 'left')
-      .style('padding', '5px 10px')
-      .style('background-color', '#111111')
-      .style('color', 'white')
-      .style('border-radius', '5px')
-      .style('pointer-events', 'none')
-      .style('z-index', 9999);
 
+    this._generateTip();
+    const self = this;
     content.selectAll('.block')
       .data(data)
       .enter()
@@ -423,32 +417,15 @@ export default class ChartRenderer extends BaseRenderer {
         return d.color || style.fill;
       })
       .on('mouseover', function (d) {
-        var tipStr = '';
-        var tipContent = d.label;
-        for (var i = 0; i < tipContent.length; i++) {
-          var li = document.createElement('li');
-          li.style.fontSize = '12px';
-          li.style.color = '#ffffff';
-          li.style.listStyle = 'none';
-          var title = tipContent[i].title;
-          var value = tipContent[i].value;
-          var titleNode = document.createElement('span');
-          titleNode.style.color = '#dddddd';
-          titleNode.innerText = title + ': ';
-          li.appendChild(titleNode);
-          var valueNode = document.createTextNode(value);
-          li.appendChild(valueNode);
-          var serializer = new XMLSerializer();
-          tipStr += serializer.serializeToString(li);
-        }
-        tips
+        var tipStr = self._generateTipStr(d.label)
+        self.tipContent.html(tipStr)
+        self.tip
           .style('opacity', 0.9)
-          .style('top', currentEvent.data.originalEvent.clientY - tips.node().clientHeight - 20 + 'px')
+          .style('top', currentEvent.data.originalEvent.clientY - self.tip.node().clientHeight - 20 + 'px')
           .style('left', currentEvent.data.originalEvent.clientX + 'px')
-          .html(tipStr)
       })
       .on('mouseout', function (d) {
-        tips
+        self.tip
           .style('opacity', 0);
       });
 
@@ -766,5 +743,55 @@ export default class ChartRenderer extends BaseRenderer {
         d3.quantile(d, 0.75)
       ]
     }
+  }
+  _generateTip() {
+    if (d3.select('body').select('.tip').empty()) {
+      this.tip = d3.select('body')
+        .append('div')
+        .attr('class', 'tip')
+        .style('opacity', 0)
+        .style('position', 'fixed')
+        .style('font-family', baseConfig.style.fontFamily)
+        .style('text-align', 'left')
+        .style('padding', '5px 10px')
+        .style('background-color', '#333333')
+        .style('color', 'white')
+        .style('border-radius', '4px')
+        .style('pointer-events', 'none')
+        .style('z-index', 9999);
+      this.tipContent = this.tip.append('div')
+        .attr('class', 'tip-content');
+      this.tip.append('div')
+        .style('border-top', '8px solid #333333')
+        .style('border-left', '5px solid #333333')
+        .style('border-bottom', '8px solid transparent')
+        .style('border-right', '5px solid transparent')
+        .style('position', 'absolute')
+        .style('top', 'calc(100% - 5px)')
+        .style('left', 0)
+    } else {
+      this.tip = d3.select('body').select('.tip')
+      this.tipContent = this.tip.select('.tip-content')
+    }
+  }
+  _generateTipStr(tipArr) {
+    var tipStr = '';
+    for (var i = 0; i < tipArr.length; i++) {
+      var li = document.createElement('li');
+      li.style.fontSize = '12px';
+      li.style.color = '#ffffff';
+      li.style.listStyle = 'none';
+      var title = tipArr[i].title;
+      var value = tipArr[i].value;
+      var titleNode = document.createElement('span');
+      titleNode.style.color = '#dddddd';
+      titleNode.innerText = title + ': ';
+      li.appendChild(titleNode);
+      var valueNode = document.createTextNode(value);
+      li.appendChild(valueNode);
+      var serializer = new XMLSerializer();
+      tipStr += serializer.serializeToString(li);
+    }
+    return tipStr;
   }
 }

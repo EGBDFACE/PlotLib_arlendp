@@ -50,6 +50,12 @@ d3.tsv('/dist/occurrence/Fig_Partial_SCC_PanCancer_PurityAdjusted_ImmGenes_data.
       block.label = [{
         title: 'Value',
         value: block.value
+      }, {
+        title: 'X',
+        value: xAxisLabel[y]
+      }, {
+        title: 'Y',
+        value: yAxisLabel[x]
       }]
       blocks.push(block)
     }
