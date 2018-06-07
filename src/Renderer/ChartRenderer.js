@@ -10,12 +10,7 @@ import {
 } from '../Util';
 import baseConfig from '../Config/base';
 import defaultConfigs from '../Config';
-import {
-  CanvasSpriteRenderer
-} from 'pixi.js';
-import {
-  SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION
-} from 'constants';
+
 export default class ChartRenderer extends BaseRenderer {
   constructor(elem, options) {
     super(elem, options)
@@ -309,7 +304,11 @@ export default class ChartRenderer extends BaseRenderer {
     const unitSize = options.unitSize;
     const gap = options.gap;
     const contentSize = options.contentSize;
-    const margin = options.canvasMargin;
+    // const margin = options.canvasMargin;
+    const margin = {
+      h: (this.renderer.view.width / this.renderer.resolution - contentSize.w) / 2,
+      v: (this.renderer.view.height / this.renderer.resolution - contentSize.h) / 2
+    }
     const style = options.style;
     const svg = d3.select(this.renderer.view)
       .toCanvas(this.renderer)

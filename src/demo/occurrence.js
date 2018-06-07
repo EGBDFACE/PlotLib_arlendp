@@ -65,7 +65,7 @@ d3.tsv('/dist/occurrence/Fig_Partial_SCC_PanCancer_PurityAdjusted_ImmGenes_data.
     bgColor: 0xffffff
   }).occurrence(blocks, {
     contentSize,
-    canvasMargin: margin,
+    // canvasMargin: margin,
     range: {
       x: xAxisLabel,
       y: yAxisLabel
