@@ -29,8 +29,8 @@ d3.tsv('/dist/occurrence/Fig_Partial_SCC_PanCancer_PurityAdjusted_ImmGenes_data.
     h: yAxisLabel.length * unitSize.h + (yAxisLabel.length - 1) * gap
   }
   const margin = {
-    h: 100,
-    v: 100
+    h: 120,
+    v: 120
   }
   // text color
   const textColor = {
@@ -48,14 +48,14 @@ d3.tsv('/dist/occurrence/Fig_Partial_SCC_PanCancer_PurityAdjusted_ImmGenes_data.
         color: v === 'NA' ? '#ffffff' : scaleColor(+v)
       }
       block.label = [{
-        title: 'Value',
-        value: block.value
-      }, {
         title: 'X',
         value: xAxisLabel[y]
       }, {
         title: 'Y',
         value: yAxisLabel[x]
+      }, {
+        title: 'Value',
+        value: block.value
       }]
       blocks.push(block)
     }

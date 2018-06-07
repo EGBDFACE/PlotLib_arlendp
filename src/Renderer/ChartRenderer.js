@@ -454,6 +454,8 @@ export default class ChartRenderer extends BaseRenderer {
           }
         }
         d.position.y = (d.oriPos.y * transform.k + transform.x);
+        d.scale.x = unitSize.w < 12 ? unitSize.w / 12 * transform.k : transform.k;
+        d.scale.y = d.scale.x;
       })
       yTicks.forEach(function (d) {
         if (!d.oriPos) {
@@ -463,6 +465,8 @@ export default class ChartRenderer extends BaseRenderer {
           }
         }
         d.position.y = (d.oriPos.y * transform.k + transform.y);
+        d.scale.x = unitSize.h < 12 ? unitSize.h / 12 * transform.k : transform.k;
+        d.scale.y = d.scale.x;
       })
       node.scale.x = transform.k;
       node.scale.y = transform.k;
