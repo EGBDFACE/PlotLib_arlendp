@@ -1,5 +1,8 @@
 import Plot from '../index.js';
-new Plot.chart(document.getElementsByTagName('canvas')[0], {
+var canvas = document.getElementsByTagName('canvas')[0];
+canvas.width = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
+new Plot.chart(canvas, {
   bgColor: 0xffffff
 }).boxplot({
   fileUrl: '/dist/boxplot/boxplot.txt',
@@ -7,7 +10,7 @@ new Plot.chart(document.getElementsByTagName('canvas')[0], {
 }, {
   barWidth: 20,
   contentSize: {
-    w: 600,
+    w: 1000,
     h: 600
   },
   style: {

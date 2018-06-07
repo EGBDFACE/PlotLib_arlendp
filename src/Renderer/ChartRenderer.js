@@ -17,8 +17,12 @@ export default class ChartRenderer extends BaseRenderer {
   }
   iris(data, configs) {
     const options = merge({}, defaultConfigs.base, configs);
-    const margin = options.canvasMargin;
+    // const margin = options.canvasMargin;
     const contentSize = options.contentSize;
+    const margin = {
+      h: (this.renderer.view.width / this.renderer.resolution - contentSize.w) / 2,
+      v: (this.renderer.view.height / this.renderer.resolution - contentSize.h) / 2
+    }
     const range = options.range;
 
     const container = d3.select(this.renderer.view)
@@ -148,7 +152,11 @@ export default class ChartRenderer extends BaseRenderer {
   candleStick(data, configs) {
     const options = merge({}, defaultConfigs.base, defaultConfigs.chart.candleStick, configs);
     const contentSize = options.contentSize;
-    const margin = options.canvasMargin;
+    // const margin = options.canvasMargin;
+    const margin = {
+      h: (this.renderer.view.width / this.renderer.resolution - contentSize.w) / 2,
+      v: (this.renderer.view.height / this.renderer.resolution - contentSize.h) / 2
+    }
     const blockWidth = options.blockWidth;
     let x = d3.scaleTime().range([0, contentSize.w]);
     let y = d3.scaleLinear().range([contentSize.h, 0]);
@@ -486,7 +494,11 @@ export default class ChartRenderer extends BaseRenderer {
   boxplot(data, configs) {
     const options = merge({}, defaultConfigs.base, configs);
     const contentSize = options.contentSize;
-    const margin = options.canvasMargin;
+    // const margin = options.canvasMargin;
+    const margin = {
+      h: (this.renderer.view.width / this.renderer.resolution - contentSize.w) / 2,
+      v: (this.renderer.view.height / this.renderer.resolution - contentSize.h) / 2
+    }
     const barWidth = options.barWidth;
     const ticks = options.ticks;
     // let x = d3.scaleLinear().domain(options.range.x).range([0, contentSize.w]);
@@ -494,6 +506,7 @@ export default class ChartRenderer extends BaseRenderer {
     // const xAxis = d3.axisBottom(x).tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));
     // const yAxis = d3.axisLeft(y);
     const style = merge({}, options.style, configs.style);
+    this._generateTip();
     const self = this;
     // deal with data
     if (data.fileUrl) {
@@ -584,7 +597,6 @@ export default class ChartRenderer extends BaseRenderer {
         const axisY = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)')
         const axisX = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
           .attr('clip-path', 'url(#clipX)')
-
         // group the boxplot
         const content = container.append("g");
         xAxisData.forEach(function (key) {
@@ -643,7 +655,33 @@ export default class ChartRenderer extends BaseRenderer {
               return '#ffffff';
             })
             .attr("stroke", style.stroke)
-            .attr("stroke-width", style.strokeWidth);
+            .attr("stroke-width", style.strokeWidth)
+            .on('mouseover', function (d) {
+              var tipStr = self._generateTipStr([{
+                  title: 'X',
+                  value: key
+                },
+                {
+                  title: 'Upper quartile',
+                  value: d[2]
+                }, {
+                  title: 'Median',
+                  value: d[1]
+                }, {
+                  title: 'Lower quartile',
+                  value: d[0]
+                }
+              ])
+              self.tipContent.html(tipStr)
+              self.tip
+                .style('opacity', 0.9)
+                .style('top', currentEvent.data.originalEvent.clientY - self.tip.node().clientHeight - 20 + 'px')
+                .style('left', currentEvent.data.originalEvent.clientX + 'px')
+            })
+            .on('mouseout', function (d) {
+              self.tip
+                .style('opacity', 0);
+            });
 
           const horizontalLine = content.selectAll(".whiskers")
             .data([recordQuantile[key][1]])
@@ -677,6 +715,24 @@ export default class ChartRenderer extends BaseRenderer {
             .attr('fill', style.fill)
             .attr('stroke-width', 0)
             .attr('stroke', 'none')
+            .on('mouseover', function (d) {
+              var tipStr = self._generateTipStr([{
+                title: 'X',
+                value: key
+              }, {
+                title: 'Y',
+                value: d.value
+              }])
+              self.tipContent.html(tipStr)
+              self.tip
+                .style('opacity', 0.9)
+                .style('top', currentEvent.data.originalEvent.clientY - self.tip.node().clientHeight - 20 + 'px')
+                .style('left', currentEvent.data.originalEvent.clientX + 'px')
+            })
+            .on('mouseout', function (d) {
+              self.tip
+                .style('opacity', 0);
+            });
         })
         const xAxis = d3.axisBottom(xScale);
         // .tickValues(ticks.x.values).tickFormat(d3.format(ticks.x.format));

@@ -1,5 +1,8 @@
 const d3 = Object.assign({}, require('d3-selection'), require('d3-array'));
 import Plot from '../index.js';
+var canvas = document.getElementsByTagName('canvas')[0];
+canvas.width = document.body.clientWidth;
+canvas.height = document.body.clientHeight;
 const data = [{
     x: "2017-03-01",
     value: [89, 90, 92, 96],
@@ -75,7 +78,7 @@ const data = [{
   }
 ];
 
-new Plot.chart(d3.select('canvas').node(), {bgColor: 0xffffff}).candleStick(data, {
+new Plot.chart(canvas, {bgColor: 0xffffff}).candleStick(data, {
   contentSize: {
     w: 600,
     h: 600
