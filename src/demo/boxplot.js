@@ -3,19 +3,20 @@ var canvas = document.getElementsByTagName('canvas')[0];
 canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
 new Plot.chart(canvas, {
-  bgColor: 0xffffff
+  bgColor: 0xf2f2f2
 }).boxplot({
   fileUrl: '/dist/boxplot/boxplot.txt',
   fileType: 'tsv'
 }, {
-  barWidth: 20,
+  barWidth: 24,
   contentSize: {
-    w: 1000,
+    w: 800,
     h: 600
   },
   style: {
-    fill: 'rgb(225, 123, 109)',
-    stroke: 'rgb(225, 123, 109)'
+    fill: 'rgb(50, 71, 166)',
+    stroke: 'rgb(50, 71, 166)',
+    opacity: 0.6
   },
   zoom: true
 })
