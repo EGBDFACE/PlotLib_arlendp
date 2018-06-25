@@ -99,6 +99,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)
@@ -172,6 +173,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)
@@ -239,6 +241,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)
@@ -326,6 +329,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)
@@ -417,6 +421,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)
@@ -511,6 +516,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)
@@ -602,6 +608,7 @@ export default class CircularRenderer extends BaseRenderer {
         }
       })
       circular.render()
+      layout.configs.completed && layout.configs.completed()
     }
     let queue = d3.queue()
     queue = queue.defer(d3[layout.fileType], layout.fileUrl)

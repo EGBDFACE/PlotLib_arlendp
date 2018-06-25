@@ -107,7 +107,7 @@ export default class ChartRenderer extends BaseRenderer {
       .call(yAxis);
 
     var rootNode = content.node().rootNode;
-
+    configs.completed && configs.completed()
     function zoom() {
       var node = content.node().glElem;
       // var xPath = cX.select('path.domain').node().glElem;
@@ -443,7 +443,7 @@ export default class ChartRenderer extends BaseRenderer {
     //     '</ul>';
     // }
     var rootNode = content.node().rootNode;
-
+      configs.completed && configs.completed()
     function zoomed() {
       var node = content.node().glElem;
       var xTicks = xAxis._groups[0].map(function (d) {
@@ -597,6 +597,24 @@ export default class ChartRenderer extends BaseRenderer {
         const axisY = svg.append("g").attr("transform", "translate(" + margin.h + ',' + margin.v + ')').attr('clip-path', 'url(#clipY)')
         const axisX = svg.append("g").attr("transform", "translate(" + margin.h + ',' + (contentSize.h + margin.v) + ')')
           .attr('clip-path', 'url(#clipX)')
+        // add legends
+        if (configs.legends) {
+          svg.append("g").attr("transform", "translate(" + (margin.h + contentSize.w / 2) + ',' + (contentSize.h + margin.v) + ')')
+            .append('text')
+            .style('font-size', configs.legends.fontSize && (configs.legends.fontSize + 'px') || '16px')
+            .style('text-anchor', 'middle')
+            .attr('x', 0)
+            .attr('y', configs.legends.xOffset)
+            .text(configs.legends.x);
+          svg.append("g").attr("transform", "translate(" + margin.h + ',' + (margin.v + contentSize.h / 2) + ')')
+            .append('text')
+            .style('font-size', configs.legends.fontSize && (configs.legends.fontSize + 'px') || '16px')
+            .style('text-anchor', 'middle')
+            .attr('x', -configs.legends.yOffset)
+            .attr('y', 0)
+            .attr('transform', 'rotate(-90)')
+            .text(configs.legends.y);
+        }
         // group the boxplot
         const content = container.append("g");
         xAxisData.forEach(function (key) {
@@ -632,7 +650,7 @@ export default class ChartRenderer extends BaseRenderer {
             .attr("y2", function (d) {
               return yScale(d.y2);
             })
-            .attr("stroke", style.stroke)
+            .attr("stroke", typeof style.stroke === 'function' ? style.stroke(key) : style.stroke)
             .attr("stroke-width", style.strokeWidth)
             .attr("fill", "none");
 
@@ -654,24 +672,11 @@ export default class ChartRenderer extends BaseRenderer {
             .attr("fill", function (d) {
               return '#ffffff';
             })
-            .attr("stroke", style.stroke)
+            .attr("stroke", typeof style.stroke === 'function' ? style.stroke(key) : style.stroke)
             .attr("stroke-width", style.strokeWidth)
             .on('mouseover', function (d) {
-              var tipStr = self._generateTipStr([{
-                  title: 'X',
-                  value: key
-                },
-                {
-                  title: 'Upper quartile',
-                  value: d[2]
-                }, {
-                  title: 'Median',
-                  value: d[1]
-                }, {
-                  title: 'Lower quartile',
-                  value: d[0]
-                }
-              ])
+              if (!configs.boxTips) return;
+              var tipStr = self._generateTipStr(configs.boxTips(key, d))
               self.tipContent.html(tipStr)
               self.tip
                 .style('opacity', 0.9)
@@ -699,7 +704,7 @@ export default class ChartRenderer extends BaseRenderer {
             .attr("y2", function (d) {
               return yScale(d)
             })
-            .attr("stroke", style.stroke)
+            .attr("stroke", typeof style.stroke === 'function' ? style.stroke(key) : style.stroke)
             .attr("stroke-width", style.strokeWidth + 1)
             .attr("fill", "none");
 
@@ -712,17 +717,12 @@ export default class ChartRenderer extends BaseRenderer {
               return yScale(+d.value)
             })
             .attr('r', 2)
-            .attr('fill', style.fill)
+            .attr('fill', typeof style.fill === 'function' ? style.fill(key) : style.fill)
             .attr('stroke-width', 0)
             .attr('stroke', 'none')
             .on('mouseover', function (d) {
-              var tipStr = self._generateTipStr([{
-                title: 'X',
-                value: key
-              }, {
-                title: 'Y',
-                value: d.value
-              }])
+              if (!configs.outlierTips) return;
+              var tipStr = self._generateTipStr(configs.outlierTips(key, d))
               self.tipContent.html(tipStr)
               self.tip
                 .style('opacity', 0.9)
@@ -752,6 +752,7 @@ export default class ChartRenderer extends BaseRenderer {
         //   cX.call(xAxis.scale(currentEvent.transform.rescaleX(x)));
         //   cY.call(yAxis.scale(currentEvent.transform.rescaleY(y)));
         // }
+        configs.completed && configs.completed()
         var rootNode = content.node().rootNode;
 
         function zoomed() {
