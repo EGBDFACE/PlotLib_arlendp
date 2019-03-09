@@ -4,7 +4,8 @@ canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
 new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	bgColor: 0xffffff
-}).chords({
+// }).chords({
+	}).visShare({
 	fileUrl: '/dist/heatmap/10GRCh37.json',
 	fileType: 'json',
 	configs: {

@@ -2,7 +2,8 @@ import Plot from '../index.js';
 var canvas = document.getElementsByTagName('canvas')[0];
 canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
-new Plot.circular(document.getElementsByTagName('canvas')[0]).histogram({
+// new Plot.circular(document.getElementsByTagName('canvas')[0]).histogram({
+new Plot.circular(document.getElementsByTagName('canvas')[0]).visShare({
 	fileUrl: '/dist/histogram/GRCh37.json',
 	fileType: 'json',
 	configs: {

@@ -7,7 +7,8 @@ import {
 } from 'd3-scale';
 new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	bgColor: 0xF4F4F4
-}).chords({
+// }).chords({
+   }).visShare({
 	fileUrl: '/dist/chords/10GRCh37.json',
 	fileType: 'json',
 	configs: {

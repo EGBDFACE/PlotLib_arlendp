@@ -4,7 +4,8 @@ canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
 new Plot.circular(document.getElementsByTagName('canvas')[0], {
 	bgColor: 0xF4F4F4
-}).scatter({
+// }).scatter({
+}).visShare({
 	fileUrl: '/dist/scatter/GRCh37.json',
 	fileType: 'json',
 	configs: {

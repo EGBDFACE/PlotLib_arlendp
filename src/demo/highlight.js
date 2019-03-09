@@ -2,7 +2,8 @@ import Plot from '../index.js';
 var canvas = document.getElementsByTagName('canvas')[0];
 canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
-new Plot.circular(document.getElementsByTagName('canvas')[0]).highlight({
+// new Plot.circular(document.getElementsByTagName('canvas')[0]).highlight({
+new Plot.circular(document.getElementsByTagName('canvas')[0]).visShare({
 	fileUrl: '/dist/highlight/GRCh37.json',
 	fileType: 'json',
 	configs: {
