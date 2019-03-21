@@ -634,27 +634,53 @@ export default class CircularRenderer extends BaseRenderer {
       const fileData = [].slice.call(arguments, 2);
       fileData.forEach(function (d, i) {
         switch(data[i].circularType){
+          //draw vep result demo 
           case 'highlight':
-          case 'heatmap':
-          case 'histogram':
-          case 'stack':
             fileData[i] = fileData[i].map(function (d) {
               d.block_id = d.chrom;
               d.start = parseInt(d.start);
               d.end = parseInt(d.end);
               d.value = parseFloat(d.value || 0);
               return d;
-            });
+            })
             break;
-          case 'scatter': 
+          case 'scatter':
+            //MetaLR_rankscore
+            fileData[i] = dataTransform(fileData[i],'MetaLR_rankscore');
+            break;
+          case 'heatmap':
+            //MetaLR_score
+            fileData[i] = dataTransform(fileData[i],'MetaLR_score');
+            break;
+          case 'histogram':
+            //MetaSVM_rankscore
+            fileData[i] = dataTransform(fileData[i],'MetaSVM_rankscore');
+            break;
           case 'line':
-            fileData[i] = fileData[i].map(function (d) {
-              d.block_id = d.chrom;
-              d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
-              d.value = parseFloat(d.value || 0);
-              return d;
-            });
+            //MetaSVM_score
+            fileData[i] = dataTransform(fileData[i],'MetaSVM_score');
             break;
+          // case 'highlight':
+          // case 'heatmap':
+          // case 'histogram':
+          // case 'stack':
+            // fileData[i] = fileData[i].map(function (d) {
+            //   d.block_id = d.chrom;
+            //   d.start = parseInt(d.start);
+            //   d.end = parseInt(d.end);
+            //   d.value = parseFloat(d.value || 0);
+            //   return d;
+            // });
+            // break;
+          // case 'scatter': 
+          // case 'line':
+          //   fileData[i] = fileData[i].map(function (d) {
+          //     d.block_id = d.chrom;
+          //     d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
+          //     d.value = parseFloat(d.value || 0);
+          //     return d;
+          //   });
+          //   break;
         }
       })
 
