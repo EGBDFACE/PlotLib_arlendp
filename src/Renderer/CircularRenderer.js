@@ -636,51 +636,51 @@ export default class CircularRenderer extends BaseRenderer {
         switch(data[i].circularType){
           //draw vep result demo 
           case 'highlight':
-            fileData[i] = fileData[i].map(function (d) {
-              d.block_id = d.chrom;
-              d.start = parseInt(d.start);
-              d.end = parseInt(d.end);
-              d.value = parseFloat(d.value || 0);
-              return d;
-            })
-            break;
-          case 'scatter':
-            //MetaLR_rankscore
-            fileData[i] = dataTransform(fileData[i],'MetaLR_rankscore');
-            break;
-          case 'heatmap':
-            //MetaLR_score
-            fileData[i] = dataTransform(fileData[i],'MetaLR_score');
-            break;
-          case 'histogram':
-            //MetaSVM_rankscore
-            fileData[i] = dataTransform(fileData[i],'MetaSVM_rankscore');
-            break;
-          case 'line':
-            //MetaSVM_score
-            fileData[i] = dataTransform(fileData[i],'MetaSVM_score');
-            break;
-          // case 'highlight':
-          // case 'heatmap':
-          // case 'histogram':
-          // case 'stack':
             // fileData[i] = fileData[i].map(function (d) {
             //   d.block_id = d.chrom;
             //   d.start = parseInt(d.start);
             //   d.end = parseInt(d.end);
             //   d.value = parseFloat(d.value || 0);
             //   return d;
-            // });
-            // break;
-          // case 'scatter': 
-          // case 'line':
-          //   fileData[i] = fileData[i].map(function (d) {
-          //     d.block_id = d.chrom;
-          //     d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
-          //     d.value = parseFloat(d.value || 0);
-          //     return d;
-          //   });
-          //   break;
+            // })
+            fileData[i] = fileData[i].map(function(d){
+              d.block_id = d.name;
+              d.start = parseInt(d.txStart);
+              d.end = parseInt(d.txEnd);
+              // d.value = parseFloat(d.value || 0);
+              d.value = 0;
+              return d;
+            });
+            break;
+          case 'scatter':
+          case 'heatmap':
+          case 'histogram':
+          case 'line':
+            fileData[i] = dataTransform(fileData[i],data[i].name);
+            break;
+          /** normal data config
+           * case 'highlight':
+           * case 'heatmap':
+             case 'histogram':
+             case 'stack':
+              fileData[i] = fileData[i].map(function (d) {
+                  d.block_id = d.chrom;
+                  d.start = parseInt(d.start);
+                  d.end = parseInt(d.end);
+                  d.value = parseFloat(d.value || 0);
+                  return d;
+                });
+                break;
+             case 'scatter': 
+             case 'line':
+                fileData[i] = fileData[i].map(function (d) {
+                  d.block_id = d.chrom;
+                  d.position = (parseInt(d.start) + parseInt(d.end)) / 2;
+                  d.value = parseFloat(d.value || 0);
+                  return d;
+                });
+                break; 
+            */
         }
       })
 
@@ -747,9 +747,10 @@ export default class CircularRenderer extends BaseRenderer {
               innerRadius: data[i].configs.innerRadius,
               outerRadius: data[i].configs.outerRadius,
               opacity: data[i].configs.opacity || 0.6,
-              color: data[i].configs.color || function (d) {
-                return gieStainColor[d.gieStain] || '#000'
-              },
+              // color: data[i].configs.color || function (d) {
+              //    return gieStainColor[d.gieStain] || '#000'
+              // },
+              color: '#000',
               tooltipContent: data[i].configs.tips
             });
             break;
@@ -803,26 +804,68 @@ export default class CircularRenderer extends BaseRenderer {
 }
 function dataTransform(inputArray,valueName){
   let outputArray = [];
-  for(let j=0;j<inputArray.length;j++){
-    let tempObj = {};
-    if(inputArray[j].MetaLR_rankscore != '-'){
-      tempObj.block_id = 'chr'+inputArray[j].Location.slice(0,inputArray[j].Location.indexOf(':'));
-      tempObj.position = +inputArray[j].Location.slice(inputArray[j].Location.indexOf(':')+1);
-      tempObj.value = +inputArray[j][valueName];
-      tempObj.start = tempObj.position - 100000;
-      tempObj.end = tempObj.position + 100000;
-    }
-    if(Object.keys(tempObj).length != 0){
-      if(outputArray.length != 0){
-        let k;
-        for(k =0;k<outputArray.length;k++){
-          if(tempObj.position == outputArray[k].position){break;}
-        }
-        if(k == outputArray.length){
+  if(valueName === 'snv'){
+    for(let j=0;j<inputArray.length;j++){
+      let tempObj = {};
+      if(inputArray[j].Location.indexOf('-') === -1){
+        tempObj.block_id = 'chr' + inputArray[j].Location.slice(0,inputArray[j].Location.indexOf(':'));
+        tempObj.position = +inputArray[j].Location.slice(inputArray[j].Location.indexOf(':')+1);
+        tempObj.value = 0.005;
+        tempObj.start = tempObj.position;
+        tempObj.end = tempObj.position;
+      }
+      if(Object.keys(tempObj).length != 0){
+        if(outputArray.length != 0){
+          let k;
+          for(k =0;k<outputArray.length;k++){
+            if(tempObj.position == outputArray[k].position){break;}
+          }
+          if(k == outputArray.length){
+            outputArray.push(tempObj);
+          }
+        }else{
           outputArray.push(tempObj);
         }
-      }else{
+      }
+    }
+    console.log(outputArray);
+    return outputArray;
+  }else if(valueName === 'structual_variant'){
+    for(let j=0;j<inputArray.length;j++){
+      let tempObj = {};
+      if(inputArray[j].Location.indexOf('-') != -1){
+        tempObj.block_id = 'chr' + inputArray[j].Location.slice(0,inputArray[j].Location.indexOf(':'));
+        tempObj.start = parseInt(inputArray[j].Location.slice(inputArray[j].Location.indexOf(':')+1,inputArray[j].Location.indexOf('-')));
+        tempObj.end = parseInt(inputArray[j].Location.slice(inputArray[j].Location.indexOf('-')+1));
+        tempObj.position = tempObj.start;
+        tempObj.value = 0.03;
         outputArray.push(tempObj);
+      }
+    }
+    console.log(outputArray);
+    return outputArray;
+  }else{
+    for(let j=0;j<inputArray.length;j++){
+      let tempObj = {};
+      if(inputArray[j].MetaLR_rankscore != '-'){
+        tempObj.block_id = 'chr'+inputArray[j].Location.slice(0,inputArray[j].Location.indexOf(':'));
+        tempObj.position = +inputArray[j].Location.slice(inputArray[j].Location.indexOf(':')+1);
+        tempObj.value = +inputArray[j][valueName];
+        tempObj.start = tempObj.position - 100000;
+        tempObj.end = tempObj.position + 100000;
+      }
+      if(Object.keys(tempObj).length != 0){
+        if(outputArray.length != 0){
+          let k;
+          for(k =0;k<outputArray.length;k++){
+            if(tempObj.position == outputArray[k].position){break;}
+          }
+          if(k == outputArray.length){
+            outputArray.push(tempObj);
+          }
+        }else{
+          outputArray.push(tempObj);
+        }
       }
     }
   }
