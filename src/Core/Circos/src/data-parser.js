@@ -87,12 +87,12 @@ export function parseSpanStringData (data, layoutSummary) {
     )
     .filter((datum) => {
       if (datum.start < 0 || datum.end > layoutSummary[datum.block_id]) {
-        logger.log(
-          2,
-          'position',
-          'position inconsistency',
-          {datum: datum, layoutSummary: layoutSummary}
-        )
+        // logger.log(
+        //   2,
+        //   'position',
+        //   'position inconsistency',
+        //   {datum: datum, layoutSummary: layoutSummary}
+        // )
         return false
       }
       return true

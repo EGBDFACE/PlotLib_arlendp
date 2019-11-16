@@ -12,7 +12,8 @@ module.exports = {
     // line: './src/demo/line.js',
     // scatter: './src/demo/scatter.js',
     // stack: './src/demo/stack.js',
-    vepResultDemo: './src/demo/vepResultDemo.js'
+    // vepResultDemo: './src/demo/vepResultDemo.js'
+    cancerClassifierDemo: './src/demo/cancerClassifierDemo.js'
   },
   output: {
     path: __dirname + '/dist',

@@ -20,35 +20,37 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
 			return d.label
 		}
 	}
-}, [{
-	circularType: 'highlight',
-	name: 'cytobands',
-	// fileUrl: '/dist/vepResultDemo/cytobands.csv',
-	// fileType: 'csv',
-	fileUrl: '/dist/vepResultDemo/gene_position_GRCh38.txt',
-	fileType: 'tsv',
-	configs: {
-		innerRadius: 300,
-        outerRadius: 320,
-        opacity: 1,
-        tips: function (d, i) {
-			return [
-				{
-				title: 'Name',
-				value: d.name
-			}, 
-			{
-				title: 'Chrom',
-				value: d.chrom
-			}, 
-			// {
-			// 	title: 'Gie Stain',
-			// 	value: d.gieStain
-			// }
-		]
-		}
-	}
-},{
+}, [
+// 	{
+// 	circularType: 'highlight',
+// 	name: 'cytobands',
+// 	// fileUrl: '/dist/vepResultDemo/cytobands.csv',
+// 	// fileType: 'csv',
+// 	fileUrl: '/dist/vepResultDemo/gene_position_GRCh38.txt',
+// 	fileType: 'tsv',
+// 	configs: {
+// 		innerRadius: 300,
+//         outerRadius: 320,
+//         opacity: 1,
+//         tips: function (d, i) {
+// 			return [
+// 				{
+// 				title: 'Name',
+// 				value: d.name
+// 			}, 
+// 			{
+// 				title: 'Chrom',
+// 				value: d.chrom
+// 			}, 
+// 			// {
+// 			// 	title: 'Gie Stain',
+// 			// 	value: d.gieStain
+// 			// }
+// 		]
+// 		}
+// 	}
+// },
+{
 	circularType: 'scatter',
 	name: 'snv',
 	fileUrl: '/dist/vepResultDemo/vep_m2_wes_result.txt',

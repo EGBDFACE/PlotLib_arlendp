@@ -621,6 +621,10 @@ export default class CircularRenderer extends BaseRenderer {
   visShare(layout,data){
     const width = this.renderer.view.width / this.renderer.resolution
     const height = this.renderer.view.height / this.renderer.resolution
+    // console.log('width visShare',width);
+    // console.log('height visShare',height);
+    // console.log(document.body.clientHeight);
+    // console.log(document.body.clientWidth);
     const circos = new Circos({
       container: this.renderer.view,
       renderer: this.renderer,
@@ -643,20 +647,48 @@ export default class CircularRenderer extends BaseRenderer {
             //   d.value = parseFloat(d.value || 0);
             //   return d;
             // })
-            fileData[i] = fileData[i].map(function(d){
-              d.block_id = d.name;
-              d.start = parseInt(d.txStart);
-              d.end = parseInt(d.txEnd);
-              // d.value = parseFloat(d.value || 0);
+
+            // vep demo
+            // fileData[i] = fileData[i].map(function(d){
+            //   d.block_id = d.name;
+            //   d.start = parseInt(d.txStart);
+            //   d.end = parseInt(d.txEnd);
+            //   // d.value = parseFloat(d.value || 0);
+            //   d.value = 0;
+            //   return d;
+            // });
+
+            // cancer classifier demo
+            fileData[i] = fileData[i].map(function(d) {
+              d.block_id = d.gene;
+              d.start = parseFloat(d.start);
+              d.end = parseFloat(d.end);
               d.value = 0;
+              d.score = parseFloat(d.score);
               return d;
-            });
+            })
             break;
           case 'scatter':
           case 'heatmap':
           case 'histogram':
           case 'line':
-            fileData[i] = dataTransform(fileData[i],data[i].name);
+            // vepDemo 
+            // fileData[i] = dataTransformForVep(fileData[i],data[i].name);
+
+            // cancer classifier demo
+            fileData[i] = fileData[i].map(function(d) {
+              // console.log(d);
+              d.block_id = d.gene;
+              // d.position = parseFloat(d.position);
+              // d.start = parseFloat(d.position);
+              // d.end = parseFloat(d.position);
+              d.position = 0;
+              d.start = 0;
+              d.end = 0;
+              d.value = 0;
+              d.score = parseFloat(d.score);
+              return d;
+            });
             break;
           /** normal data config
            * case 'highlight':
@@ -730,8 +762,8 @@ export default class CircularRenderer extends BaseRenderer {
               innerRadius: data[i].configs.innerRadius,
               outerRadius: data[i].configs.outerRadius,
               color: data[i].configs.color || '#000',
-              strokeColor: data[i].configs.stroke || '#000',
-              strokeWidth: 0.5,
+              strokeColor: data[i].configs.strokeColor || '#000',
+              strokeWidth: data[i].configs.strokeWidth || 0,
               fillOpacity: data[i].configs.fillOpacity || 1,
               shape: 'circle',
               size: data[i].configs.size || 14,
@@ -750,7 +782,17 @@ export default class CircularRenderer extends BaseRenderer {
               // color: data[i].configs.color || function (d) {
               //    return gieStainColor[d.gieStain] || '#000'
               // },
-              color: '#000',
+              // color: '#000',
+              strokeWidth: data[i].configs.strokeWidth || 0,
+              strokeColor: data[i].configs.strokeColor || '#0xF4F4F4',
+              color: function(d) {
+                if (d.score === 0) {
+                  return '#225AE3';
+                }else {
+                  console.log(d);
+                  return '#FFC2BA';
+                }
+              },
               tooltipContent: data[i].configs.tips
             });
             break;
@@ -802,7 +844,7 @@ export default class CircularRenderer extends BaseRenderer {
 
   }
 }
-function dataTransform(inputArray,valueName){
+function dataTransformForVep(inputArray,valueName){
   let outputArray = [];
   if(valueName === 'snv'){
     for(let j=0;j<inputArray.length;j++){
