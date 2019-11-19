@@ -670,25 +670,59 @@ export default class CircularRenderer extends BaseRenderer {
             break;
           case 'scatter':
           case 'heatmap':
-          case 'histogram':
-          case 'line':
             // vepDemo 
             // fileData[i] = dataTransformForVep(fileData[i],data[i].name);
 
             // cancer classifier demo
+            // fileData[i] = fileData[i].map(function(d) {
+            //   // console.log(d);
+            //   // d.block_id = d.gene;
+            //   d.block_id = "gene";
+            //   // d.position = parseFloat(d.position);
+            //   // d.start = parseFloat(d.position);
+            //   // d.end = parseFloat(d.position);
+            //   d.start = d.end =d.position = parseFloat(d.position);
+            //   // d.position = 0;
+            //   // d.start = 0;
+            //   // d.end = 0;
+            //   d.value = 0;
+            //   d.score = parseFloat(d.score);
+            //   return d;
+            // });
+            let filterData = [];
+            fileData[i].map(function(d) {
+              if (parseFloat(d.score) !== 0) {
+                filterData.push({
+                  block_id: "gene",
+                  gene: d.gene,
+                  position: parseFloat(d.position),
+                  start: parseFloat(d.position),
+                  end: parseFloat(d.position),
+                  value: 0,
+                  score: parseFloat(d.score)
+                });
+              }
+            });
+            fileData[i] = filterData;
+            break;
+          case 'line':
             fileData[i] = fileData[i].map(function(d) {
-              // console.log(d);
-              d.block_id = d.gene;
-              // d.position = parseFloat(d.position);
-              // d.start = parseFloat(d.position);
-              // d.end = parseFloat(d.position);
-              d.position = 0;
-              d.start = 0;
-              d.end = 0;
-              d.value = 0;
-              d.score = parseFloat(d.score);
+              // d.block_id = d.gene;
+              d.block_id = "gene";
+              d.start=d.end=d.position = parseFloat(d.position);
+              d.value = parseFloat(d.score);
               return d;
             });
+            break;
+          case 'histogram':
+            fileData[i] = fileData[i].map(function(d) {
+              d.block_id = "gene";
+              d.position = parseFloat(d.position);
+              d.start = d.position-5;
+              d.end = d.position+5;
+              d.value = parseFloat(d.score);
+              return d;
+            })
             break;
           /** normal data config
            * case 'highlight':
@@ -714,6 +748,7 @@ export default class CircularRenderer extends BaseRenderer {
                 break; 
             */
         }
+        // console.log(fileData[i])
       })
 
       let circular = circos
@@ -721,16 +756,20 @@ export default class CircularRenderer extends BaseRenderer {
           innerRadius: layout.configs.innerRadius || width / 2 - 100,
           outerRadius: layout.configs.outerRadius || width / 2 - 80,
           labels: {
-            display: layout.configs.labels || false,
-            radialOffset: 26
+            display: layout.configs.labels.display || false,
+            radialOffset: 26,
+            size: layout.configs.labels.size || 15,
           },
           opacity: layout.configs.opacity,
           ticks: {
-            display: layout.configs.ticks || false,
-            labelDenominator: layout.configs.tickScale || 1000000,
-            labelSuffix: layout.configs.labelSuffix || '',
-            labelSpacing: layout.configs.labelSpacing || 5,
-            labelDisplay0: layout.configs.labelDisplay0 || false
+            labels: layout.configs.ticks.labels || false,
+            display: layout.configs.ticks.display || false,
+            spacing: layout.configs.ticks.spacing || 1000000,
+            labelDenominator: layout.configs.ticks.labelDenominator || 1,
+            labelSuffix: layout.configs.ticks.labelSuffix || '',
+            labelSpacing: layout.configs.ticks.labelSpacing || 5,
+            labelDisplay0: layout.configs.ticks.labelDisplay0 || false,
+            labelColor: layout.configs.ticks.labelColor || '#000',
           },
           tooltipContent: layout.configs.tips
         })

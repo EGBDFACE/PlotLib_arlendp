@@ -8,6 +8,8 @@ import {
   event
 } from 'd3-selection'
 
+
+
 function renderLayoutLabels(conf, block) {
   const radius = conf.innerRadius + conf.labels.radialOffset
 
@@ -75,8 +77,23 @@ function renderLayoutTicks(conf, layout, instance) {
     }
   }
 
+  // add by jackchu 
+  // here i want to filter ticks to make 1 degree only 1 tick
+  // let filterInstanceLayoutData = [];
+  // let filterGap = parseInt(instance._layout.data.length / 360);
+  // for (let i=0; i<instance._layout.data.length; i++) {
+  //   if (i % filterGap === 0) {
+  //     filterInstanceLayoutData.push(instance._layout.data[i]);
+  //   }
+  // }
+
   const ticks = layout.append('g').selectAll('g')
     .data(instance._layout.data)
+
+    // modified by jackchu
+    // here i want to filter ticks to make 1 degree only 1 tick
+    // .data(filterInstanceLayoutData)
+
     .enter().append('g').selectAll('g')
     .data(blockTicks)
     .enter().append('g')
@@ -102,8 +119,9 @@ function renderLayoutTicks(conf, layout, instance) {
     })
     .attr('y2', 1)
     .style('stroke', conf.ticks.color)
-
-  ticks.append('text')
+  
+  if (conf.ticks.labels){
+    ticks.append('text')
     .attr('x', 10)
     .attr('dy', '0.25em')
     .attr(
@@ -116,6 +134,8 @@ function renderLayoutTicks(conf, layout, instance) {
     .style('font-family', conf.ticks.labelFont)
     .style('fill', conf.ticks.labelColor)
     .text((d) => d.label)
+  }
+  
 }
 
 export default function renderLayout(parentElement, instance) {
@@ -128,8 +148,23 @@ export default function renderLayout(parentElement, instance) {
     .attr('z-index', conf.zIndex)
     .on('click', conf.onClick)
 
+
+  
+  // add by jackchu 
+  // here i want to filter ticks to make 1 degree only 1 tick
+  // let filterInstanceLayoutData = [];
+  // let filterGap = parseInt(instance._layout.data.length / 180);
+  // for (let i=0; i<instance._layout.data.length; i++) {
+  //   if (i % filterGap === 0) {
+  //     filterInstanceLayoutData.push(instance._layout.data[i]);
+  //   }
+  // }
+
   const block = layout
     .selectAll('g')
+    // modified by jackchu
+    // here i want to filter ticks to make 1 degree only 1 tick
+    // .data(filterInstanceLayoutData)
     .data(instance._layout.data)
     .enter()
     .append('g')
@@ -164,6 +199,7 @@ export default function renderLayout(parentElement, instance) {
     .attr('fill', (d) => d.color)
     .attr('id', (d) => d.id)
 
+  
   if (conf.labels.display) {
     renderLayoutLabels(conf, block)
   }

@@ -11,7 +11,6 @@ export default class Layout {
     if (!data) {
       logger.log(2, 'no layout data', '')
     }
-
     this.conf = defaultsDeep(conf, cloneDeep(defaultConf))
     this.data = data
     const agg = reduce(data, (aggregator, block) => {

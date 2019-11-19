@@ -222,3 +222,8 @@ typings/
 
 
 # End of https://www.gitignore.io/api/node,cocos2dx,cocoapods
+
+# add by jackchu
+/dist/cancerClassifierDemo/*
+/node_modules/
+/package-lock.json
