@@ -225,5 +225,5 @@ typings/
 
 # add by jackchu
 /dist/cancerClassifierDemo/*
-/node_modules/
+/node_modules/*
 /package-lock.json

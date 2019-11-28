@@ -762,6 +762,7 @@ export default class CircularRenderer extends BaseRenderer {
           },
           opacity: layout.configs.opacity,
           ticks: {
+            color: layout.configs.ticks.tickColor,
             labels: layout.configs.ticks.labels || false,
             display: layout.configs.ticks.display || false,
             spacing: layout.configs.ticks.spacing || 1000000,
@@ -769,7 +770,8 @@ export default class CircularRenderer extends BaseRenderer {
             labelSuffix: layout.configs.ticks.labelSuffix || '',
             labelSpacing: layout.configs.ticks.labelSpacing || 5,
             labelDisplay0: layout.configs.ticks.labelDisplay0 || false,
-            labelColor: layout.configs.ticks.labelColor || '#000',
+            labelColor: layout.configs.ticks.labelColor,
+            labelSize: layout.configs.ticks.labelSize || '10'
           },
           tooltipContent: layout.configs.tips
         })

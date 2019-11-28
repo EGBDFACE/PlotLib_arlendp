@@ -132,8 +132,22 @@ function renderLayoutTicks(conf, layout, instance) {
     .style('text-anchor', 'middle')
     .style('font-size', '' + conf.ticks.labelSize + 'px')
     .style('font-family', conf.ticks.labelFont)
-    .style('fill', conf.ticks.labelColor)
-    .text((d) => d.label)
+    .style('fill','red')
+    // .text((d) => d.label)
+    
+    // modified by jackchu for temp
+    .text((d,i) => {
+      console.log(`i `,i,`d.label `,d.label);
+      if (i === 0){
+        return 1;
+      }
+      if (i === 726){
+        return 7269;
+      }
+      if(d.label){
+        return d.label/10;
+      }
+    })
   }
   
 }

@@ -4,27 +4,118 @@ canvas.width = document.body.clientWidth;
 canvas.height = document.body.clientHeight;
 // console.log('width canvas',canvas.width);
 // console.log('height canvas',canvas.height);
-import {
-    scaleQuantize
-} from 'd3-scale';
 
-const cancerType = ['BLCA', 'BLCA', 'HNSC', 'HNSC', 'PAAD', 
-                    'PAAD', 'PRAD', 'PRAD', 'STAD', 'STAD', 
-                    'UCS', 'UCS', 'CESC', 'CESC', 'LUAD', 
-                    'LUAD', 'KIRP', 'KIRP', 'ACC', 'ACC', 
-                    'BRCA', 'BRCA', 'LGG', 'LGG'];
+// const cancerType = ['BLCA', 'BLCA', 'HNSC', 'HNSC', 'PAAD', 
+//                     'PAAD', 'PRAD', 'PRAD', 'STAD', 'STAD', 
+//                     'UCS', 'UCS', 'CESC', 'CESC', 'LUAD', 
+//                     'LUAD', 'KIRP', 'KIRP', 'ACC', 'ACC', 
+//                     'BRCA', 'BRCA', 'LGG', 'LGG'];
+
+const cancerType = [
+    'CESC',
+    'LUAD',
+    'BRCA',
+    'PAAD',
+    'ACC',
+    'KIRP',
+    'STAD',
+    'PRAD',
+    'UCS',
+    'HNSC',
+    'BLCA',
+    'LGG'
+].sort();
+
 let configArray = [];
 
-const circleGap = 0.03;
-for (let i=0; i<cancerType.length-1; i+=2) {
-    configArray[i/2] = {
-        circularType: 'scatter',
+// circleGap for scatter
+// const circleGap = 0.03;
+
+// circleGap for 12 line
+const circleGap = 0.06;
+
+// for 12 scatter
+// for (let i=0; i<cancerType.length-1; i+=2) {
+//     configArray[i/2] = {
+//         circularType: 'scatter',
+//         name: `sample-${i+1}`,
+//         fileUrl: `/dist/cancerClassifierDemo/sample-${i}-${cancerType[i]}`,
+//         fileType: 'tsv',
+//         configs: {
+//             innerRadius: (0.8-(i/2+1)*circleGap)/0.95,
+//             outerRadius: (0.8-(i/2)*circleGap)/0.95,
+//             size: 1.2*Math.PI,
+//             strokeWidth: 0,
+//             tips: function (d, i) {
+//                 return [
+//                     {
+//                         title: 'score',
+//                         value: d.score
+//                     }
+//                 ]
+//             },
+//             // color: '#ff0000',
+//             fillOpacity: function(d) {
+//                 return d.score;
+//             }
+//         }
+//     }
+// }
+
+const lineColors = [
+    '#FF8361',
+    '#FFBE62',
+    '#FFE476',
+    '#E6FF72',
+    '#BCF5A8',
+    '#9DF8E1',
+    '#9DE3F8',
+    '#9DBDF8',
+    '#8D9AFF',
+    '#B691FF',
+    '#E298FC',
+    '#F9AAE7'
+];
+
+// for 12 line in 24
+// for (let i=0; i<cancerType.length-1; i+=2) {
+//     configArray[i/2] = {
+//         circularType: 'line',
+//         name: `sample-${i+1}`,
+//         fileUrl: `/dist/cancerClassifierDemo/sample-${i}-${cancerType[i]}`,
+//         fileType: 'tsv',
+//         configs: {
+//             innerRadius: (0.95-(i/2+1)*circleGap)/0.95,
+//             outerRadius: (0.95-(i/2)*circleGap)/0.95,
+//             size: 1.2*Math.PI,
+//             strokeWidth: 0,
+//             tips: function (d, i) {
+//                 return [
+//                     {
+//                         title: 'score',
+//                         value: d.score
+//                     }
+//                 ]
+//             },
+//             color: lineColors[i/2],
+//             // color: '#ff0000',
+//             fillOpacity: function(d) {
+//                 return d.score;
+//             }
+//         }
+//     }
+// }
+
+// for 12 line in 12
+for (let i=0; i<cancerType.length-1; i++) {
+    configArray[i] = {
+        circularType: 'line',
         name: `sample-${i+1}`,
         fileUrl: `/dist/cancerClassifierDemo/sample-${i}-${cancerType[i]}`,
         fileType: 'tsv',
         configs: {
-            innerRadius: (0.8-(i/2+1)*circleGap)/0.95,
-            outerRadius: (0.8-(i/2)*circleGap)/0.95,
+            innerRadius: (0.95-(i+1)*circleGap)/0.95,
+            outerRadius: (0.95-(i)*circleGap)/0.95,
             size: 1.2*Math.PI,
             strokeWidth: 0,
             tips: function (d, i) {
@@ -35,7 +126,8 @@ for (let i=0; i<cancerType.length-1; i+=2) {
                     }
                 ]
             },
-            color: '#ff0000',
+            color: lineColors[i],
+            // color: '#ff0000',
             fillOpacity: function(d) {
                 return d.score;
             }
@@ -43,41 +135,41 @@ for (let i=0; i<cancerType.length-1; i+=2) {
     }
 }
 
-configArray.push({
-    circularType: 'line',
-    name: 'sample-0_line',
-    fileUrl: '/dist/cancerClassifierDemo/sample-0-BLCA',
-    fileType: 'tsv',
-    configs: {
-        innerRadius: 0.8/0.95,
-        outerRadius: 0.9/0.95,
-        min: 0,
-        max: 1,
-        color: '#000'
-    }
-});
-configArray.push({
-    circularType: 'histogram',
-    name: 'sample-0_histogram',
-    fileUrl: '/dist/cancerClassifierDemo/sample-0-BLCA',
-    fileType: 'tsv',
-    configs: {
-        innerRadius: 0.2/0.95,
-        outerRadius: 0.4/0.95,
-        direction: 'out',
-        color: function(d) {
-            if (d.value === 0) {
-                // return '#225AE3';
-                return '#ffffff';
-            } else {
-                return '#ff0000';
-            }
-        },
-    }
-});
+// configArray.push({
+//     circularType: 'line',
+//     name: 'sample-0_line',
+//     fileUrl: '/dist/cancerClassifierDemo/sample-0-BLCA',
+//     fileType: 'tsv',
+//     configs: {
+//         innerRadius: 0.8/0.95,
+//         outerRadius: 0.9/0.95,
+//         min: 0,
+//         max: 1,
+//         color: '#000'
+//     }
+// });
+// configArray.push({
+//     circularType: 'histogram',
+//     name: 'sample-0_histogram',
+//     fileUrl: '/dist/cancerClassifierDemo/sample-0-BLCA',
+//     fileType: 'tsv',
+//     configs: {
+//         innerRadius: 0.2/0.95,
+//         outerRadius: 0.4/0.95,
+//         direction: 'out',
+//         color: function(d) {
+//             if (d.value === 0) {
+//                 // return '#225AE3';
+//                 return '#ffffff';
+//             } else {
+//                 return '#ff0000';
+//             }
+//         },
+//     }
+// });
 
 new Plot.circular(document.getElementsByTagName('canvas')[0], {
-    bgColor: 0xffffff
+    bgColor: 0x000
 }).visShare({
     fileUrl: '/dist/cancerClassifierDemo/layout.json',
     fileType: 'json',
@@ -91,11 +183,14 @@ new Plot.circular(document.getElementsByTagName('canvas')[0], {
         ticks: {
             spacing: 100,
             labelDisplay0: false,
-            labelSpacing: 2,
+            labelSpacing: 100,
             display: true,
             tickScale: 2,
-            labelSuffix: 1000,
-            labels: false
+            labelSuffix: 0,
+            labelSize: '7',
+            labels: true,
+            labelColor: 'red',
+            tickColor: '#999'
         }
     }
 },configArray);
