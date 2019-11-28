@@ -1,9 +1,0 @@
-platform:ios, '8.0'
-
-target 'platform' do
-
-pod 'Masonry'
-pod 'Mantle'
-pod 'Colours'
-
-end
